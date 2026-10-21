@@ -1,0 +1,4 @@
+/* JS-only / missing classes not present in the compiled original stylesheet */
+/* Used by the notify modal's enter/exit states; absent from the compiled sheet because the original only mounts them post-hydration. */
+.backdrop-blur-0{--tw-backdrop-blur:blur(0);-webkit-backdrop-filter:var(--tw-backdrop-blur,);backdrop-filter:var(--tw-backdrop-blur,)}
+.blur-0{--tw-blur:blur(0);filter:var(--tw-blur,)}

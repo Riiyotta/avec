@@ -1,0 +1,18 @@
+section,category,templates,routes,Home (scroll-snapped story),Legal pages (not captured)
+footer.bar,FOOTER,2,3,x,x
+shell.header,SHELL,1,1,x,
+shell.progress-dots,SHELL,1,1,x,
+shell.scroll-hint,SHELL,1,1,x,
+shell.notify-modal,SHELL,1,1,x,
+hero.copy,HERO,1,1,x,
+hero.video,HERO,1,1,x,
+deck.word-reveal-copy,DECK,1,1,x,
+deck.email-stack,DECK,1,1,x,
+deck.triage-game,DECK,1,1,x,
+expand.compose-demo,EXPAND,1,1,x,
+expand.be-here-now,EXPAND,1,1,x,
+expand.search-demo,EXPAND,1,1,x,
+expand.notifications-demo,EXPAND,1,1,x,
+proof.reviews-carousel,PROOF,1,1,x,
+footer.launch,FOOTER,1,1,x,
+ROUTE COUNT,,,3,1,2

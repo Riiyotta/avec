@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "source": "https://www.avec.ai/ (measured via CLONE_SPEC.md, 2026-10-21; /terms and /privacy-policy are linked but were not captured)",
+    "status": "draft: home measured live, legal routes unverified",
+    "totalRoutes": 3,
+    "totalTemplates": 2
+  },
+  "categories": {
+    "SHELL": "Fixed UI layered over the scroll container on every stop: header, progress dots, scroll hint, modal.",
+    "HERO": "First scroll stop: headline, subcopy, CTA, and the autoplaying hero video.",
+    "DECK": "Sticky 4-viewport section that explains email triage: word-reveal copy, swipeable card stack, and the Stack Challenge game.",
+    "EXPAND": "Sticky 7-viewport section driven by one integer scroll state (0-6): voice compose, low-importance triage, search and notifications demos.",
+    "PROOF": "App Store review social proof.",
+    "FOOTER": "Closing stop: download headline, CTAs and legal/social bar."
+  },
+  "sections": {
+    "shell.header": {
+      "category": "SHELL",
+      "description": "Fixed white header bar with the Avec logo, a TestFlight 'Get early access' link and a 'Get notified' button that opens the modal.",
+      "scope": "Fixed over every scroll stop on the home route.",
+      "implementedBy": "Header.jsx"
+    },
+    "shell.progress-dots": {
+      "category": "SHELL",
+      "description": "Right-edge column of 13 invert-blend dots, one per scroll stop, with hover frame-preview tooltips and click-to-jump.",
+      "scope": "Home route, md and wider only.",
+      "implementedBy": "ProgressDots.jsx"
+    },
+    "shell.scroll-hint": {
+      "category": "SHELL",
+      "description": "Floating 'Scroll or use arrow keys to page through this site' pill that appears after 5 seconds without scrolling on selected stops.",
+      "scope": "Home route, md and wider only.",
+      "implementedBy": "ScrollHint.jsx"
+    },
+    "shell.notify-modal": {
+      "category": "SHELL",
+      "description": "Portal modal with email capture for 'Get notified' on other platforms (iOS-only app today); blurred scale-in animation.",
+      "scope": "Opened from the 'Get notified' buttons in the header and footer on the home route.",
+      "implementedBy": "NotifyModal.jsx"
+    },
+    "hero.copy": {
+      "category": "HERO",
+      "description": "H1 'Handle your inbox in one minute a day', subcopy, early-access CTA and the 400+ reviews rating row.",
+      "scope": "Home route, stop 'hero'.",
+      "implementedBy": "Hero.jsx"
+    },
+    "hero.video": {
+      "category": "HERO",
+      "description": "Square rounded media frame: triage video that crossfades to a looping waves video, with a 'Scroll to learn more' pill and a pause/play/replay control.",
+      "scope": "Home route, stop 'hero'.",
+      "implementedBy": "HeroVideo.jsx"
+    },
+    "deck.word-reveal-copy": {
+      "category": "DECK",
+      "description": "Left-column paragraph whose characters and words reveal from 15% to full black as the user scrolls.",
+      "scope": "Home route, stops 'deck_intro' to 'triage_game'.",
+      "implementedBy": "WordReveal.jsx"
+    },
+    "deck.email-stack": {
+      "category": "DECK",
+      "description": "Stack of 320x474 email cards on a panel whose background shifts surface, green, sky; the top cards swipe 'Done' then 'Later' as scroll progresses.",
+      "scope": "Home route, stops 'deck_intro', 'deck_swipe_done', 'deck_swipe_later'.",
+      "implementedBy": "EmailStack.jsx"
+    },
+    "deck.triage-game": {
+      "category": "DECK",
+      "description": "'Avec Stack Challenge': intro card, 3-2-1 countdown, 20-second sorting game, and a score and leaderboard finish screen.",
+      "scope": "Home route, stop 'triage_game'.",
+      "implementedBy": "TriageGame.jsx"
+    },
+    "expand.compose-demo": {
+      "category": "EXPAND",
+      "description": "Clip-path stage that turns surface, red, brand, amber while a scrubbed phone video plays voice compose, with word-reveal captions per state.",
+      "scope": "Home route, stops 'compose_intro', 'compose_record', 'compose_drafted', 'low_importance'.",
+      "implementedBy": "Expand.jsx"
+    },
+    "expand.be-here-now": {
+      "category": "EXPAND",
+      "description": "Blue 'Be here now' button positioned over the phone's Done button that expands to full bleed with a waves video.",
+      "scope": "Home route, stops 'deck_empty' to 'notifications'.",
+      "implementedBy": "Expand.jsx"
+    },
+    "expand.search-demo": {
+      "category": "EXPAND",
+      "description": "'Find anything in seconds' headline, a typing search pill and glass answer and sources cards.",
+      "scope": "Home route, stop 'search'.",
+      "implementedBy": "Expand.jsx"
+    },
+    "expand.notifications-demo": {
+      "category": "EXPAND",
+      "description": "'Stay informed' headline, an airline notification banner and an expanded email card.",
+      "scope": "Home route, stop 'notifications'.",
+      "implementedBy": "Expand.jsx"
+    },
+    "proof.reviews-carousel": {
+      "category": "PROOF",
+      "description": "Auto-advancing, draggable, edge-masked carousel of six App Store reviews with star rows.",
+      "scope": "Home route, stop 'footer'.",
+      "implementedBy": "ReviewsCarousel.jsx"
+    },
+    "footer.launch": {
+      "category": "FOOTER",
+      "description": "Logo plus 'Avec is available for free on the App Store.' headline and the Get early access / Get notified button pair.",
+      "scope": "Home route, stop 'footer'.",
+      "implementedBy": "Footer.jsx"
+    },
+    "footer.bar": {
+      "category": "FOOTER",
+      "description": "Copyright line with X, YouTube, Instagram, LinkedIn, email, Terms and Privacy links.",
+      "scope": "Home route, stop 'footer'. Presumed on the legal routes; not verified.",
+      "implementedBy": "Footer.jsx"
+    }
+  },
+  "templates": [
+    {
+      "id": "template.home",
+      "name": "Home (scroll-snapped story)",
+      "routeCount": 1,
+      "routes": ["/"],
+      "routePattern": null,
+      "chrome": "full",
+      "sections": [
+        "shell.header", "shell.progress-dots", "shell.scroll-hint", "shell.notify-modal",
+        "hero.copy", "hero.video",
+        "deck.word-reveal-copy", "deck.email-stack", "deck.triage-game",
+        "expand.compose-demo", "expand.be-here-now", "expand.search-demo", "expand.notifications-demo",
+        "proof.reviews-carousel", "footer.launch", "footer.bar"
+      ]
+    },
+    {
+      "id": "template.legal",
+      "name": "Legal pages (not captured)",
+      "routeCount": 2,
+      "routes": ["/terms", "/privacy-policy"],
+      "routePattern": null,
+      "chrome": "unknown",
+      "sections": ["footer.bar"]
+    }
+  ]
+}
