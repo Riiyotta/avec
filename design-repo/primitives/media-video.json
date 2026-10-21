@@ -1,0 +1,17 @@
+{
+  "id": "primitive.media-video",
+  "layer": "primitive",
+  "purpose": "Muted, playsInline, object-cover video with poster; role-bound source.",
+  "props": {
+    "loop": "boolean",
+    "preload": [
+      "auto",
+      "metadata"
+    ]
+  },
+  "tokens": [],
+  "evidenceIds": [
+    "ev.src.herovideo-src",
+    "ev.src.expand-phone-src"
+  ]
+}

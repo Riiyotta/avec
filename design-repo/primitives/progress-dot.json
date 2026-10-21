@@ -1,0 +1,18 @@
+{
+  "id": "primitive.progress-dot",
+  "layer": "primitive",
+  "purpose": "6px invert-blend dot button.",
+  "props": {
+    "state": [
+      "passed",
+      "next",
+      "later"
+    ]
+  },
+  "tokens": [
+    "duration.press"
+  ],
+  "evidenceIds": [
+    "ev.src.progress-dots"
+  ]
+}

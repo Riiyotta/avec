@@ -1,0 +1,24 @@
+{
+  "id": "primitive.avatar",
+  "layer": "primitive",
+  "purpose": "Round sender avatar: photo (bound asset) or initials on an accent token.",
+  "props": {
+    "kind": [
+      "photo",
+      "initials"
+    ],
+    "size": [
+      "36px email",
+      "43px md sources"
+    ]
+  },
+  "tokens": [
+    "iconSize.avatar-email",
+    "color.accent-green",
+    "color.accent-sky"
+  ],
+  "evidenceIds": [
+    "ev.src.emailstack-card",
+    "ev.src.expand-sources"
+  ]
+}

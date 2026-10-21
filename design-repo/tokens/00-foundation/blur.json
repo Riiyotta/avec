@@ -1,0 +1,32 @@
+{
+  "blur": {
+    "sm": {
+      "$type": "dimension",
+      "$value": "8px",
+      "measuredFrom": [
+        "ev.css.root-blur"
+      ]
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": "12px",
+      "measuredFrom": [
+        "ev.css.root-blur"
+      ]
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": "16px",
+      "measuredFrom": [
+        "ev.css.root-blur"
+      ]
+    },
+    "2xl": {
+      "$type": "dimension",
+      "$value": "40px",
+      "measuredFrom": [
+        "ev.css.root-blur"
+      ]
+    }
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "id": "expand.search-demo",
+  "layer": "section",
+  "category": "EXPAND",
+  "purpose": "Prove 'find anything' with a typed natural-language query and a sourced answer.",
+  "sourceComponent": "src/components/Expand.jsx",
+  "scrollStops": [
+    "search"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "group": "expand"
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "headline",
+      "query",
+      "answer",
+      "sources"
+    ],
+    "properties": {
+      "headline": {
+        "type": "string",
+        "minLength": 1
+      },
+      "query": {
+        "type": "string",
+        "minLength": 1
+      },
+      "answer": {
+        "type": "string",
+        "minLength": 1
+      },
+      "sources": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 2,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "initial",
+            "name",
+            "subject",
+            "preview",
+            "avatar"
+          ],
+          "properties": {
+            "initial": {
+              "type": "string",
+              "pattern": "^[A-Z]{1,2}$"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "subject": {
+              "type": "string",
+              "minLength": 1
+            },
+            "preview": {
+              "type": "string",
+              "minLength": 1
+            },
+            "avatar": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole",
+                "colorToken"
+              ],
+              "properties": {
+                "assetRole": {
+                  "const": "avatar.initials"
+                },
+                "colorToken": {
+                  "enum": [
+                    "accent-green",
+                    "accent-sky"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "fieldBudgets": {
+    "headline": {
+      "maxWords": 14,
+      "realMaxWordCount": 11
+    },
+    "query": {
+      "maxWords": 8,
+      "realMaxWordCount": 6
+    },
+    "answer": {
+      "maxWords": 24,
+      "realMaxWordCount": 19
+    },
+    "sources[].name": {
+      "maxWords": 4,
+      "realMaxWordCount": 3
+    },
+    "sources[].subject": {
+      "maxWords": 8,
+      "realMaxWordCount": 6
+    },
+    "sources[].preview": {
+      "maxWords": 25,
+      "realMaxWordCount": 20
+    }
+  },
+  "motion": {
+    "pattern": "typing-query-state",
+    "trigger": "scroll-state",
+    "reducedMotionFallback": "instant-state-change",
+    "durationTokens": [
+      "type-char",
+      "headline",
+      "card"
+    ],
+    "notes": "at B5: headline in (.4s, +.1s); query typed 35ms/char after 400ms; answer cards translate-y-4 -> 0, 300ms +200ms"
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "pill icon size-4, cards p-4, gap-3"
+      ]
+    },
+    {
+      "query": "tall-height",
+      "changes": [
+        "--search-anchor 30%, --headline-offset 180px"
+      ]
+    }
+  ],
+  "accessibility": [
+    "headline is real text with decorative blurred halo span"
+  ],
+  "assetRoles": [
+    "avatar.initials"
+  ],
+  "referenceContent": {
+    "headline": "Find anything in seconds. Instead of sifting through threads, just ask.",
+    "query": "Find my 1099s from last year",
+    "answer": "You received a 2025 1099-NEC from Smith Engineers LLC on January 11, 2026 and a 1099 Consolidated from Acorns.",
+    "sources": [
+      {
+        "initial": "SE",
+        "name": "Smith Engineers LLC",
+        "subject": "Your 1099 Tax Documents are available",
+        "preview": "Hi Maura, your 1099 is now available to dow...",
+        "avatar": {
+          "assetRole": "avatar.initials",
+          "colorToken": "accent-green"
+        }
+      },
+      {
+        "initial": "A",
+        "name": "Acorns",
+        "subject": "2025 Tax information from Acorns",
+        "preview": "We wanted to give you a heads up that 2025 Acorns tax forms will be available in the coming weeks.",
+        "avatar": {
+          "assetRole": "avatar.initials",
+          "colorToken": "accent-sky"
+        }
+      }
+    ]
+  },
+  "evidenceIds": [
+    "ev.src.expand-headline",
+    "ev.src.expand-search-pill",
+    "ev.src.expand-sources",
+    "ev.src.expand-glass",
+    "ev.src.content-search",
+    "ev.shot.desktop.search"
+  ],
+  "notes": "Max 2 sources: the sources card is measured at 480x266 with 2 rows. 'Acorns' is a real company named in demo copy."
+}

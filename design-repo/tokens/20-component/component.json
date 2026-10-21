@@ -1,0 +1,201 @@
+{
+  "$description": "Component-scoped tokens. Raw hex here exists only where the source uses an arbitrary-value utility or inline style (rawReason states which).",
+  "component": {
+    "cta": {
+      "border": {
+        "$type": "color",
+        "$value": "{color.black}",
+        "alpha": 0.5,
+        "measuredFrom": [
+          "ev.src.cta-sizes"
+        ]
+      },
+      "radius-sm": {
+        "$type": "dimension",
+        "$value": "{radius.xl}",
+        "measuredFrom": [
+          "ev.src.cta-sizes"
+        ]
+      },
+      "radius-lg": {
+        "$type": "dimension",
+        "$value": "{radius.2xl}",
+        "measuredFrom": [
+          "ev.src.cta-sizes"
+        ]
+      },
+      "press-scale": {
+        "$type": "number",
+        "$value": 0.97,
+        "measuredFrom": [
+          "ev.src.cta-sizes"
+        ]
+      }
+    },
+    "email-card": {
+      "text": {
+        "$type": "color",
+        "$value": "#403e3c",
+        "measuredFrom": [
+          "ev.src.emailstack-card"
+        ],
+        "rawReason": "arbitrary-value utility text-[#403e3c] in source"
+      },
+      "meta": {
+        "$type": "color",
+        "$value": "#878580",
+        "measuredFrom": [
+          "ev.src.emailstack-card"
+        ],
+        "rawReason": "arbitrary-value utility"
+      },
+      "reply-bg": {
+        "$type": "color",
+        "$value": "#0682fe",
+        "measuredFrom": [
+          "ev.src.emailstack-reply"
+        ],
+        "rawReason": "arbitrary-value utility"
+      },
+      "radius": {
+        "$type": "dimension",
+        "$value": "{radius.card}",
+        "measuredFrom": [
+          "ev.src.emailstack-card"
+        ]
+      },
+      "shadow": {
+        "$type": "shadow",
+        "$value": "{elevation.email-card}",
+        "measuredFrom": [
+          "ev.src.emailstack-card"
+        ]
+      }
+    },
+    "swipe-overlay": {
+      "done": {
+        "$type": "color",
+        "$value": "#07aa04",
+        "measuredFrom": [
+          "ev.src.emailstack-overlay"
+        ],
+        "rawReason": "inline style"
+      },
+      "later": {
+        "$type": "color",
+        "$value": "#858482",
+        "measuredFrom": [
+          "ev.src.emailstack-overlay"
+        ],
+        "rawReason": "inline style"
+      }
+    },
+    "be-here-now": {
+      "bg": {
+        "$type": "color",
+        "$value": "oklch(0.6474 0.2088 252.22)",
+        "fallback": "#008cff",
+        "measuredFrom": [
+          "ev.src.expand-btn-color"
+        ],
+        "rawReason": "inline style"
+      },
+      "shadow": {
+        "$type": "shadow",
+        "$value": "{elevation.be-here-now-glow}",
+        "measuredFrom": [
+          "ev.src.expand-btn-shadow"
+        ]
+      },
+      "radius": {
+        "$type": "dimension",
+        "$value": "{radius.expand-btn}",
+        "measuredFrom": [
+          "ev.css.root-custom"
+        ]
+      }
+    },
+    "glass-card": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "alpha": 0.8,
+        "measuredFrom": [
+          "ev.src.expand-search-pill"
+        ]
+      },
+      "blur": {
+        "$type": "dimension",
+        "$value": "{blur.md}",
+        "measuredFrom": [
+          "ev.src.expand-search-pill"
+        ]
+      },
+      "shadow": {
+        "$type": "shadow",
+        "$value": "{elevation.glass}",
+        "measuredFrom": [
+          "ev.src.expand-glass"
+        ]
+      }
+    },
+    "notification": {
+      "meta": {
+        "$type": "color",
+        "$value": "#6e6d6a",
+        "measuredFrom": [
+          "ev.src.expand-notif-card"
+        ],
+        "rawReason": "arbitrary-value utility"
+      },
+      "source-subject": {
+        "$type": "color",
+        "$value": "#222222",
+        "measuredFrom": [
+          "ev.src.expand-sources"
+        ],
+        "rawReason": "arbitrary-value utility"
+      }
+    },
+    "header": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "measuredFrom": [
+          "ev.src.header"
+        ]
+      },
+      "shadow": {
+        "$type": "shadow",
+        "$value": "{elevation.header}",
+        "measuredFrom": [
+          "ev.src.header"
+        ]
+      },
+      "radius-bottom": {
+        "$type": "dimension",
+        "$value": "{radius.card}",
+        "measuredFrom": [
+          "ev.src.header"
+        ]
+      }
+    },
+    "modal": {
+      "radius": {
+        "$type": "dimension",
+        "$value": "{radius.modal}",
+        "measuredFrom": [
+          "ev.src.notify-modal"
+        ]
+      },
+      "overlay": {
+        "$type": "color",
+        "$value": "{color.black}",
+        "alpha": 0.5,
+        "measuredFrom": [
+          "ev.src.notify-modal"
+        ]
+      }
+    }
+  }
+}

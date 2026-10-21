@@ -1,0 +1,270 @@
+{
+  "duration": {
+    "instant-reduced": {
+      "$type": "duration",
+      "$value": "0.01ms",
+      "measuredFrom": [
+        "ev.css.reduced-motion"
+      ]
+    },
+    "word-step": {
+      "$type": "duration",
+      "$value": "25ms",
+      "measuredFrom": [
+        "ev.src.wordreveal"
+      ]
+    },
+    "type-char": {
+      "$type": "duration",
+      "$value": "35ms",
+      "measuredFrom": [
+        "ev.spec.motion"
+      ]
+    },
+    "press": {
+      "$type": "duration",
+      "$value": "120ms",
+      "measuredFrom": [
+        "ev.css.duration-120",
+        "ev.spec.motion"
+      ]
+    },
+    "fast": {
+      "$type": "duration",
+      "$value": "150ms",
+      "measuredFrom": [
+        "ev.css.root-default-transition"
+      ]
+    },
+    "modal": {
+      "$type": "duration",
+      "$value": "200ms",
+      "measuredFrom": [
+        "ev.src.notify-modal"
+      ]
+    },
+    "card": {
+      "$type": "duration",
+      "$value": "300ms",
+      "measuredFrom": [
+        "ev.spec.motion"
+      ]
+    },
+    "headline": {
+      "$type": "duration",
+      "$value": "400ms",
+      "measuredFrom": [
+        "ev.spec.motion"
+      ]
+    },
+    "stage": {
+      "$type": "duration",
+      "$value": "500ms",
+      "measuredFrom": [
+        "ev.src.expand-stage-transition"
+      ]
+    },
+    "phone-md": {
+      "$type": "duration",
+      "$value": "600ms",
+      "measuredFrom": [
+        "ev.src.expand-phone"
+      ]
+    },
+    "card-enter": {
+      "$type": "duration",
+      "$value": "800ms",
+      "measuredFrom": [
+        "ev.css.keyframes"
+      ]
+    },
+    "crossfade": {
+      "$type": "duration",
+      "$value": "1000ms",
+      "measuredFrom": [
+        "ev.src.herovideo"
+      ]
+    },
+    "carousel-pause": {
+      "$type": "duration",
+      "$value": "5000ms",
+      "measuredFrom": [
+        "ev.src.carousel"
+      ]
+    },
+    "hint-idle": {
+      "$type": "duration",
+      "$value": "5000ms",
+      "measuredFrom": [
+        "ev.src.scroll-hint-delay"
+      ]
+    }
+  },
+  "easing": {
+    "standard": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.4,
+        0,
+        0.2,
+        1
+      ],
+      "measuredFrom": [
+        "ev.css.root-default-transition"
+      ]
+    },
+    "in": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.4,
+        0,
+        1,
+        1
+      ],
+      "measuredFrom": [
+        "ev.css.root-motion"
+      ]
+    },
+    "out": {
+      "$type": "cubicBezier",
+      "$value": [
+        0,
+        0,
+        0.2,
+        1
+      ],
+      "measuredFrom": [
+        "ev.css.root-motion"
+      ]
+    },
+    "phone": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.645,
+        0.045,
+        0.355,
+        1
+      ],
+      "measuredFrom": [
+        "ev.src.expand-phone"
+      ]
+    },
+    "card-exit": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.1,
+        0.3,
+        1,
+        0
+      ],
+      "measuredFrom": [
+        "ev.src.emailstack-timing"
+      ]
+    },
+    "card-enter": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.16,
+        1,
+        0.3,
+        1
+      ],
+      "measuredFrom": [
+        "ev.spec.keyframes"
+      ]
+    },
+    "modal-success": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.22,
+        1,
+        0.36,
+        1
+      ],
+      "measuredFrom": [
+        "ev.src.notify-modal"
+      ]
+    }
+  },
+  "keyframes": {
+    "expand": {
+      "$type": "keyframes",
+      "$value": "expand",
+      "measuredFrom": [
+        "ev.css.keyframes",
+        "ev.spec.keyframes"
+      ]
+    },
+    "bg-pulse": {
+      "$type": "keyframes",
+      "$value": "bg-pulse",
+      "measuredFrom": [
+        "ev.css.keyframes",
+        "ev.spec.keyframes"
+      ]
+    },
+    "fade-in": {
+      "$type": "keyframes",
+      "$value": "fade-in",
+      "measuredFrom": [
+        "ev.css.keyframes",
+        "ev.spec.keyframes"
+      ]
+    },
+    "float": {
+      "$type": "keyframes",
+      "$value": "float",
+      "measuredFrom": [
+        "ev.css.keyframes",
+        "ev.spec.keyframes"
+      ]
+    },
+    "card-enter": {
+      "$type": "keyframes",
+      "$value": "card-enter",
+      "measuredFrom": [
+        "ev.css.keyframes",
+        "ev.spec.keyframes"
+      ]
+    },
+    "countdown-pop": {
+      "$type": "keyframes",
+      "$value": "countdown-pop",
+      "measuredFrom": [
+        "ev.css.keyframes",
+        "ev.spec.keyframes"
+      ]
+    },
+    "float-up-fade": {
+      "$type": "keyframes",
+      "$value": "float-up-fade",
+      "measuredFrom": [
+        "ev.css.keyframes",
+        "ev.spec.keyframes"
+      ]
+    },
+    "spin": {
+      "$type": "keyframes",
+      "$value": "spin",
+      "measuredFrom": [
+        "ev.css.keyframes",
+        "ev.spec.keyframes"
+      ]
+    },
+    "pulse": {
+      "$type": "keyframes",
+      "$value": "pulse",
+      "measuredFrom": [
+        "ev.css.keyframes",
+        "ev.spec.keyframes"
+      ]
+    }
+  },
+  "reducedMotion": {
+    "$type": "policy",
+    "$value": "global CSS rule forces transition/animation durations to .01ms and iteration-count 1; videos are NOT paused by it",
+    "measuredFrom": [
+      "ev.css.reduced-motion"
+    ]
+  }
+}

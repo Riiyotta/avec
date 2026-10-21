@@ -1,0 +1,178 @@
+{
+  "id": "expand.notifications-demo",
+  "layer": "section",
+  "category": "EXPAND",
+  "purpose": "Show smart notifications: a summary banner over the full email it summarises.",
+  "sourceComponent": "src/components/Expand.jsx",
+  "scrollStops": [
+    "notifications"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "group": "expand"
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "headline",
+      "sender",
+      "time",
+      "bannerBody",
+      "emailSubject",
+      "emailBody",
+      "bannerIcon",
+      "senderAvatar"
+    ],
+    "properties": {
+      "headline": {
+        "type": "string",
+        "minLength": 1
+      },
+      "sender": {
+        "type": "string",
+        "minLength": 1
+      },
+      "time": {
+        "type": "string",
+        "minLength": 1
+      },
+      "bannerBody": {
+        "type": "string",
+        "minLength": 1
+      },
+      "emailSubject": {
+        "type": "string",
+        "minLength": 1
+      },
+      "emailBody": {
+        "type": "string",
+        "minLength": 1
+      },
+      "bannerIcon": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "brand.app-icon"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^(/assets/|inline:)"
+          }
+        }
+      },
+      "senderAvatar": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "avatar.sender-photo",
+              "avatar.initials"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^(/assets/|inline:)"
+          }
+        }
+      }
+    }
+  },
+  "fieldBudgets": {
+    "headline": {
+      "maxWords": 25,
+      "realMaxWordCount": 20
+    },
+    "sender": {
+      "maxWords": 3,
+      "realMaxWordCount": 2
+    },
+    "time": {
+      "maxWords": 3,
+      "realMaxWordCount": 2
+    },
+    "bannerBody": {
+      "maxWords": 13,
+      "realMaxWordCount": 10
+    },
+    "emailSubject": {
+      "maxWords": 12,
+      "realMaxWordCount": 9
+    },
+    "emailBody": {
+      "maxWords": 74,
+      "realMaxWordCount": 59
+    }
+  },
+  "motion": {
+    "pattern": "card-stagger-state",
+    "trigger": "scroll-state",
+    "reducedMotionFallback": "instant-state-change",
+    "durationTokens": [
+      "stage",
+      "card"
+    ],
+    "notes": "B6: headline swaps (.4s); email card in at +80ms (500ms), banner at +260ms (500ms)"
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "email card rounded-24, px-4; banner gap-4 py-0"
+      ]
+    },
+    {
+      "query": "md",
+      "changes": [
+        "email card rounded-28, max-h 24rem"
+      ]
+    }
+  ],
+  "accessibility": [
+    "expanded email card aria-hidden (decorative)"
+  ],
+  "assetRoles": [
+    "brand.app-icon",
+    "avatar.sender-photo",
+    "avatar.initials"
+  ],
+  "referenceContent": {
+    "headline": "Stay informed, without opening your inbox. Avec sends smart notifications that tell you what’s happening and what to do next.",
+    "sender": "Pacific Airlines",
+    "time": "9:41 AM",
+    "bannerBody": "New departure Thursday 7:45pm. Seat assignment 2A. Download boarding pass.",
+    "emailSubject": "Updated departure time and seat assignment for your flight",
+    "emailBody": "Hi Diego,\n\nYour Pacific Airlines flight has a new departure time: Thursday at 7:45 PM.\nSeat assignment: 2A\n\nYour boarding pass is now available. Please download it before arriving at the airport, and be sure to check your flight status again before heading to the terminal.\n\nThank you for flying with Pacific Airlines.\n\nSafe travels,\nPacific Airlines Customer Care",
+    "bannerIcon": {
+      "assetRole": "brand.app-icon",
+      "assetRef": "/assets/square-logo-195.png"
+    },
+    "senderAvatar": {
+      "assetRole": "avatar.sender-photo",
+      "assetRef": "/assets/avatars/pacific-airlines.png"
+    }
+  },
+  "evidenceIds": [
+    "ev.src.expand-notif-card",
+    "ev.src.expand-notif-banner",
+    "ev.src.expand-notif-avatar",
+    "ev.src.content-notif",
+    "ev.shot.desktop.notifications",
+    "ev.spec.notif-icon-claim"
+  ],
+  "notes": "Correction vs CLONE_SPEC 5.4: the banner icon is the Avec app icon (square-logo-195.png), not the Pacific Airlines avatar - confirmed by Expand.jsx and desktop-1440-11 screenshot. Source also spells the email-stack sender 'Pacific Air Lines' vs 'Pacific Airlines' here."
+}

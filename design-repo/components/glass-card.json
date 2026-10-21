@@ -1,0 +1,15 @@
+{
+  "id": "component.glass-card",
+  "layer": "component",
+  "purpose": "White/80 + backdrop-blur-md card with the GLASS inset shadow recipe (search pill, answer, sources, banner).",
+  "composes": [],
+  "tokens": [
+    "component.glass-card.bg",
+    "component.glass-card.blur",
+    "component.glass-card.shadow"
+  ],
+  "evidenceIds": [
+    "ev.src.expand-glass",
+    "ev.src.expand-search-pill"
+  ]
+}

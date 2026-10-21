@@ -1,0 +1,22 @@
+{
+  "id": "primitive.word-reveal-text",
+  "layer": "primitive",
+  "purpose": "Text whose characters/words switch from dim to full colour (scroll-scrubbed per char, or 25ms per word).",
+  "props": {
+    "variant": [
+      "dark",
+      "light"
+    ],
+    "mode": [
+      "per-char-progress",
+      "per-word-timed"
+    ]
+  },
+  "tokens": [
+    "duration.word-step"
+  ],
+  "evidenceIds": [
+    "ev.src.wordreveal",
+    "ev.src.wordreveal-dim"
+  ]
+}

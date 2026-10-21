@@ -1,0 +1,1131 @@
+{
+  "version": "1.0.0",
+  "sourceRootRelative": "..",
+  "measuredAt": "2026-10-21 (CLONE_SPEC.md Playwright run); design-repo extracted 2026-10-21",
+  "gracefulDegradation": "Citations resolve against the sibling source project (design-repo/..). If it is absent (standalone/zipped copy), verify_all.py WARNS and skips external citation checks; internal evidence-id resolution still runs.",
+  "citationKinds": {
+    "lines": "path + 1-based line range; `expect` must occur within the range",
+    "contains": "path must contain `expect` (used for single-line minified files src/index.css, src/content.js)",
+    "file": "path must exist (screenshots, binary assets)"
+  },
+  "budgetPolicy": "maxWords = max(real + 1, ceil(real * 1.25)) where real = the longest real string for that field (src/content.js, component source); realMaxWordCount is stored beside every budget so the headroom is auditable. Headroom is a stated policy, not a measurement.",
+  "evidence": {
+    "ev.css.root-tokens": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "--color-background:#f7f6f4;--color-foreground:#171717;--color-brand:#0050ff;--color-accent-green:#03ce4c;--color-accent-red:#f73c1d;--color-accent-sky:#36b7ff;--color-surface:#e5e2dc",
+      "description": "Original :root custom properties (Tailwind v4 compiled) - brand/background/accent colors"
+    },
+    "ev.css.root-scale": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "--radius-sm:.25rem;--radius-md:.375rem;--radius-lg:.5rem;--radius-xl:.75rem;--radius-2xl:1rem;--radius-4xl:2rem",
+      "description": "Radius scale in :root"
+    },
+    "ev.css.root-text": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "--color-red-700:#bf000f;--color-green-700:#008138;--color-blue-100:#dbeafe;--color-neutral-500:#737373",
+      "description": "Palette colors present in :root"
+    },
+    "ev.css.root-motion": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "--ease-in:cubic-bezier(.4, 0, 1, 1);--ease-out:cubic-bezier(0, 0, .2, 1)",
+      "description": "Easing tokens in :root"
+    },
+    "ev.css.root-default-transition": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "--default-transition-duration:.15s;--default-transition-timing-function:cubic-bezier(.4, 0, .2, 1)",
+      "description": "Default transition in :root"
+    },
+    "ev.css.root-blur": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "--blur-sm:8px;--blur-md:12px;--blur-lg:16px;--blur-2xl:40px",
+      "description": "Blur scale in :root"
+    },
+    "ev.css.root-spacing": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "--spacing:.25rem",
+      "description": "Spacing base unit in :root"
+    },
+    "ev.css.root-weights": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700",
+      "description": "Font weights in :root"
+    },
+    "ev.css.root-tracking": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "--tracking-tighter:-.05em;--tracking-tight:-.025em",
+      "description": "Tracking tokens in :root"
+    },
+    "ev.css.accent-amber": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".bg-accent-amber{background-color:#ffac1f",
+      "description": "accent-amber only exists as a utility (not in :root dump)"
+    },
+    "ev.css.surface-alt": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".bg-surface-alt{background-color:#edecea",
+      "description": "surface-alt utility"
+    },
+    "ev.css.brand-alt": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".hover\\:bg-brand-alt:hover{background-color:#226ef4",
+      "description": "brand-alt hover utility"
+    },
+    "ev.css.text-soft": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".placeholder\\:text-soft::placeholder{color:#a0b4c4",
+      "description": "soft placeholder color utility"
+    },
+    "ev.css.type-display": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".type-display{letter-spacing:-.025em;font-variation-settings:\"opsz\" 30;font-size:clamp(2.5rem,5vw,4rem);line-height:1}",
+      "description": ".type-display class rule (compiled CSS)"
+    },
+    "ev.css.type-display-footer": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".type-display-footer{font-size:max(1.5rem,10.3vw - 5px)}",
+      "description": ".type-display-footer class rule (compiled CSS)"
+    },
+    "ev.css.type-hero": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".type-hero{letter-spacing:-.025em;font-variation-settings:\"opsz\" 30;font-size:clamp(1.75rem,6vw,3.5rem);line-height:1.08}",
+      "description": ".type-hero class rule (compiled CSS)"
+    },
+    "ev.css.type-title": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".type-title{letter-spacing:-.03em;font-variation-settings:\"opsz\" 26;font-size:1.5rem;line-height:1.2}",
+      "description": ".type-title class rule (compiled CSS)"
+    },
+    "ev.css.type-body-lg": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".type-body-lg{letter-spacing:-.02em;font-variation-settings:\"opsz\" 20;font-size:clamp(1.25rem,2.2vw,1.75rem);line-height:1.2}",
+      "description": ".type-body-lg class rule (compiled CSS)"
+    },
+    "ev.css.type-body": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".type-body{letter-spacing:-.01em;font-variation-settings:\"opsz\" 16;font-size:1rem;line-height:1.5}",
+      "description": ".type-body class rule (compiled CSS)"
+    },
+    "ev.css.type-body-sm": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".type-body-sm{letter-spacing:-.02em;font-variation-settings:\"opsz\" 14;font-size:.875rem;line-height:1.35}",
+      "description": ".type-body-sm class rule (compiled CSS)"
+    },
+    "ev.css.type-button": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".type-button{letter-spacing:0;font-variation-settings:\"opsz\" 15;font-size:.9375rem;line-height:.9}",
+      "description": ".type-button class rule (compiled CSS)"
+    },
+    "ev.css.type-caption": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".type-caption{letter-spacing:-.02em;font-variation-settings:\"opsz\" 10;font-size:.75rem;line-height:1.35}",
+      "description": ".type-caption class rule (compiled CSS)"
+    },
+    "ev.css.section-max-w": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "@media (min-width:1380px){:root{--section-max-w:1280px}}@media (min-width:2000px){:root{--section-max-w:1440px}}",
+      "description": "Responsive --section-max-w steps"
+    },
+    "ev.css.section-frame": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".section-frame{scroll-snap-align:start;padding-inline:1rem;flex-direction:column;padding-top:96px;display:flex}",
+      "description": "section-frame layout primitive"
+    },
+    "ev.css.section-frame-md": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".section-frame{padding-top:70px}",
+      "description": "section-frame md padding-top"
+    },
+    "ev.css.section-content": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".section-content{width:100%;max-width:var(--section-max-w);margin-inline:auto}",
+      "description": "section-content container"
+    },
+    "ev.css.root-custom": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ":root{--expand-btn-radius:40px;--search-anchor:26%;--headline-offset:155px}",
+      "description": "Expand-section custom props"
+    },
+    "ev.css.search-anchor-tall": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "@media (min-height:960px){:root{--search-anchor:30%;--headline-offset:180px}}",
+      "description": "Tall-viewport anchor override"
+    },
+    "ev.css.reduced-motion": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "@media (prefers-reduced-motion:reduce){*,:before,:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}",
+      "description": "Global reduced-motion rule (the only reduced-motion handling in source)"
+    },
+    "ev.css.keyframes": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "@keyframes card-enter",
+      "description": "Keyframes block"
+    },
+    "ev.css.body": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "body{background:var(--color-background);color:var(--color-foreground);font-optical-sizing:none}",
+      "description": "Body base styles"
+    },
+    "ev.css.scroll-root": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "[data-scroll-root]{scrollbar-width:none}",
+      "description": "Scroll root hides scrollbar"
+    },
+    "ev.css.font-gt": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": "font-family:gtStandard;src:url(/fonts/GT_Standard_VF-s.p.1bb_t6o__k212.woff2)",
+      "description": "GT Standard VF @font-face (commercial font)"
+    },
+    "ev.css.shadow-lg": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".shadow-lg{--tw-shadow:0 10px 15px -3px var(--tw-shadow-color,#0000001a), 0 4px 6px -4px var(--tw-shadow-color,#0000001a)",
+      "description": "shadow-lg"
+    },
+    "ev.css.shadow-xl": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".shadow-xl{--tw-shadow:0 20px 25px -5px var(--tw-shadow-color,#0000001a), 0 8px 10px -6px var(--tw-shadow-color,#0000001a)",
+      "description": "shadow-xl"
+    },
+    "ev.css.duration-120": {
+      "kind": "contains",
+      "path": "src/index.css",
+      "expect": ".duration-120{--tw-duration:.12s;transition-duration:.12s}",
+      "description": "120ms duration utility"
+    },
+    "ev.css.extra": {
+      "kind": "contains",
+      "path": "src/extra.css",
+      "expect": ".backdrop-blur-0{",
+      "description": "Supplemental classes for the notify modal enter/exit"
+    },
+    "ev.src.app": {
+      "kind": "lines",
+      "path": "src/App.jsx",
+      "lines": "11-20",
+      "expect": "<main data-scroll-root=\"true\"",
+      "description": "Scroll-jacked main container and child order"
+    },
+    "ev.src.header": {
+      "kind": "lines",
+      "path": "src/components/Header.jsx",
+      "lines": "7-15",
+      "expect": "rounded-b-[20px] bg-white",
+      "description": "Header bar"
+    },
+    "ev.src.cta-url": {
+      "kind": "lines",
+      "path": "src/components/Cta.jsx",
+      "lines": "5",
+      "expect": "const TESTFLIGHT_URL",
+      "description": "TestFlight live endpoint"
+    },
+    "ev.src.cta-sizes": {
+      "kind": "lines",
+      "path": "src/components/Cta.jsx",
+      "lines": "7-13",
+      "expect": "const SIZES = {",
+      "description": "CTA size variants sm/lg"
+    },
+    "ev.src.hero": {
+      "kind": "lines",
+      "path": "src/components/Hero.jsx",
+      "lines": "11-12",
+      "expect": "<h1 className=\"type-display",
+      "description": "Hero headline/subcopy"
+    },
+    "ev.src.hero-rating": {
+      "kind": "lines",
+      "path": "src/components/Hero.jsx",
+      "lines": "21-27",
+      "expect": "400+ reviews",
+      "description": "Rating row"
+    },
+    "ev.src.hero-layout": {
+      "kind": "lines",
+      "path": "src/components/Hero.jsx",
+      "lines": "9",
+      "expect": "md:flex-row md:items-stretch",
+      "description": "Hero responsive layout"
+    },
+    "ev.src.herovideo": {
+      "kind": "lines",
+      "path": "src/components/HeroVideo.jsx",
+      "lines": "120",
+      "expect": "transition-opacity duration-1000",
+      "description": "Waves crossfade 1000ms"
+    },
+    "ev.src.herovideo-timing": {
+      "kind": "lines",
+      "path": "src/components/HeroVideo.jsx",
+      "lines": "39-43",
+      "expect": "if (ct >= v.duration - 6) startWaves()",
+      "description": "Video choreography thresholds"
+    },
+    "ev.src.herovideo-src": {
+      "kind": "lines",
+      "path": "src/components/HeroVideo.jsx",
+      "lines": "97-98",
+      "expect": "src=\"/assets/hero-triage.mp4\"",
+      "description": "Hero triage video asset"
+    },
+    "ev.src.deck": {
+      "kind": "lines",
+      "path": "src/components/Deck.jsx",
+      "lines": "21",
+      "expect": "useScrollFloat(ref, 3, { snap: true })",
+      "description": "Deck float 0..3 with snap"
+    },
+    "ev.src.deck-bg": {
+      "kind": "lines",
+      "path": "src/components/Deck.jsx",
+      "lines": "9-15",
+      "expect": "export function scrollRevealGraphicBackground",
+      "description": "Panel background interpolation"
+    },
+    "ev.src.deck-stops": {
+      "kind": "lines",
+      "path": "src/components/Deck.jsx",
+      "lines": "71-73",
+      "expect": "data-section-name=\"deck_swipe_done\"",
+      "description": "Deck stop spacers"
+    },
+    "ev.src.deck-copy": {
+      "kind": "lines",
+      "path": "src/components/Deck.jsx",
+      "lines": "48-53",
+      "expect": "<WordReveal text={copy.intro}",
+      "description": "Deck word-reveal chunks"
+    },
+    "ev.src.wordreveal": {
+      "kind": "lines",
+      "path": "src/components/WordReveal.jsx",
+      "lines": "34",
+      "expect": "}, 25)",
+      "description": "WordReveal 25ms per-word interval"
+    },
+    "ev.src.wordreveal-dim": {
+      "kind": "lines",
+      "path": "src/components/WordReveal.jsx",
+      "lines": "59",
+      "expect": "const alpha = dimmedOpacity ?? (variant === 'light' ? 0.5 : 0.15)",
+      "description": "Dim alpha .15 dark / .5 light"
+    },
+    "ev.src.emailstack-card": {
+      "kind": "lines",
+      "path": "src/components/EmailStack.jsx",
+      "lines": "29-45",
+      "expect": "rounded-[20px] bg-white font-inter",
+      "description": "Email card"
+    },
+    "ev.src.emailstack-reply": {
+      "kind": "lines",
+      "path": "src/components/EmailStack.jsx",
+      "lines": "51-56",
+      "expect": "bg-[#0682fe]",
+      "description": "Reply button"
+    },
+    "ev.src.emailstack-overlay": {
+      "kind": "lines",
+      "path": "src/components/EmailStack.jsx",
+      "lines": "72",
+      "expect": "backgroundColor: right ? '#07AA04' : '#858482'",
+      "description": "Swipe overlay colors"
+    },
+    "ev.src.emailstack-timing": {
+      "kind": "lines",
+      "path": "src/components/EmailStack.jsx",
+      "lines": "215",
+      "expect": "transitionTimingFunction: `${justExited ? (dragExit",
+      "description": "Card transition easings"
+    },
+    "ev.src.emailstack-container": {
+      "kind": "lines",
+      "path": "src/components/EmailStack.jsx",
+      "lines": "168",
+      "expect": "aspect-27/40 w-full max-w-[320px]",
+      "description": "Stack container 27:40, 320px max"
+    },
+    "ev.src.game-intro": {
+      "kind": "lines",
+      "path": "src/components/TriageGame.jsx",
+      "lines": "482-510",
+      "expect": "Play Avec Stack Challenge</h2>",
+      "description": "Game intro card copy"
+    },
+    "ev.src.game-duration": {
+      "kind": "lines",
+      "path": "src/components/TriageGame.jsx",
+      "lines": "193",
+      "expect": "const [time, setTime] = useState(20)",
+      "description": "20-second game"
+    },
+    "ev.src.game-card": {
+      "kind": "lines",
+      "path": "src/components/TriageGame.jsx",
+      "lines": "479",
+      "expect": "rounded-[28px] bg-white px-4 py-6 md:p-8 ring-1 ring-black/10 shadow-xl",
+      "description": "Game intro card container"
+    },
+    "ev.src.game-finish": {
+      "kind": "lines",
+      "path": "src/components/TriageGame.jsx",
+      "lines": "537",
+      "expect": "animate-card-enter flex w-full max-w-[360px]",
+      "description": "Finish card enter animation"
+    },
+    "ev.src.expand-state": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "142",
+      "expect": "const B = useScrollProgress(sectionRef, 7)",
+      "description": "Expand integer state 0..6"
+    },
+    "ev.src.expand-captions": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "132-135",
+      "expect": "{ index: 0, text: copy.expand.reply",
+      "description": "Caption index/delay/maxWidth table (index === B)"
+    },
+    "ev.src.caption-active": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "89",
+      "expect": "const active = activeIndex === index",
+      "description": "Caption shown when B equals its index"
+    },
+    "ev.src.expand-stage-bg": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "414",
+      "expect": "B === 1 ? 'bg-accent-red' : B === 2 ? 'bg-brand' : B === 3 ? 'bg-accent-amber' : 'bg-surface'",
+      "description": "Stage colour per state"
+    },
+    "ev.src.expand-stage-transition": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "418",
+      "expect": "transition: `clip-path 500ms ${ease}, background-color 500ms ${ease}`",
+      "description": "Stage clip/bg 500ms"
+    },
+    "ev.src.expand-phone": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "424-430",
+      "expect": "'absolute inset-0 will-change-transform transition-[transform] ease-[cubic-bezier(0.645,0.045,0.355,1)]'",
+      "description": "Phone transform easing"
+    },
+    "ev.src.expand-phone-src": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "447",
+      "expect": "<source src=\"/assets/phone-demo.webm\" type=\"video/webm\" />",
+      "description": "Phone demo video"
+    },
+    "ev.src.expand-btn": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "509",
+      "expect": "              Be here now",
+      "description": "Be here now label"
+    },
+    "ev.src.expand-btn-color": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "495",
+      "expect": "backgroundColor: 'oklch(0.6474 0.2088 252.22)'",
+      "description": "Be here now color"
+    },
+    "ev.src.expand-btn-shadow": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "491",
+      "expect": "rounded-[40px] shadow-[0px_4px_14px_0px_#FFFFFF60_inset,0px_0px_24px_0px_#008CFF90]",
+      "description": "Be here now glow"
+    },
+    "ev.src.expand-wave-src": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "65",
+      "expect": "<source src=\"/assets/wave_desktop.webm\" type=\"video/webm\" />",
+      "description": "Wave expand video"
+    },
+    "ev.src.expand-glass": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "39",
+      "expect": "const GLASS = ",
+      "description": "Glass card shadow recipe"
+    },
+    "ev.src.expand-search-pill": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "554",
+      "expect": "rounded-full bg-white/80 backdrop-blur-md transition-all",
+      "description": "Search pill glass"
+    },
+    "ev.src.expand-sources": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "586-600",
+      "expect": ">Sources</p>",
+      "description": "Sources card"
+    },
+    "ev.src.expand-headline": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "531",
+      "expect": "'text-white type-title absolute left-1/2 w-[500px]",
+      "description": "Search headline"
+    },
+    "ev.src.expand-notif-card": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "612",
+      "expect": "rounded-[24px] bg-white/55 font-inter shadow-[0_12px_32px_-18px_rgba(0,0,0,0.5)]",
+      "description": "Notification email card"
+    },
+    "ev.src.expand-notif-banner": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "631",
+      "expect": "src=\"/assets/square-logo-195.png\" alt=\"Avec\"",
+      "description": "Notification banner icon = Avec app icon (not pacific-airlines.png)"
+    },
+    "ev.src.expand-notif-avatar": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "620",
+      "expect": "src=\"/assets/avatars/pacific-airlines.png\"",
+      "description": "Notification email sender avatar"
+    },
+    "ev.src.expand-stops": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "642-644",
+      "expect": "{['compose_record', 'compose_drafted', 'low_importance', 'deck_empty', 'search', 'notifications'].map",
+      "description": "Expand stop spacers"
+    },
+    "ev.src.carousel": {
+      "kind": "lines",
+      "path": "src/components/ReviewsCarousel.jsx",
+      "lines": "30",
+      "expect": "pixelsPerSecond = 800, pauseMs = 5000",
+      "description": "Carousel speed/pause"
+    },
+    "ev.src.carousel-reviews": {
+      "kind": "lines",
+      "path": "src/components/ReviewsCarousel.jsx",
+      "lines": "6-11",
+      "expect": "{ title: 'Way better than Gmail!'",
+      "description": "Six verbatim App Store reviews"
+    },
+    "ev.src.carousel-ease": {
+      "kind": "lines",
+      "path": "src/components/ReviewsCarousel.jsx",
+      "lines": "102",
+      "expect": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "description": "Carousel move easing"
+    },
+    "ev.src.carousel-item": {
+      "kind": "lines",
+      "path": "src/components/ReviewsCarousel.jsx",
+      "lines": "213",
+      "expect": "w-[320px] shrink-0 md:w-[400px]",
+      "description": "Review card width"
+    },
+    "ev.src.footer-headline": {
+      "kind": "lines",
+      "path": "src/components/Footer.jsx",
+      "lines": "6-30",
+      "expect": "function FooterHeadline",
+      "description": "Footer headline (mobile + md variants)"
+    },
+    "ev.src.footer-order": {
+      "kind": "lines",
+      "path": "src/components/Footer.jsx",
+      "lines": "50-58",
+      "expect": "<FooterHeadline headline={content.footer.headline} />",
+      "description": "Footer DOM order: headline, buttons, carousel"
+    },
+    "ev.src.footer-links": {
+      "kind": "lines",
+      "path": "src/components/Footer.jsx",
+      "lines": "33-43",
+      "expect": "const footerLinks = [",
+      "description": "Footer social links"
+    },
+    "ev.src.footer-copy": {
+      "kind": "lines",
+      "path": "src/components/Footer.jsx",
+      "lines": "44",
+      "expect": "const COPY = 'Copyright",
+      "description": "Copyright line"
+    },
+    "ev.src.footer-bar": {
+      "kind": "lines",
+      "path": "src/components/Footer.jsx",
+      "lines": "63",
+      "expect": "max-[452px]:grid",
+      "description": "Footer bar narrow-grid variant"
+    },
+    "ev.src.notify-modal": {
+      "kind": "lines",
+      "path": "src/components/NotifyModal.jsx",
+      "lines": "78",
+      "expect": "rounded-[28px] bg-background p-6 pt-8 md:p-8 ring-1 ring-black/10 transition-all duration-200",
+      "description": "Notify modal card"
+    },
+    "ev.src.notify-modal-enter": {
+      "kind": "lines",
+      "path": "src/components/NotifyModal.jsx",
+      "lines": "79",
+      "expect": "overlay.visible ? 'scale-100 opacity-100 blur-0 ease-out' : 'scale-75 opacity-0 blur-2xl ease-in'",
+      "description": "Modal blur/scale enter"
+    },
+    "ev.src.notify-modal-copy": {
+      "kind": "lines",
+      "path": "src/components/NotifyModal.jsx",
+      "lines": "93",
+      "expect": "We’ll email you when Avec is available for more platforms",
+      "description": "Modal subtitle"
+    },
+    "ev.src.notify-stub": {
+      "kind": "lines",
+      "path": "src/components/NotifyModal.jsx",
+      "lines": "9",
+      "expect": "Backend call replaced by a local stub",
+      "description": "Notify endpoint stubbed"
+    },
+    "ev.src.progress-dots": {
+      "kind": "lines",
+      "path": "src/components/ProgressDots.jsx",
+      "lines": "129",
+      "expect": "backdrop-invert saturate-0 brightness-1000",
+      "description": "Invert-blend dots"
+    },
+    "ev.src.progress-dots-paint": {
+      "kind": "lines",
+      "path": "src/components/ProgressDots.jsx",
+      "lines": "55",
+      "expect": "const o = i <= index ? 1 : i === index + 1 ? 0.1 + 0.9 * fraction : 0.1",
+      "description": "Dot opacity scrub"
+    },
+    "ev.src.progress-dots-frames": {
+      "kind": "lines",
+      "path": "src/components/ProgressDots.jsx",
+      "lines": "12-17",
+      "expect": "'frame-08.3kyq836e8ltsb.png',",
+      "description": "Frames 01-13 referenced; all 13 present in public/assets/frames"
+    },
+    "ev.src.scroll-hint": {
+      "kind": "lines",
+      "path": "src/components/ScrollHint.jsx",
+      "lines": "5",
+      "expect": "const HIDDEN_ON = new Set(",
+      "description": "Scroll hint hidden stops"
+    },
+    "ev.src.scroll-hint-delay": {
+      "kind": "lines",
+      "path": "src/components/ScrollHint.jsx",
+      "lines": "24",
+      "expect": "}, 5000)",
+      "description": "Scroll hint 5s idle"
+    },
+    "ev.src.icons-logo": {
+      "kind": "lines",
+      "path": "src/components/Icons.jsx",
+      "lines": "26",
+      "expect": "export function AvecLogo()",
+      "description": "Inline Avec glyph svg"
+    },
+    "ev.src.icons-stars": {
+      "kind": "lines",
+      "path": "src/components/Icons.jsx",
+      "lines": "73",
+      "expect": "export function Stars(",
+      "description": "Star rating icon"
+    },
+    "ev.src.hooks": {
+      "kind": "lines",
+      "path": "src/hooks/useScroll.js",
+      "lines": "121-135",
+      "expect": "export function useScrollProgress(ref, count)",
+      "description": "useScrollProgress"
+    },
+    "ev.src.hooks-float": {
+      "kind": "lines",
+      "path": "src/hooks/useScroll.js",
+      "lines": "34",
+      "expect": "export function useScrollFloat(ref, steps, opts)",
+      "description": "useScrollFloat"
+    },
+    "ev.src.hooks-approach": {
+      "kind": "lines",
+      "path": "src/hooks/useScroll.js",
+      "lines": "5",
+      "expect": "export function useScrollApproach(ref, opts)",
+      "description": "useScrollApproach"
+    },
+    "ev.src.scroll-stops": {
+      "kind": "lines",
+      "path": "src/lib/scroll.js",
+      "lines": "25-36",
+      "expect": "export function getScrollStops(root)",
+      "description": "Scroll stop discovery via [data-section-name]"
+    },
+    "ev.src.analytics-stub": {
+      "kind": "lines",
+      "path": "src/lib/analytics.js",
+      "lines": "1",
+      "expect": "// Local stubs replacing PostHog and the avec.ai backend (no network calls at runtime).",
+      "description": "Backend/analytics stubs"
+    },
+    "ev.src.content-hero": {
+      "kind": "contains",
+      "path": "src/content.js",
+      "expect": "headline: \"Handle your inbox in one minute a day\"",
+      "description": "Copy source object (minified, single-line)"
+    },
+    "ev.src.content-emails": {
+      "kind": "contains",
+      "path": "src/content.js",
+      "expect": "sender: \"Coach Marcus\"",
+      "description": "fakeEmails demo content (fictional)"
+    },
+    "ev.src.content-search": {
+      "kind": "contains",
+      "path": "src/content.js",
+      "expect": "searchQuery: \"Find my 1099s from last year\"",
+      "description": "Search demo content"
+    },
+    "ev.src.content-notif": {
+      "kind": "contains",
+      "path": "src/content.js",
+      "expect": "notificationSender: \"Pacific Airlines\"",
+      "description": "Notification demo content"
+    },
+    "ev.src.content-footer": {
+      "kind": "contains",
+      "path": "src/content.js",
+      "expect": "headline: \"Avec is available for\\nfree on the App Store.\"",
+      "description": "Footer headline copy"
+    },
+    "ev.src.content-expand": {
+      "kind": "contains",
+      "path": "src/content.js",
+      "expect": "reply: \"Use voice to send emails in seconds.",
+      "description": "Expand caption copy"
+    },
+    "ev.pkg": {
+      "kind": "lines",
+      "path": "package.json",
+      "lines": "7",
+      "expect": "\"react\": \"^18.3.1\"",
+      "description": "React 18 / Vite 5 stack"
+    },
+    "ev.postcss": {
+      "kind": "contains",
+      "path": "postcss.config.js",
+      "expect": "export default { plugins: {} }",
+      "description": "Tailwind v3 config present but unused (postcss loads no plugins)"
+    },
+    "ev.spec.measured": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "5",
+      "expect": "Everything below was measured live with Playwright (Chromium) on 2026-10-21",
+      "description": "Measurement provenance"
+    },
+    "ev.spec.scroll-app": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "15",
+      "expect": "**The page is a scroll-jacked app, not a normal document.**",
+      "description": "Scroll-jacked structure"
+    },
+    "ev.spec.not-reachable": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "17",
+      "expect": "Not reachable or not reproduced: the \"Get notified\" POST endpoint",
+      "description": "Stubbed backend endpoints"
+    },
+    "ev.spec.color-table": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "76-96",
+      "expect": "| Token | Hex | Use |",
+      "description": "Color usage table"
+    },
+    "ev.spec.shadows": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "97-104",
+      "expect": "Shadows (verbatim computed):",
+      "description": "Measured shadows"
+    },
+    "ev.spec.radii": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "106",
+      "expect": "Radii: header bar `0 0 20px 20px`",
+      "description": "Measured radii"
+    },
+    "ev.spec.type-measured": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "125-162",
+      "expect": "Measured computed values at 1440",
+      "description": "Per-element typography at 1440"
+    },
+    "ev.spec.breakpoints": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "166-173",
+      "expect": "Tailwind v4 default breakpoints (sm 40rem",
+      "description": "Breakpoints and custom variants"
+    },
+    "ev.spec.viewports": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "177-192",
+      "expect": "| | 1440x900 | 1280x800 | 768x1024 | 390x844 |",
+      "description": "Per-viewport hero measurements"
+    },
+    "ev.spec.motion": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "305",
+      "expect": "Transition inventory:",
+      "description": "Transition inventory"
+    },
+    "ev.spec.keyframes": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "293",
+      "expect": "@keyframes card-enter{0%{opacity:0;filter:blur(32px);transform:scale(.75)}",
+      "description": "Keyframes verbatim"
+    },
+    "ev.spec.fonts": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "23",
+      "expect": "`--font-gt-standard: \"gtStandard\", \"gtStandard Fallback\"` is the default font",
+      "description": "Font families"
+    },
+    "ev.spec.legal": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "344",
+      "expect": "* `/terms` and `/privacy-policy` routes were not captured.",
+      "description": "Legal routes never captured"
+    },
+    "ev.spec.stage-mapping": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "259",
+      "expect": "* Stage mapping (desktop 1440 stops)",
+      "description": "Spec's own stage mapping (partly off-by-one vs source; see corrections)"
+    },
+    "ev.spec.caption-claim": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "247",
+      "expect": "  * B=1 `reply` (index0",
+      "description": "Spec claims reply caption at B=1; source shows index===B (B=0)"
+    },
+    "ev.spec.notif-icon-claim": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "258",
+      "expect": "56px icon `/images/avatars/pacific-airlines.png`",
+      "description": "Spec claims banner icon = pacific-airlines avatar; source+screenshot show Avec app icon"
+    },
+    "ev.spec.reviews": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "269",
+      "expect": "Reviews (title / author / body / stars 5):",
+      "description": "Review list"
+    },
+    "ev.spec.dots": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "282",
+      "expect": "* Dots: `fixed top-1/2",
+      "description": "Progress dots"
+    },
+    "ev.spec.hint": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "284",
+      "expect": "* Scroll hint: fixed `top-[78px]` centered",
+      "description": "Scroll hint"
+    },
+    "ev.spec.modal": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "279",
+      "expect": "Opens on \"Get notified\" buttons. Portal",
+      "description": "Notify modal"
+    },
+    "ev.spec.assets": {
+      "kind": "lines",
+      "path": "CLONE_SPEC.md",
+      "lines": "311-321",
+      "expect": "Fonts (`public/fonts/`):",
+      "description": "Asset inventory"
+    },
+    "ev.ia.home": {
+      "kind": "lines",
+      "path": "ia.json",
+      "lines": "116-129",
+      "expect": "\"id\": \"template.home\"",
+      "description": "IA template.home"
+    },
+    "ev.ia.legal": {
+      "kind": "lines",
+      "path": "ia.json",
+      "lines": "143-158",
+      "expect": "\"id\": \"template.legal\"",
+      "description": "IA template.legal placeholder"
+    },
+    "ev.ia.footer-order": {
+      "kind": "lines",
+      "path": "ia.json",
+      "lines": "138-140",
+      "expect": "\"footer.launch\",",
+      "description": "IA lists footer.launch before proof.reviews-carousel (matches DOM order since the 2026-10-21 IA fix)"
+    },
+    "ev.shot.desktop.hero": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-00-hero.png",
+      "description": "Desktop 1440 screenshot, stop 0 hero"
+    },
+    "ev.shot.mobile.hero": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-00-hero.png",
+      "description": "Mobile 390 screenshot, stop 0 hero"
+    },
+    "ev.shot.desktop.deck_intro": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-01-deck_intro.png",
+      "description": "Desktop 1440 screenshot, stop 1 deck_intro"
+    },
+    "ev.shot.mobile.deck_intro": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-01-deck_intro.png",
+      "description": "Mobile 390 screenshot, stop 1 deck_intro"
+    },
+    "ev.shot.desktop.deck_swipe_done": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-02-deck_swipe_done.png",
+      "description": "Desktop 1440 screenshot, stop 2 deck_swipe_done"
+    },
+    "ev.shot.mobile.deck_swipe_done": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-02-deck_swipe_done.png",
+      "description": "Mobile 390 screenshot, stop 2 deck_swipe_done"
+    },
+    "ev.shot.desktop.deck_swipe_later": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-03-deck_swipe_later.png",
+      "description": "Desktop 1440 screenshot, stop 3 deck_swipe_later"
+    },
+    "ev.shot.mobile.deck_swipe_later": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-03-deck_swipe_later.png",
+      "description": "Mobile 390 screenshot, stop 3 deck_swipe_later"
+    },
+    "ev.shot.desktop.triage_game": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-04-triage_game.png",
+      "description": "Desktop 1440 screenshot, stop 4 triage_game"
+    },
+    "ev.shot.mobile.triage_game": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-04-triage_game.png",
+      "description": "Mobile 390 screenshot, stop 4 triage_game"
+    },
+    "ev.shot.desktop.compose_intro": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-05-compose_intro.png",
+      "description": "Desktop 1440 screenshot, stop 5 compose_intro"
+    },
+    "ev.shot.mobile.compose_intro": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-05-compose_intro.png",
+      "description": "Mobile 390 screenshot, stop 5 compose_intro"
+    },
+    "ev.shot.desktop.compose_record": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-06-compose_record.png",
+      "description": "Desktop 1440 screenshot, stop 6 compose_record"
+    },
+    "ev.shot.mobile.compose_record": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-06-compose_record.png",
+      "description": "Mobile 390 screenshot, stop 6 compose_record"
+    },
+    "ev.shot.desktop.compose_drafted": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-07-compose_drafted.png",
+      "description": "Desktop 1440 screenshot, stop 7 compose_drafted"
+    },
+    "ev.shot.mobile.compose_drafted": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-07-compose_drafted.png",
+      "description": "Mobile 390 screenshot, stop 7 compose_drafted"
+    },
+    "ev.shot.desktop.low_importance": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-08-low_importance.png",
+      "description": "Desktop 1440 screenshot, stop 8 low_importance"
+    },
+    "ev.shot.mobile.low_importance": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-08-low_importance.png",
+      "description": "Mobile 390 screenshot, stop 8 low_importance"
+    },
+    "ev.shot.desktop.deck_empty": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-09-deck_empty.png",
+      "description": "Desktop 1440 screenshot, stop 9 deck_empty"
+    },
+    "ev.shot.mobile.deck_empty": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-09-deck_empty.png",
+      "description": "Mobile 390 screenshot, stop 9 deck_empty"
+    },
+    "ev.shot.desktop.search": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-10-search.png",
+      "description": "Desktop 1440 screenshot, stop 10 search"
+    },
+    "ev.shot.mobile.search": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-10-search.png",
+      "description": "Mobile 390 screenshot, stop 10 search"
+    },
+    "ev.shot.desktop.notifications": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-11-notifications.png",
+      "description": "Desktop 1440 screenshot, stop 11 notifications"
+    },
+    "ev.shot.mobile.notifications": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-11-notifications.png",
+      "description": "Mobile 390 screenshot, stop 11 notifications"
+    },
+    "ev.shot.desktop.footer": {
+      "kind": "file",
+      "path": "_reference/shots/desktop-1440-12-footer.png",
+      "description": "Desktop 1440 screenshot, stop 12 footer"
+    },
+    "ev.shot.mobile.footer": {
+      "kind": "file",
+      "path": "_reference/shots/mobile-390-12-footer.png",
+      "description": "Mobile 390 screenshot, stop 12 footer"
+    }
+  },
+  "corrections": [
+    {
+      "id": "corr.caption-index",
+      "claim": "CLONE_SPEC 5.4: reply caption shows at B=1",
+      "finding": "Expand.jsx shows caption when activeIndex === index, so reply is B=0 (compose_intro), dictation B=1, learn B=2, triage B=3. desktop-1440-05-compose_intro.png shows the reply caption on the surface card.",
+      "evidenceIds": [
+        "ev.spec.caption-claim",
+        "ev.src.caption-active",
+        "ev.src.expand-captions",
+        "ev.shot.desktop.compose_intro"
+      ]
+    },
+    {
+      "id": "corr.banner-icon",
+      "claim": "CLONE_SPEC 5.4: notification banner icon is pacific-airlines.png",
+      "finding": "Expand.jsx uses /assets/square-logo-195.png (Avec app icon); desktop-1440-11-notifications.png shows the Avec icon.",
+      "evidenceIds": [
+        "ev.spec.notif-icon-claim",
+        "ev.src.expand-notif-banner",
+        "ev.shot.desktop.notifications"
+      ]
+    },
+    {
+      "id": "corr.footer-order",
+      "claim": "ia.json template.home lists proof.reviews-carousel before footer.launch",
+      "finding": "Footer.jsx renders FooterHeadline + buttons, then ReviewsCarousel, then the bar. Resolved: ia.json was corrected to this DOM order on 2026-10-21.",
+      "evidenceIds": [
+        "ev.ia.footer-order",
+        "ev.src.footer-order"
+      ]
+    },
+    {
+      "id": "corr.legal-footer",
+      "claim": "ia.json template.legal contains footer.bar",
+      "finding": "Unverified presumption (routes never captured). templates.json gives template.legal zero nodes and generationEligible=false.",
+      "evidenceIds": [
+        "ev.ia.legal",
+        "ev.spec.legal"
+      ]
+    },
+    {
+      "id": "corr.missing-frames",
+      "claim": "Progress-dot tooltip frames 01-13 exist",
+      "finding": "Resolved, did not reproduce: all 13 frames ProgressDots.jsx references exist in public/assets/frames (23 files, two hash variants for most frames). The earlier count of 12 was wrong.",
+      "evidenceIds": [
+        "ev.src.progress-dots-frames"
+      ]
+    },
+    {
+      "id": "corr.tailwind",
+      "claim": "Project uses Tailwind v3 (tailwind.config.js)",
+      "finding": "postcss.config.js loads no plugins; src/index.css is the original compiled Tailwind v4 CSS. Tokens are therefore taken from its :root and utilities, not tailwind.config.js.",
+      "evidenceIds": [
+        "ev.postcss",
+        "ev.css.root-tokens"
+      ]
+    }
+  ],
+  "structuralFacts": {
+    "framework": "React 18.3 + Vite 5 (package.json)",
+    "routes": "single real route '/'; /terms and /privacy-policy linked but never captured",
+    "scrollStops": 13,
+    "outboundRuntimeRequests": "none (notify + leaderboard stubbed in src/lib/analytics.js; PostHog removed)",
+    "liveCompany": "Avec / Nearly Extraterrestrial Technology, Inc. - real, live company; see assets/asset-roles.json licensing."
+  }
+}

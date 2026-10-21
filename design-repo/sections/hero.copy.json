@@ -1,0 +1,201 @@
+{
+  "id": "hero.copy",
+  "layer": "section",
+  "category": "HERO",
+  "purpose": "State the one-line promise and drive the primary TestFlight conversion, with App Store social proof.",
+  "sourceComponent": "src/components/Hero.jsx",
+  "scrollStops": [
+    "hero"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "mustBeFirstContent": true
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "headline",
+      "subheadline",
+      "cta",
+      "rating"
+    ],
+    "properties": {
+      "headline": {
+        "type": "string",
+        "minLength": 1
+      },
+      "subheadline": {
+        "type": "string",
+        "minLength": 1
+      },
+      "cta": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "href",
+          "icon"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "href": {
+            "enum": [
+              "https://testflight.apple.com/join/3JR2HxjZ"
+            ]
+          },
+          "icon": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assetRole"
+            ],
+            "properties": {
+              "assetRole": {
+                "enum": [
+                  "thirdparty.store-badge"
+                ]
+              },
+              "assetRef": {
+                "type": "string",
+                "pattern": "^(/assets/|inline:)"
+              }
+            }
+          }
+        }
+      },
+      "rating": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "storeBadge",
+          "reviewCountLabel",
+          "score",
+          "stars"
+        ],
+        "properties": {
+          "storeBadge": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assetRole"
+            ],
+            "properties": {
+              "assetRole": {
+                "enum": [
+                  "thirdparty.store-badge"
+                ]
+              },
+              "assetRef": {
+                "type": "string",
+                "pattern": "^(/assets/|inline:)"
+              }
+            }
+          },
+          "reviewCountLabel": {
+            "const": "400+ reviews"
+          },
+          "score": {
+            "const": "5.0"
+          },
+          "stars": {
+            "const": 5
+          }
+        }
+      }
+    }
+  },
+  "fieldBudgets": {
+    "headline": {
+      "maxWords": 10,
+      "realMaxWordCount": 8
+    },
+    "subheadline": {
+      "maxWords": 15,
+      "realMaxWordCount": 12
+    },
+    "cta.label": {
+      "maxWords": 4,
+      "realMaxWordCount": 3
+    }
+  },
+  "motion": {
+    "pattern": "static",
+    "trigger": "none",
+    "reducedMotionFallback": "static",
+    "durationTokens": [
+      "press"
+    ]
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "flex-col-reverse: video above text, gap 32px",
+        "text centered",
+        "h1 40px",
+        "body 16/24",
+        "CTA row hidden",
+        "rating row centered, no App Store wordmark"
+      ]
+    },
+    {
+      "query": "md",
+      "changes": [
+        "row: text column flex-1 left, video flex-1 right",
+        "h1 clamp(2.5rem,5vw,4rem)=64px at 1440"
+      ]
+    },
+    {
+      "query": "lg",
+      "changes": [
+        "App Store wordmark shown in rating row"
+      ]
+    }
+  ],
+  "accessibility": [
+    "single h1 on the page",
+    "rating row is visual (opacity .5)"
+  ],
+  "assetRoles": [
+    "thirdparty.store-badge"
+  ],
+  "referenceContent": {
+    "headline": "Handle your inbox in one minute a day",
+    "subheadline": "Made for people who hate email. Works with your existing Gmail account.",
+    "cta": {
+      "label": "Get early access",
+      "href": "https://testflight.apple.com/join/3JR2HxjZ",
+      "icon": {
+        "assetRole": "thirdparty.store-badge",
+        "assetRef": "/assets/testflight.png"
+      }
+    },
+    "rating": {
+      "storeBadge": {
+        "assetRole": "thirdparty.store-badge",
+        "assetRef": "/assets/app-store-wordmark.svg"
+      },
+      "reviewCountLabel": "400+ reviews",
+      "score": "5.0",
+      "stars": 5
+    }
+  },
+  "evidenceIds": [
+    "ev.src.hero",
+    "ev.src.hero-rating",
+    "ev.src.hero-layout",
+    "ev.src.content-hero",
+    "ev.spec.viewports",
+    "ev.shot.desktop.hero",
+    "ev.shot.mobile.hero"
+  ],
+  "notes": "Rating values are real third-party App Store data (pinned consts) - never alter or invent ratings/review counts."
+}

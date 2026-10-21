@@ -1,0 +1,206 @@
+{
+  "id": "deck.email-stack",
+  "layer": "section",
+  "category": "DECK",
+  "purpose": "Demonstrate swipe triage (Done right / Later left) with a realistic stack of fictional emails.",
+  "sourceComponent": "src/components/EmailStack.jsx",
+  "scrollStops": [
+    "deck_intro",
+    "deck_swipe_done",
+    "deck_swipe_later"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "group": "deck"
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "cards",
+      "swipeLabels",
+      "replyLabel",
+      "replyHint"
+    ],
+    "properties": {
+      "cards": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 12,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "subject",
+            "sender",
+            "time",
+            "to",
+            "body",
+            "avatar"
+          ],
+          "properties": {
+            "subject": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sender": {
+              "type": "string",
+              "minLength": 1
+            },
+            "time": {
+              "type": "string",
+              "minLength": 1
+            },
+            "to": {
+              "type": "string",
+              "minLength": 1
+            },
+            "body": {
+              "type": "string",
+              "minLength": 1
+            },
+            "avatar": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole"
+              ],
+              "properties": {
+                "assetRole": {
+                  "enum": [
+                    "avatar.sender-photo",
+                    "avatar.initials"
+                  ]
+                },
+                "assetRef": {
+                  "type": "string",
+                  "pattern": "^(/assets/|inline:)"
+                }
+              }
+            }
+          }
+        }
+      },
+      "swipeLabels": {
+        "const": {
+          "right": "Done",
+          "left": "Later"
+        }
+      },
+      "replyLabel": {
+        "const": "Reply"
+      },
+      "replyHint": {
+        "const": "Hold to voice compose"
+      }
+    }
+  },
+  "fieldBudgets": {
+    "cards[].subject": {
+      "maxWords": 12,
+      "realMaxWordCount": 9
+    },
+    "cards[].sender": {
+      "maxWords": 5,
+      "realMaxWordCount": 4
+    },
+    "cards[].to": {
+      "maxWords": 7,
+      "realMaxWordCount": 5
+    },
+    "cards[].body": {
+      "maxWords": 83,
+      "realMaxWordCount": 66
+    },
+    "cards[].time": {
+      "maxWords": 4,
+      "realMaxWordCount": 3
+    }
+  },
+  "motion": {
+    "pattern": "card-swipe-scrub",
+    "trigger": "scroll-scrub",
+    "reducedMotionFallback": "instant-state-change",
+    "durationTokens": [
+      "card"
+    ],
+    "notes": "card0 swipes right (Done) over float 0..1, card1 left (Later) over 1..2; translateX(200%*e) rotate(12deg*e); depth translateY(-8px*k) scale(1-.1k)"
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "stack scaled by --stack-scale = min(1, .7*panelH/474)"
+      ]
+    },
+    {
+      "query": "md",
+      "changes": [
+        "panel 624x640 at 1440, max-h 640"
+      ]
+    }
+  ],
+  "accessibility": [
+    "stack container is decorative demo; text readable"
+  ],
+  "assetRoles": [
+    "avatar.sender-photo",
+    "avatar.initials"
+  ],
+  "referenceContent": {
+    "cards": [
+      {
+        "subject": "Location change for tonight's practice",
+        "sender": "Coach Marcus",
+        "time": "2 days ago",
+        "to": "You and 23 others",
+        "body": "Hi Soccer Families,\n\nDue to flooding at our usual field, tonight's practice has been moved to East Field at Lincoln Park. Same time, 5:30 PM. Street parking available on Elm. Enter through the north gate.\n\nSee you on the field!\nCoach Marcus",
+        "avatar": {
+          "assetRole": "avatar.sender-photo",
+          "assetRef": "/assets/avatars/coach-marcus.png"
+        }
+      },
+      {
+        "subject": "Group gift for Sarah's 40th?",
+        "sender": "Nina Park",
+        "time": "2 days ago",
+        "to": "You, Matt C, Elise R",
+        "body": "Hey all,\n\nSo we're doing a group gift for Sarah's 40th right? I know she's been eyeing that Le Creuset Dutch oven forever. Found a few color options here. Can everyone vote?\n\nI'll order but need to know by Friday so it arrives in time. Venmo me whenever, I'll send the total once we pick.\n\nNina",
+        "avatar": {
+          "assetRole": "avatar.sender-photo",
+          "assetRef": "/assets/avatars/nina-park.png"
+        }
+      },
+      {
+        "subject": "Finch Team IRL in Austin",
+        "sender": "Dana Chen",
+        "time": "2 days ago",
+        "to": "You",
+        "body": "So the Finch deal is moving faster than expected– their team wants to meet in person while you're in Austin next week. Can you make Thursday afternoon work? I know you were planning to fly back that morning, but this could lock in the whole contract.\n\nAlso, would you be okay leading the conversation solo? I'll prep you beforehand, but I can't make the trip.\n\nDana",
+        "avatar": {
+          "assetRole": "avatar.sender-photo",
+          "assetRef": "/assets/avatars/dana-chen.png"
+        }
+      }
+    ],
+    "swipeLabels": {
+      "right": "Done",
+      "left": "Later"
+    },
+    "replyLabel": "Reply",
+    "replyHint": "Hold to voice compose"
+  },
+  "evidenceIds": [
+    "ev.src.emailstack-card",
+    "ev.src.emailstack-reply",
+    "ev.src.emailstack-overlay",
+    "ev.src.emailstack-container",
+    "ev.src.deck-bg",
+    "ev.src.content-emails"
+  ],
+  "notes": "Fictional demo emails may be newly written, but new senders must use avatar.initials; sender-photo avatars are bound to their original sender."
+}

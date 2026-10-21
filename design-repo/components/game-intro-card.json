@@ -1,0 +1,18 @@
+{
+  "id": "component.game-intro-card",
+  "layer": "component",
+  "purpose": "White 28px card with chip, title, rules, mini illustration, +1/-1 chips, start prompt.",
+  "composes": [
+    "primitive.key-chip"
+  ],
+  "tokens": [
+    "elevation.xl",
+    "radius.modal",
+    "semantic.feedback.correct",
+    "semantic.feedback.incorrect"
+  ],
+  "evidenceIds": [
+    "ev.src.game-card",
+    "ev.src.game-intro"
+  ]
+}

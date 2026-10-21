@@ -1,0 +1,179 @@
+{
+  "id": "expand.compose-demo",
+  "layer": "section",
+  "category": "EXPAND",
+  "purpose": "Show voice compose end-to-end (record, dictate, drafted) and one-swipe low-importance triage.",
+  "sourceComponent": "src/components/Expand.jsx",
+  "scrollStops": [
+    "compose_intro",
+    "compose_record",
+    "compose_drafted",
+    "low_importance"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "group": "expand"
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "captions",
+      "phoneVideo",
+      "stageSequence"
+    ],
+    "properties": {
+      "captions": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "reply",
+          "dictation",
+          "dictationCont",
+          "learn",
+          "triage"
+        ],
+        "properties": {
+          "reply": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dictation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dictationCont": {
+            "type": "string",
+            "minLength": 1
+          },
+          "learn": {
+            "type": "string",
+            "minLength": 1
+          },
+          "triage": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "phoneVideo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "media.phone-demo-video"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^(/assets/|inline:)"
+          }
+        }
+      },
+      "stageSequence": {
+        "const": [
+          "surface",
+          "accent-red",
+          "brand",
+          "accent-amber",
+          "surface"
+        ]
+      }
+    }
+  },
+  "fieldBudgets": {
+    "captions.reply": {
+      "maxWords": 27,
+      "realMaxWordCount": 21
+    },
+    "captions.dictation": {
+      "maxWords": 20,
+      "realMaxWordCount": 16
+    },
+    "captions.dictationCont": {
+      "maxWords": 18,
+      "realMaxWordCount": 14
+    },
+    "captions.learn": {
+      "maxWords": 19,
+      "realMaxWordCount": 15
+    },
+    "captions.triage": {
+      "maxWords": 19,
+      "realMaxWordCount": 15
+    }
+  },
+  "motion": {
+    "pattern": "clip-stage-state",
+    "trigger": "scroll-state",
+    "reducedMotionFallback": "instant-transitions-video-unchanged",
+    "durationTokens": [
+      "stage",
+      "phone-md",
+      "fast"
+    ],
+    "notes": "B=useScrollProgress(7): B0 reply caption on surface card; B1 red full-bleed + dictation; B2 brand + learn; B3 amber + triage; clip-path/bg 500ms standard; phone transform 500/600ms phone easing; video time-scrubbed per state"
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "stage height +112px (md +86px)",
+        "phone transforms use dvh-based translateY",
+        "captions translate 4dvh"
+      ]
+    },
+    {
+      "query": "md and max-height:700px",
+      "changes": [
+        "captions type-body"
+      ]
+    }
+  ],
+  "accessibility": [
+    "captions are real text; phone video aria-hidden"
+  ],
+  "assetRoles": [
+    "media.phone-demo-video"
+  ],
+  "referenceContent": {
+    "captions": {
+      "reply": "Use voice to send emails in seconds. Say a few key points and let Avec draft a perfect email for you.",
+      "dictation": "“Okay yeah I can do Thursday afternoon, we can change my flight to the evening, and",
+      "dictationCont": "yes I can lead it — maybe we can do a quick prep Wednesday?”",
+      "learn": "Avec writes emails that sound distinctively like you. Review it, tweak it, and send it.",
+      "triage": "Not every email deserves the same attention. Handle less important emails with just one swipe."
+    },
+    "phoneVideo": {
+      "assetRole": "media.phone-demo-video",
+      "assetRef": "/assets/phone-demo.webm"
+    },
+    "stageSequence": [
+      "surface",
+      "accent-red",
+      "brand",
+      "accent-amber",
+      "surface"
+    ]
+  },
+  "evidenceIds": [
+    "ev.src.expand-state",
+    "ev.src.expand-captions",
+    "ev.src.caption-active",
+    "ev.src.expand-stage-bg",
+    "ev.src.expand-stage-transition",
+    "ev.src.expand-phone",
+    "ev.src.content-expand",
+    "ev.shot.desktop.compose_intro",
+    "ev.shot.desktop.compose_record"
+  ],
+  "notes": "Correction vs CLONE_SPEC 5.4: caption index === B (reply shows at B0/compose_intro, dictation at B1, learn at B2, triage at B3), confirmed by Expand.jsx and desktop-1440-05 screenshot."
+}

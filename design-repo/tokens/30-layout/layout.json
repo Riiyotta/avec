@@ -1,0 +1,73 @@
+{
+  "layout": {
+    "section-max-w": {
+      "$type": "dimension",
+      "$value": {
+        "base": "1124px",
+        "min-1380": "1280px",
+        "min-2000": "1440px"
+      },
+      "measuredFrom": [
+        "ev.css.root-tokens",
+        "ev.css.section-max-w"
+      ]
+    },
+    "section-frame": {
+      "$type": "layout",
+      "$value": {
+        "scrollSnapAlign": "start",
+        "paddingInline": "{spacing.gutter}",
+        "paddingTop": "{spacing.frame-top}",
+        "paddingTopMd": "{spacing.frame-top-md}",
+        "display": "flex column"
+      },
+      "measuredFrom": [
+        "ev.css.section-frame",
+        "ev.css.section-frame-md"
+      ]
+    },
+    "scroll-root": {
+      "$type": "layout",
+      "$value": {
+        "height": "100dvh",
+        "overflowY": "auto",
+        "snap": "y mandatory (touch) / proximity (pointer:fine)",
+        "scrollbar": "hidden"
+      },
+      "measuredFrom": [
+        "ev.src.app",
+        "ev.css.scroll-root"
+      ]
+    },
+    "stop-height": {
+      "$type": "dimension",
+      "$value": "100dvh",
+      "measuredFrom": [
+        "ev.src.deck-stops",
+        "ev.src.expand-stops"
+      ]
+    },
+    "search-anchor": {
+      "$type": "dimension",
+      "$value": {
+        "base": "26%",
+        "min-height-960": "30%"
+      },
+      "measuredFrom": [
+        "ev.css.root-custom",
+        "ev.css.search-anchor-tall"
+      ]
+    },
+    "headline-offset": {
+      "$type": "dimension",
+      "$value": {
+        "base": "155px",
+        "min-height-960": "180px"
+      },
+      "measuredFrom": [
+        "ev.css.root-custom",
+        "ev.css.search-anchor-tall"
+      ]
+    }
+  }
+}

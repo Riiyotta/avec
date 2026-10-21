@@ -1,0 +1,83 @@
+{
+  "radius": {
+    "sm": {
+      "$type": "dimension",
+      "$value": "4px",
+      "measuredFrom": [
+        "ev.css.root-scale"
+      ]
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": "6px",
+      "measuredFrom": [
+        "ev.css.root-scale"
+      ]
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": "8px",
+      "measuredFrom": [
+        "ev.css.root-scale"
+      ]
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": "12px",
+      "measuredFrom": [
+        "ev.css.root-scale"
+      ]
+    },
+    "2xl": {
+      "$type": "dimension",
+      "$value": "16px",
+      "measuredFrom": [
+        "ev.css.root-scale"
+      ]
+    },
+    "card": {
+      "$type": "dimension",
+      "$value": "20px",
+      "measuredFrom": [
+        "ev.spec.radii",
+        "ev.src.emailstack-card"
+      ]
+    },
+    "glass-lg": {
+      "$type": "dimension",
+      "$value": "24px",
+      "measuredFrom": [
+        "ev.src.expand-notif-card"
+      ]
+    },
+    "modal": {
+      "$type": "dimension",
+      "$value": "28px",
+      "measuredFrom": [
+        "ev.src.notify-modal",
+        "ev.src.game-card"
+      ]
+    },
+    "4xl": {
+      "$type": "dimension",
+      "$value": "32px",
+      "measuredFrom": [
+        "ev.css.root-scale"
+      ]
+    },
+    "expand-btn": {
+      "$type": "dimension",
+      "$value": "40px",
+      "measuredFrom": [
+        "ev.css.root-custom"
+      ]
+    },
+    "full": {
+      "$type": "dimension",
+      "$value": "9999px",
+      "measuredFrom": [
+        "ev.spec.radii"
+      ]
+    }
+  }
+}

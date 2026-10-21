@@ -1,0 +1,123 @@
+{
+  "id": "hero.video",
+  "layer": "section",
+  "category": "HERO",
+  "purpose": "Show the product (triage) in motion, then hand off to the scroll story via the 'Scroll to learn more' pill.",
+  "sourceComponent": "src/components/HeroVideo.jsx",
+  "scrollStops": [
+    "hero"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "mustFollow": "hero.copy"
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "primaryVideo",
+      "loopVideo",
+      "overlayCtaLabel"
+    ],
+    "properties": {
+      "primaryVideo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "media.hero-demo-video"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^(/assets/|inline:)"
+          }
+        }
+      },
+      "loopVideo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "media.ambient-video"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^(/assets/|inline:)"
+          }
+        }
+      },
+      "overlayCtaLabel": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "fieldBudgets": {
+    "overlayCtaLabel": {
+      "maxWords": 5,
+      "realMaxWordCount": 4
+    }
+  },
+  "motion": {
+    "pattern": "video-crossfade",
+    "trigger": "load",
+    "reducedMotionFallback": "instant-transitions-video-unchanged",
+    "durationTokens": [
+      "crossfade"
+    ],
+    "notes": "triage plays once; at duration-6s waves starts; at duration-1.4s waves + pill fade in over 1000ms; triage frozen at duration-2/60s"
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "square sized by height, max 400px / 100vw-2rem"
+      ]
+    },
+    {
+      "query": "md",
+      "changes": [
+        "max-w calc(100dvh-122px), 640x640 at 1440"
+      ]
+    }
+  ],
+  "accessibility": [
+    "videos aria-hidden",
+    "control button aria-label Pause/Play/Replay video"
+  ],
+  "assetRoles": [
+    "media.hero-demo-video",
+    "media.ambient-video"
+  ],
+  "referenceContent": {
+    "primaryVideo": {
+      "assetRole": "media.hero-demo-video",
+      "assetRef": "/assets/hero-triage.mp4"
+    },
+    "loopVideo": {
+      "assetRole": "media.ambient-video",
+      "assetRef": "/assets/hero-waves.mp4"
+    },
+    "overlayCtaLabel": "Scroll to learn more"
+  },
+  "evidenceIds": [
+    "ev.src.herovideo",
+    "ev.src.herovideo-timing",
+    "ev.src.herovideo-src",
+    "ev.spec.viewports"
+  ]
+}

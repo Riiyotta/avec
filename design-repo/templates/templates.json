@@ -1,0 +1,267 @@
+{
+  "version": "1.0.0",
+  "templates": {
+    "template.home": {
+      "name": "Home (scroll-snapped story)",
+      "generationEligible": true,
+      "evidenceLevel": "measured-live",
+      "routes": [
+        "/"
+      ],
+      "homeRouteOnly": true,
+      "nodes": [
+        {
+          "section": "shell.header",
+          "required": true,
+          "repeatable": false,
+          "position": 0
+        },
+        {
+          "section": "shell.progress-dots",
+          "required": true,
+          "repeatable": false,
+          "position": 1
+        },
+        {
+          "section": "shell.scroll-hint",
+          "required": true,
+          "repeatable": false,
+          "position": 2
+        },
+        {
+          "section": "shell.notify-modal",
+          "required": true,
+          "repeatable": false,
+          "position": 3
+        },
+        {
+          "section": "hero.copy",
+          "required": true,
+          "repeatable": false,
+          "position": 4
+        },
+        {
+          "section": "hero.video",
+          "required": true,
+          "repeatable": false,
+          "position": 5
+        },
+        {
+          "section": "deck.word-reveal-copy",
+          "required": true,
+          "repeatable": false,
+          "position": 6
+        },
+        {
+          "section": "deck.email-stack",
+          "required": true,
+          "repeatable": false,
+          "position": 7
+        },
+        {
+          "section": "deck.triage-game",
+          "required": true,
+          "repeatable": false,
+          "position": 8
+        },
+        {
+          "section": "expand.compose-demo",
+          "required": true,
+          "repeatable": false,
+          "position": 9
+        },
+        {
+          "section": "expand.be-here-now",
+          "required": true,
+          "repeatable": false,
+          "position": 10
+        },
+        {
+          "section": "expand.search-demo",
+          "required": true,
+          "repeatable": false,
+          "position": 11
+        },
+        {
+          "section": "expand.notifications-demo",
+          "required": true,
+          "repeatable": false,
+          "position": 12
+        },
+        {
+          "section": "footer.launch",
+          "required": true,
+          "repeatable": false,
+          "position": 13
+        },
+        {
+          "section": "proof.reviews-carousel",
+          "required": true,
+          "repeatable": false,
+          "position": 14
+        },
+        {
+          "section": "footer.bar",
+          "required": true,
+          "repeatable": false,
+          "position": 15
+        }
+      ],
+      "scrollStops": [
+        {
+          "index": 0,
+          "id": "hero",
+          "group": "hero",
+          "activeSections": [
+            "hero.copy",
+            "hero.video"
+          ]
+        },
+        {
+          "index": 1,
+          "id": "deck_intro",
+          "group": "scroll_reveal",
+          "activeSections": [
+            "deck.word-reveal-copy",
+            "deck.email-stack"
+          ],
+          "deckFloat": 0
+        },
+        {
+          "index": 2,
+          "id": "deck_swipe_done",
+          "group": "scroll_reveal",
+          "activeSections": [
+            "deck.word-reveal-copy",
+            "deck.email-stack"
+          ],
+          "deckFloat": 1
+        },
+        {
+          "index": 3,
+          "id": "deck_swipe_later",
+          "group": "scroll_reveal",
+          "activeSections": [
+            "deck.word-reveal-copy",
+            "deck.email-stack"
+          ],
+          "deckFloat": 2
+        },
+        {
+          "index": 4,
+          "id": "triage_game",
+          "group": "scroll_reveal",
+          "activeSections": [
+            "deck.word-reveal-copy",
+            "deck.triage-game"
+          ],
+          "deckFloat": 3
+        },
+        {
+          "index": 5,
+          "id": "compose_intro",
+          "group": "expand",
+          "activeSections": [
+            "expand.compose-demo"
+          ],
+          "expandState": 0
+        },
+        {
+          "index": 6,
+          "id": "compose_record",
+          "group": "expand",
+          "activeSections": [
+            "expand.compose-demo"
+          ],
+          "expandState": 1
+        },
+        {
+          "index": 7,
+          "id": "compose_drafted",
+          "group": "expand",
+          "activeSections": [
+            "expand.compose-demo"
+          ],
+          "expandState": 2
+        },
+        {
+          "index": 8,
+          "id": "low_importance",
+          "group": "expand",
+          "activeSections": [
+            "expand.compose-demo"
+          ],
+          "expandState": 3
+        },
+        {
+          "index": 9,
+          "id": "deck_empty",
+          "group": "expand",
+          "activeSections": [
+            "expand.compose-demo",
+            "expand.be-here-now"
+          ],
+          "expandState": 4
+        },
+        {
+          "index": 10,
+          "id": "search",
+          "group": "expand",
+          "activeSections": [
+            "expand.be-here-now",
+            "expand.search-demo"
+          ],
+          "expandState": 5
+        },
+        {
+          "index": 11,
+          "id": "notifications",
+          "group": "expand",
+          "activeSections": [
+            "expand.be-here-now",
+            "expand.notifications-demo"
+          ],
+          "expandState": 6
+        },
+        {
+          "index": 12,
+          "id": "footer",
+          "group": "footer",
+          "activeSections": [
+            "footer.launch",
+            "proof.reviews-carousel",
+            "footer.bar"
+          ]
+        }
+      ],
+      "notes": "Node order = real DOM order (App.jsx children; Footer.jsx renders headline+buttons, then ReviewsCarousel, then the bar). ia.json lists proof.reviews-carousel BEFORE footer.launch; that order is corrected here (see extraction/measured-values.json corrections). Shell nodes are fixed overlays/portals and are listed first.",
+      "evidenceIds": [
+        "ev.src.app",
+        "ev.src.footer-order",
+        "ev.ia.home",
+        "ev.ia.footer-order",
+        "ev.src.deck-stops",
+        "ev.src.expand-stops",
+        "ev.src.scroll-stops",
+        "ev.spec.viewports"
+      ]
+    },
+    "template.legal": {
+      "name": "Legal pages (NOT CAPTURED - out of scope)",
+      "generationEligible": false,
+      "evidenceLevel": "unverified-not-captured",
+      "routes": [
+        "/terms",
+        "/privacy-policy"
+      ],
+      "homeRouteOnly": false,
+      "nodes": [],
+      "scrollStops": [],
+      "notes": "Linked from footer.bar but never visited during recon. ia.json presumes footer.bar here; that presumption is NOT carried over and no sections are invented. A PageSpec declaring this template is rejected until the routes are captured.",
+      "evidenceIds": [
+        "ev.spec.legal",
+        "ev.ia.legal"
+      ]
+    }
+  }
+}

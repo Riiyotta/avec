@@ -1,0 +1,243 @@
+{
+  "version": "1.0.0",
+  "policies": {
+    "reuse-exact-only": "Reference only a file listed in allowedRefs, unmodified. Never AI-generate, redraw, recolour or approximate. Trademarks/logos.",
+    "no-generation-proprietary": "Proprietary Avec media or real-person likeness. Reference only a listed file (inside an Avec-licensed context) or omit assetRef to leave a neutral placeholder. Never AI-generate a lookalike, never fabricate new footage/photos.",
+    "generate-new-allowed": "Purely token-driven, no file. Generator may compose new instances (e.g. initials on an accent token). Must NOT carry an assetRef."
+  },
+  "pinnedPolicies": {
+    "brand.wordmark": "reuse-exact-only",
+    "brand.glyph": "reuse-exact-only",
+    "brand.app-icon": "reuse-exact-only",
+    "thirdparty.store-badge": "reuse-exact-only",
+    "thirdparty.platform-icon": "reuse-exact-only",
+    "avatar.sender-photo": "no-generation-proprietary",
+    "media.hero-demo-video": "no-generation-proprietary",
+    "media.phone-demo-video": "no-generation-proprietary"
+  },
+  "roles": {
+    "brand.wordmark": {
+      "policy": "reuse-exact-only",
+      "allowedRefs": [
+        "/assets/avec-logo.svg"
+      ],
+      "usedBy": [
+        "shell.header"
+      ],
+      "licensing": "Avec logo (Nearly Extraterrestrial Technology, Inc.). Never generate, alter, or reuse outside an Avec-authorised context.",
+      "evidenceIds": [
+        "ev.src.header",
+        "ev.spec.assets"
+      ]
+    },
+    "brand.glyph": {
+      "policy": "reuse-exact-only",
+      "allowedRefs": [
+        "inline:Icons.AvecLogo"
+      ],
+      "usedBy": [
+        "footer.launch"
+      ],
+      "licensing": "Avec logo glyph (inline SVG). Same restrictions as brand.wordmark.",
+      "evidenceIds": [
+        "ev.src.icons-logo",
+        "ev.src.footer-headline"
+      ]
+    },
+    "brand.app-icon": {
+      "policy": "reuse-exact-only",
+      "allowedRefs": [
+        "/assets/square-logo-195.png"
+      ],
+      "usedBy": [
+        "expand.notifications-demo"
+      ],
+      "licensing": "Avec app icon. Never generate or alter.",
+      "evidenceIds": [
+        "ev.src.expand-notif-banner",
+        "ev.shot.desktop.notifications"
+      ]
+    },
+    "thirdparty.store-badge": {
+      "policy": "reuse-exact-only",
+      "allowedRefs": [
+        "/assets/testflight.png",
+        "/assets/app-store-wordmark.svg"
+      ],
+      "usedBy": [
+        "shell.header",
+        "hero.copy",
+        "footer.launch"
+      ],
+      "licensing": "Apple TestFlight icon and App Store wordmark are Apple trademarks; use only per Apple marketing guidelines, never generate lookalikes.",
+      "evidenceIds": [
+        "ev.src.cta-sizes",
+        "ev.src.hero-rating"
+      ]
+    },
+    "thirdparty.platform-icon": {
+      "policy": "reuse-exact-only",
+      "allowedRefs": [
+        "/assets/outlook-icon.svg",
+        "/assets/android-icon.svg"
+      ],
+      "usedBy": [
+        "shell.header",
+        "shell.notify-modal",
+        "footer.launch"
+      ],
+      "licensing": "Microsoft Outlook and Android marks are third-party trademarks; never generate lookalikes.",
+      "evidenceIds": [
+        "ev.spec.assets"
+      ]
+    },
+    "media.hero-demo-video": {
+      "policy": "no-generation-proprietary",
+      "allowedRefs": [
+        "/assets/hero-triage.mp4",
+        "/assets/hero-triage-poster.webp"
+      ],
+      "usedBy": [
+        "hero.video"
+      ],
+      "licensing": "Proprietary Avec product footage.",
+      "evidenceIds": [
+        "ev.src.herovideo-src"
+      ]
+    },
+    "media.ambient-video": {
+      "policy": "no-generation-proprietary",
+      "allowedRefs": [
+        "/assets/hero-waves.mp4",
+        "/assets/hero-waves-poster.webp",
+        "/assets/wave_desktop.webm",
+        "/assets/wave_desktop_hevc.mp4",
+        "/assets/wave_desktop-poster.webp",
+        "/assets/wave_mobile.webm",
+        "/assets/wave_mobile_hevc.mp4",
+        "/assets/wave_mobile-poster.webp"
+      ],
+      "usedBy": [
+        "hero.video",
+        "expand.be-here-now"
+      ],
+      "licensing": "Proprietary Avec footage (origin/licence of the wave footage unknown).",
+      "evidenceIds": [
+        "ev.src.herovideo",
+        "ev.src.expand-wave-src"
+      ]
+    },
+    "media.phone-demo-video": {
+      "policy": "no-generation-proprietary",
+      "allowedRefs": [
+        "/assets/phone-demo.webm",
+        "/assets/phone-demo.mov",
+        "/assets/phone-demo-poster.webp"
+      ],
+      "usedBy": [
+        "expand.compose-demo"
+      ],
+      "licensing": "Proprietary Avec app UI recording (HEVC/VP9 with alpha). Never fabricate app-UI footage.",
+      "evidenceIds": [
+        "ev.src.expand-phone-src"
+      ]
+    },
+    "media.section-preview-frame": {
+      "policy": "no-generation-proprietary",
+      "allowedRefs": [
+        "/assets/frames/frame-01.057mo71r_kzoc.png",
+        "/assets/frames/frame-02.2l-jfx3bv0y3-.png",
+        "/assets/frames/frame-03.058avsjh2p5fe.png",
+        "/assets/frames/frame-04.0tdb2whq9nu4o.png",
+        "/assets/frames/frame-05.2sw59hmd09wal.png",
+        "/assets/frames/frame-06.3oqwt-xl6tvvg.png",
+        "/assets/frames/frame-07.1_4a3viagqq9b.png"
+      ],
+      "usedBy": [
+        "shell.progress-dots"
+      ],
+      "licensing": "Screenshots of the proprietary site. NOTE: ProgressDots.jsx references frame-08..13 which are absent from public/assets/frames (broken tooltip images in the clone); only the 7 present files are allowed refs.",
+      "evidenceIds": [
+        "ev.src.progress-dots-frames"
+      ]
+    },
+    "avatar.sender-photo": {
+      "policy": "no-generation-proprietary",
+      "allowedRefs": [
+        "/assets/avatars/coach-marcus.png",
+        "/assets/avatars/dana-chen.png",
+        "/assets/avatars/dropbox.png",
+        "/assets/avatars/jordan.png",
+        "/assets/avatars/nina-park.png",
+        "/assets/avatars/pacific-airlines.png",
+        "/assets/avatars/pacific-gas-electric.png",
+        "/assets/avatars/pilates-pass.png",
+        "/assets/avatars/riverside-elementary.png",
+        "/assets/avatars/sara-chen-ramirez.png",
+        "/assets/avatars/the-gist.png",
+        "/assets/avatars/tomas-reyes.png"
+      ],
+      "senderBindings": {
+        "/assets/avatars/coach-marcus.png": [
+          "Coach Marcus"
+        ],
+        "/assets/avatars/nina-park.png": [
+          "Nina Park"
+        ],
+        "/assets/avatars/dana-chen.png": [
+          "Dana Chen"
+        ],
+        "/assets/avatars/dropbox.png": [
+          "Dropbox"
+        ],
+        "/assets/avatars/tomas-reyes.png": [
+          "Tomás Reyes"
+        ],
+        "/assets/avatars/riverside-elementary.png": [
+          "Riverside Elementary School"
+        ],
+        "/assets/avatars/pacific-airlines.png": [
+          "Pacific Air Lines",
+          "Pacific Airlines"
+        ],
+        "/assets/avatars/pilates-pass.png": [
+          "PilatesPass"
+        ],
+        "/assets/avatars/jordan.png": [
+          "Jordan"
+        ],
+        "/assets/avatars/the-gist.png": [
+          "The Gist"
+        ],
+        "/assets/avatars/pacific-gas-electric.png": [
+          "Pacific Gas & Electric"
+        ],
+        "/assets/avatars/sara-chen-ramirez.png": [
+          "Sarah Chen-Ramirez"
+        ]
+      },
+      "usedBy": [
+        "deck.email-stack",
+        "expand.notifications-demo"
+      ],
+      "licensing": "Avatar images of fictional/brand senders shipped by Avec. Photo-style avatars depict people: never AI-generate new person photos or reproduce real people's likeness; a photo may only be used with the sender it is bound to. Brand avatars (Dropbox, PG&E) are third-party marks. New senders must use avatar.initials.",
+      "evidenceIds": [
+        "ev.src.content-emails",
+        "ev.src.expand-notif-avatar"
+      ]
+    },
+    "avatar.initials": {
+      "policy": "generate-new-allowed",
+      "allowedRefs": [],
+      "usedBy": [
+        "expand.search-demo",
+        "deck.email-stack",
+        "expand.notifications-demo"
+      ],
+      "licensing": "Text initials on a token colour (accent-green / accent-sky) - no image.",
+      "evidenceIds": [
+        "ev.src.expand-sources"
+      ]
+    }
+  }
+}

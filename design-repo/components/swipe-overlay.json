@@ -1,0 +1,13 @@
+{
+  "id": "component.swipe-overlay",
+  "layer": "component",
+  "purpose": "Done (green #07AA04) / Later (#858482) overlay that fades in on swipe.",
+  "composes": [],
+  "tokens": [
+    "component.swipe-overlay.done",
+    "component.swipe-overlay.later"
+  ],
+  "evidenceIds": [
+    "ev.src.emailstack-overlay"
+  ]
+}

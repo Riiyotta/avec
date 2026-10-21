@@ -1,0 +1,29 @@
+{
+  "theme": "light",
+  "$description": "Only theme. No dark mode exists in source (no prefers-color-scheme rule); do not generate one.",
+  "resolved": {
+    "text.primary": "#171717",
+    "text.display": "#000000",
+    "text.inverse": "#ffffff",
+    "text.placeholder": "#a0b4c4",
+    "text.source-label": "#737373",
+    "text.reply-hint": "#dbeafe",
+    "surface.page": "#f7f6f4",
+    "surface.card": "#ffffff",
+    "surface.panel": "#e5e2dc",
+    "surface.hover": "#edecea",
+    "action.primary": "#0050ff",
+    "action.primary-hover": "#226ef4",
+    "state.done": "#03ce4c",
+    "state.later": "#36b7ff",
+    "state.record": "#f73c1d",
+    "stage.compose": "#0050ff",
+    "stage.drafted": "#ffac1f",
+    "feedback.correct": "#008138",
+    "feedback.incorrect": "#bf000f"
+  },
+  "measuredFrom": [
+    "ev.css.root-tokens",
+    "ev.css.body"
+  ]
+}

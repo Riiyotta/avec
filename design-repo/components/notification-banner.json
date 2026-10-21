@@ -1,0 +1,14 @@
+{
+  "id": "component.notification-banner",
+  "layer": "component",
+  "purpose": "Glass banner: app icon + sender + one-line summary.",
+  "composes": [
+    "component.glass-card"
+  ],
+  "tokens": [
+    "component.glass-card.bg"
+  ],
+  "evidenceIds": [
+    "ev.src.expand-notif-banner"
+  ]
+}

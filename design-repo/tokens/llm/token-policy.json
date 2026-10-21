@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "resolutionOrder": [
+    "foundation",
+    "themes/light (only mode)",
+    "semantic aliases",
+    "component tokens",
+    "no local overrides",
+    "responsive values inside token $value objects"
+  ],
+  "rawValueRestrictions": {
+    "color": "Never emit raw hex/lab/oklch in generated output; reference semantic.* or component.*.",
+    "radius": "Use radius.* only.",
+    "elevation": "Use elevation.* only.",
+    "duration": "Use duration.* only.",
+    "easing": "Use easing.* only.",
+    "type": "Use type.* classes; do not set raw font-size/letter-spacing.",
+    "spacing": "Multiples of spacing.base only."
+  },
+  "enforcement": {
+    "pageSpec": "PageSpecs carry NO per-instance style/token field; styling is owned by section contracts. Token policy therefore applies to implementers, and is drift-checked at the catalog level by extraction/verify_all.py (policy keys must exist in the catalog).",
+    "machineChecked": [
+      "policy keys exist in catalog",
+      "semantic aliases resolve",
+      "theme values equal resolution",
+      "component aliases resolve"
+    ]
+  },
+  "overrides": "None permitted. There is no PageSpec field for token overrides (by design, see enforcement.pageSpec).",
+  "darkMode": "Not present in source - do not generate."
+}

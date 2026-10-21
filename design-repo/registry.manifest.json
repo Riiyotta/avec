@@ -1,0 +1,68 @@
+{
+  "repositoryId": "avec-design-repo",
+  "repositoryVersion": "1.0.0",
+  "pageSpecVersion": "1.0.0",
+  "allowlistVersion": "1.0.0",
+  "versionFieldNote": "allowlistVersion is MACHINE-CHECKED (extraction/verify_all.py version_parity fails if it drifts from tokens/llm/component-allowlist.json). counts are MACHINE-CHECKED (manifest_counts recomputes every number from disk). repositoryVersion and pageSpecVersion are DOCUMENTATION-ONLY hand-maintained markers (pageSpecVersion is additionally a schema const, so PageSpecs must declare 1.0.0).",
+  "status": "design-review-pending",
+  "productionApproved": false,
+  "defaultTheme": "light",
+  "schemaValidatedThemes": [
+    "light"
+  ],
+  "source": {
+    "site": "https://www.avec.ai/",
+    "clone": "React 18.3 + Vite 5 clone (sibling project, read-only); styling is the original compiled Tailwind v4 CSS",
+    "measured": "2026-10-21",
+    "realLiveCompany": true,
+    "company": "Avec / Nearly Extraterrestrial Technology, Inc.",
+    "distribution": "Private. Contains real company copy, real third-party reviews and references to proprietary media and a commercial font - do not publish this repository."
+  },
+  "structure": {
+    "routes": "single real route '/' rendered as a 13-stop scroll-snapped story inside main[data-scroll-root]",
+    "outOfScope": [
+      "/terms",
+      "/privacy-policy (linked, never captured; template.legal is generationEligible=false with zero nodes)"
+    ],
+    "stubbedBackends": [
+      "notify-me POST",
+      "Stack Challenge leaderboard"
+    ],
+    "outboundRuntimeRequests": "none"
+  },
+  "entryPoints": {
+    "readme": "README.md",
+    "changelog": "CHANGELOG.md",
+    "schema": "schema/pagespec.schema.json",
+    "example": "schema/example.pagespec.json",
+    "semanticValidator": "schema/semantic_validate.py",
+    "adversarialTests": "schema/tests/adversarial_test.py",
+    "verifyAll": "extraction/verify_all.py",
+    "measuredValues": "extraction/measured-values.json",
+    "templates": "templates/templates.json",
+    "routes": "templates/routes.json",
+    "compatibilityGraph": "compatibility/graph.json",
+    "assetRoles": "assets/asset-roles.json",
+    "componentAllowlist": "tokens/llm/component-allowlist.json",
+    "tokenCatalog": "tokens/llm/token-catalog.json",
+    "tokenPolicy": "tokens/llm/token-policy.json",
+    "themeLight": "tokens/themes/light.json"
+  },
+  "counts": {
+    "foundationTokens": 111,
+    "semanticTokens": 19,
+    "componentTokens": 24,
+    "layoutTokens": 6,
+    "primitives": 8,
+    "components": 7,
+    "sections": 16,
+    "templates": 2,
+    "generationEligibleTemplates": 1,
+    "routes": 3,
+    "scrollStops": 13,
+    "assetRoles": 11,
+    "graphRules": 15,
+    "evidenceEntries": 164,
+    "corrections": 6
+  }
+}

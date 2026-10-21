@@ -1,0 +1,41 @@
+{
+  "spacing": {
+    "base": {
+      "$type": "dimension",
+      "$value": "4px",
+      "measuredFrom": [
+        "ev.css.root-spacing"
+      ],
+      "note": "Tailwind v4 --spacing unit; utilities are multiples (p-4 = 16px)."
+    },
+    "gutter": {
+      "$type": "dimension",
+      "$value": "16px",
+      "measuredFrom": [
+        "ev.css.section-frame",
+        "ev.spec.viewports"
+      ]
+    },
+    "frame-top": {
+      "$type": "dimension",
+      "$value": "96px",
+      "measuredFrom": [
+        "ev.css.section-frame"
+      ]
+    },
+    "frame-top-md": {
+      "$type": "dimension",
+      "$value": "70px",
+      "measuredFrom": [
+        "ev.css.section-frame-md"
+      ]
+    },
+    "header-cta-gap": {
+      "$type": "dimension",
+      "$value": "7px",
+      "measuredFrom": [
+        "ev.src.header"
+      ]
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "id": "expand.be-here-now",
+  "layer": "section",
+  "category": "EXPAND",
+  "purpose": "Pivot from inbox demo to 'calm' features: the phone's Done button grows into a full-bleed wave scene.",
+  "sourceComponent": "src/components/Expand.jsx",
+  "scrollStops": [
+    "deck_empty",
+    "search",
+    "notifications"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "group": "expand"
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "label",
+      "expandVideo"
+    ],
+    "properties": {
+      "label": {
+        "type": "string",
+        "minLength": 1
+      },
+      "expandVideo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "media.ambient-video"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^(/assets/|inline:)"
+          }
+        }
+      }
+    }
+  },
+  "fieldBudgets": {
+    "label": {
+      "maxWords": 4,
+      "realMaxWordCount": 3
+    }
+  },
+  "motion": {
+    "pattern": "button-expand-state",
+    "trigger": "scroll-state",
+    "reducedMotionFallback": "instant-transitions-video-unchanged",
+    "durationTokens": [
+      "stage",
+      "fast"
+    ],
+    "notes": "visible at B>=4 (500ms, +500ms delay first reveal); expands to full bleed at B>=5; wave video fades in 500ms"
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "expanded height calc(100%+112px)",
+        "mobile wave video sources"
+      ]
+    }
+  ],
+  "accessibility": [
+    "role=button aria-label 'Expand section' while collapsed; Enter/Space activate"
+  ],
+  "assetRoles": [
+    "media.ambient-video"
+  ],
+  "referenceContent": {
+    "label": "Be here now",
+    "expandVideo": {
+      "assetRole": "media.ambient-video",
+      "assetRef": "/assets/wave_desktop.webm"
+    }
+  },
+  "evidenceIds": [
+    "ev.src.expand-btn",
+    "ev.src.expand-btn-color",
+    "ev.src.expand-btn-shadow",
+    "ev.src.expand-wave-src"
+  ]
+}

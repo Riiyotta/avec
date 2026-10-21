@@ -1,0 +1,19 @@
+{
+  "id": "primitive.star-rating",
+  "layer": "primitive",
+  "purpose": "Row of 5 overlapping stars (22px hero, 20px reviews).",
+  "props": {
+    "score": "number 0-5",
+    "size": [
+      20,
+      22
+    ]
+  },
+  "tokens": [
+    "iconSize.star-hero",
+    "iconSize.star-review"
+  ],
+  "evidenceIds": [
+    "ev.src.icons-stars"
+  ]
+}

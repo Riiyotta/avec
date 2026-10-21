@@ -1,0 +1,19 @@
+{
+  "id": "primitive.key-chip",
+  "layer": "primitive",
+  "purpose": "Keyboard-key chip (arrows, Enter) inside hint/prompt text.",
+  "props": {
+    "key": [
+      "↑",
+      "↓",
+      "Enter"
+    ]
+  },
+  "tokens": [
+    "radius.sm"
+  ],
+  "evidenceIds": [
+    "ev.src.scroll-hint",
+    "ev.src.game-intro"
+  ]
+}

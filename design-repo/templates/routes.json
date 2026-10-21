@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "routes": [
+    {
+      "route": "/",
+      "template": "template.home",
+      "evidenceLevel": "measured-live"
+    },
+    {
+      "route": "/terms",
+      "template": "template.legal",
+      "evidenceLevel": "unverified-not-captured"
+    },
+    {
+      "route": "/privacy-policy",
+      "template": "template.legal",
+      "evidenceLevel": "unverified-not-captured"
+    }
+  ]
+}

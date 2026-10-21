@@ -1,0 +1,153 @@
+{
+  "id": "shell.notify-modal",
+  "layer": "section",
+  "category": "SHELL",
+  "purpose": "Captures email for platforms beyond iOS (Android/Outlook/more) - secondary conversion.",
+  "sourceComponent": "src/components/NotifyModal.jsx",
+  "scrollStops": [
+    "hero",
+    "deck_intro",
+    "deck_swipe_done",
+    "deck_swipe_later",
+    "triage_game",
+    "compose_intro",
+    "compose_record",
+    "compose_drafted",
+    "low_importance",
+    "deck_empty",
+    "search",
+    "notifications",
+    "footer"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "position": "shell",
+    "portal": true
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "title",
+      "subtitle",
+      "inputPlaceholder",
+      "submitLabel",
+      "retryLabel",
+      "successMessage",
+      "icon"
+    ],
+    "properties": {
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "subtitle": {
+        "type": "string",
+        "minLength": 1
+      },
+      "inputPlaceholder": {
+        "const": "you@example.com"
+      },
+      "submitLabel": {
+        "type": "string",
+        "minLength": 1
+      },
+      "retryLabel": {
+        "type": "string",
+        "minLength": 1
+      },
+      "successMessage": {
+        "type": "string",
+        "minLength": 1
+      },
+      "icon": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "thirdparty.platform-icon"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^(/assets/|inline:)"
+          }
+        }
+      }
+    }
+  },
+  "fieldBudgets": {
+    "title": {
+      "maxWords": 3,
+      "realMaxWordCount": 2
+    },
+    "subtitle": {
+      "maxWords": 13,
+      "realMaxWordCount": 10
+    },
+    "submitLabel": {
+      "maxWords": 2,
+      "realMaxWordCount": 1
+    },
+    "retryLabel": {
+      "maxWords": 3,
+      "realMaxWordCount": 2
+    },
+    "successMessage": {
+      "maxWords": 5,
+      "realMaxWordCount": 4
+    }
+  },
+  "motion": {
+    "pattern": "blur-scale-in",
+    "trigger": "interaction",
+    "reducedMotionFallback": "instant-state-change",
+    "durationTokens": [
+      "modal"
+    ],
+    "notes": "overlay bg-black/50 + blur-sm; card scale .75->1, blur-2xl->0, 200ms"
+  },
+  "responsive": [
+    {
+      "query": "md",
+      "changes": [
+        "card padding p-8 (p-6 pt-8 below md)"
+      ]
+    }
+  ],
+  "accessibility": [
+    "role=dialog aria-modal aria-labelledby",
+    "Escape closes",
+    "input focused after enter transition"
+  ],
+  "assetRoles": [
+    "thirdparty.platform-icon"
+  ],
+  "referenceContent": {
+    "title": "Get notified",
+    "subtitle": "We’ll email you when Avec is available for more platforms",
+    "inputPlaceholder": "you@example.com",
+    "submitLabel": "Submit",
+    "retryLabel": "Try again",
+    "successMessage": "You're on the list!",
+    "icon": {
+      "assetRole": "thirdparty.platform-icon"
+    }
+  },
+  "evidenceIds": [
+    "ev.src.notify-modal",
+    "ev.src.notify-modal-enter",
+    "ev.src.notify-modal-copy",
+    "ev.src.notify-stub",
+    "ev.spec.modal"
+  ],
+  "notes": "LIVE ENDPOINT NOT REPRODUCED: the real POST target is unknown; the clone stubs it (src/lib/analytics.js). A generated page must not wire this form to any invented endpoint."
+}

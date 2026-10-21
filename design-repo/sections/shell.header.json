@@ -1,0 +1,205 @@
+{
+  "id": "shell.header",
+  "layer": "section",
+  "category": "SHELL",
+  "purpose": "Persistent brand + conversion bar: keeps both acquisition paths (TestFlight beta, notify-me) one tap away on every scroll stop.",
+  "sourceComponent": "src/components/Header.jsx",
+  "scrollStops": [
+    "hero",
+    "deck_intro",
+    "deck_swipe_done",
+    "deck_swipe_later",
+    "triage_game",
+    "compose_intro",
+    "compose_record",
+    "compose_drafted",
+    "low_importance",
+    "deck_empty",
+    "search",
+    "notifications",
+    "footer"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "position": "shell",
+    "fixed": true
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "logo",
+      "primaryCta",
+      "secondaryCta"
+    ],
+    "properties": {
+      "logo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "brand.wordmark"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^(/assets/|inline:)"
+          }
+        }
+      },
+      "primaryCta": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "href",
+          "icon"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "href": {
+            "enum": [
+              "https://testflight.apple.com/join/3JR2HxjZ"
+            ]
+          },
+          "icon": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assetRole"
+            ],
+            "properties": {
+              "assetRole": {
+                "enum": [
+                  "thirdparty.store-badge"
+                ]
+              },
+              "assetRef": {
+                "type": "string",
+                "pattern": "^(/assets/|inline:)"
+              }
+            }
+          }
+        }
+      },
+      "secondaryCta": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "action",
+          "icon"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "action": {
+            "const": "open-notify-modal"
+          },
+          "icon": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assetRole"
+            ],
+            "properties": {
+              "assetRole": {
+                "enum": [
+                  "thirdparty.platform-icon"
+                ]
+              },
+              "assetRef": {
+                "type": "string",
+                "pattern": "^(/assets/|inline:)"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "fieldBudgets": {
+    "primaryCta.label": {
+      "maxWords": 4,
+      "realMaxWordCount": 3
+    },
+    "secondaryCta.label": {
+      "maxWords": 3,
+      "realMaxWordCount": 2
+    }
+  },
+  "motion": {
+    "pattern": "static",
+    "trigger": "none",
+    "reducedMotionFallback": "static",
+    "durationTokens": [
+      "press"
+    ],
+    "notes": "buttons: transition-transform 120ms + active:scale(.97); hover bg surface-alt"
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "secondary CTA hidden (hidden md:flex)",
+        "logo h-6 (98x24) instead of h-8",
+        "bar full-bleed (no md:px-4 outer padding)"
+      ]
+    },
+    {
+      "query": "md",
+      "changes": [
+        "bar constrained to section-content width with rounded-b-20 and header shadow"
+      ]
+    }
+  ],
+  "accessibility": [
+    "logo link aria-label 'Avec home'",
+    "TestFlight link opens new tab with rel=noopener noreferrer"
+  ],
+  "assetRoles": [
+    "brand.wordmark",
+    "thirdparty.store-badge",
+    "thirdparty.platform-icon"
+  ],
+  "referenceContent": {
+    "logo": {
+      "assetRole": "brand.wordmark",
+      "assetRef": "/assets/avec-logo.svg"
+    },
+    "primaryCta": {
+      "label": "Get early access",
+      "href": "https://testflight.apple.com/join/3JR2HxjZ",
+      "icon": {
+        "assetRole": "thirdparty.store-badge",
+        "assetRef": "/assets/testflight.png"
+      }
+    },
+    "secondaryCta": {
+      "label": "Get notified",
+      "action": "open-notify-modal",
+      "icon": {
+        "assetRole": "thirdparty.platform-icon"
+      }
+    }
+  },
+  "evidenceIds": [
+    "ev.src.header",
+    "ev.src.cta-sizes",
+    "ev.src.cta-url",
+    "ev.spec.viewports"
+  ]
+}

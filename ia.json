@@ -116,25 +116,43 @@
       "id": "template.home",
       "name": "Home (scroll-snapped story)",
       "routeCount": 1,
-      "routes": ["/"],
+      "routes": [
+        "/"
+      ],
       "routePattern": null,
       "chrome": "full",
       "sections": [
-        "shell.header", "shell.progress-dots", "shell.scroll-hint", "shell.notify-modal",
-        "hero.copy", "hero.video",
-        "deck.word-reveal-copy", "deck.email-stack", "deck.triage-game",
-        "expand.compose-demo", "expand.be-here-now", "expand.search-demo", "expand.notifications-demo",
-        "proof.reviews-carousel", "footer.launch", "footer.bar"
+        "shell.header",
+        "shell.progress-dots",
+        "shell.scroll-hint",
+        "shell.notify-modal",
+        "hero.copy",
+        "hero.video",
+        "deck.word-reveal-copy",
+        "deck.email-stack",
+        "deck.triage-game",
+        "expand.compose-demo",
+        "expand.be-here-now",
+        "expand.search-demo",
+        "expand.notifications-demo",
+        "footer.launch",
+        "proof.reviews-carousel",
+        "footer.bar"
       ]
     },
     {
       "id": "template.legal",
       "name": "Legal pages (not captured)",
       "routeCount": 2,
-      "routes": ["/terms", "/privacy-policy"],
+      "routes": [
+        "/terms",
+        "/privacy-policy"
+      ],
       "routePattern": null,
       "chrome": "unknown",
-      "sections": ["footer.bar"]
+      "sections": [
+        "footer.bar"
+      ]
     }
   ]
 }

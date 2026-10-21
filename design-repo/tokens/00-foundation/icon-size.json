@@ -1,0 +1,46 @@
+{
+  "iconSize": {
+    "btn-sm": {
+      "$type": "dimension",
+      "$value": "20px",
+      "measuredFrom": [
+        "ev.src.cta-sizes"
+      ]
+    },
+    "btn-lg": {
+      "$type": "dimension",
+      "$value": "24px",
+      "measuredFrom": [
+        "ev.src.cta-sizes"
+      ]
+    },
+    "star-hero": {
+      "$type": "dimension",
+      "$value": "22px",
+      "measuredFrom": [
+        "ev.src.hero-rating"
+      ]
+    },
+    "star-review": {
+      "$type": "dimension",
+      "$value": "20px",
+      "measuredFrom": [
+        "ev.spec.type-measured"
+      ]
+    },
+    "avatar-email": {
+      "$type": "dimension",
+      "$value": "36px",
+      "measuredFrom": [
+        "ev.spec.type-measured"
+      ]
+    },
+    "video-control": {
+      "$type": "dimension",
+      "$value": "40px",
+      "measuredFrom": [
+        "ev.src.herovideo"
+      ]
+    }
+  }
+}

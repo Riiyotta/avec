@@ -1,0 +1,143 @@
+{
+  "id": "deck.triage-game",
+  "layer": "section",
+  "category": "DECK",
+  "purpose": "Turn the explanation into play: a 20-second sorting challenge that proves the speed claim.",
+  "sourceComponent": "src/components/TriageGame.jsx",
+  "scrollStops": [
+    "triage_game"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "group": "deck"
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "chip",
+      "title",
+      "durationSeconds",
+      "instructionsPointer",
+      "instructionsTouch",
+      "startPromptPointer",
+      "startPromptTouch",
+      "scoring"
+    ],
+    "properties": {
+      "chip": {
+        "type": "string",
+        "minLength": 1
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "durationSeconds": {
+        "const": 20
+      },
+      "instructionsPointer": {
+        "type": "string",
+        "minLength": 1
+      },
+      "instructionsTouch": {
+        "type": "string",
+        "minLength": 1
+      },
+      "startPromptPointer": {
+        "type": "string",
+        "minLength": 1
+      },
+      "startPromptTouch": {
+        "type": "string",
+        "minLength": 1
+      },
+      "scoring": {
+        "const": {
+          "correct": 1,
+          "incorrect": -1
+        }
+      }
+    }
+  },
+  "fieldBudgets": {
+    "chip": {
+      "maxWords": 4,
+      "realMaxWordCount": 3
+    },
+    "title": {
+      "maxWords": 5,
+      "realMaxWordCount": 4
+    },
+    "instructionsPointer": {
+      "maxWords": 12,
+      "realMaxWordCount": 9
+    },
+    "instructionsTouch": {
+      "maxWords": 8,
+      "realMaxWordCount": 6
+    },
+    "startPromptPointer": {
+      "maxWords": 8,
+      "realMaxWordCount": 6
+    },
+    "startPromptTouch": {
+      "maxWords": 4,
+      "realMaxWordCount": 3
+    }
+  },
+  "motion": {
+    "pattern": "game-state-keyframes",
+    "trigger": "interaction",
+    "reducedMotionFallback": "instant-state-change",
+    "durationTokens": [
+      "card-enter",
+      "card"
+    ],
+    "notes": "countdown-pop .9s; bg-pulse .5s; card-enter .8s cubic(.16,1,.3,1); float-up-fade 1s"
+  },
+  "responsive": [
+    {
+      "query": "pointer-fine",
+      "changes": [
+        "arrow-key instructions; hover scale-102"
+      ]
+    },
+    {
+      "query": "max-md and max-height:700px",
+      "changes": [
+        "chip hidden, gap 3.5"
+      ]
+    }
+  ],
+  "accessibility": [
+    "intro overlay role=button, Enter begins",
+    "ArrowLeft=Later, ArrowRight=Done"
+  ],
+  "assetRoles": [],
+  "referenceContent": {
+    "chip": "Experience it yourself",
+    "title": "Play Avec Stack Challenge",
+    "durationSeconds": 20,
+    "instructionsPointer": "Use the arrow keys to match each card's label",
+    "instructionsTouch": "Tap/swipe to match each card's label",
+    "startPromptPointer": "Click or press Enter to begin",
+    "startPromptTouch": "Tap to begin",
+    "scoring": {
+      "correct": 1,
+      "incorrect": -1
+    }
+  },
+  "evidenceIds": [
+    "ev.src.game-intro",
+    "ev.src.game-duration",
+    "ev.src.game-card",
+    "ev.src.game-finish",
+    "ev.spec.not-reachable"
+  ],
+  "notes": "Leaderboard/percentile API (/stackchallenge) is NOT reproduced; the clone uses a synthetic local distribution. Do not invent leaderboard data or endpoints."
+}

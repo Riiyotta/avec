@@ -1,0 +1,126 @@
+{
+  "id": "proof.reviews-carousel",
+  "layer": "section",
+  "category": "PROOF",
+  "purpose": "Third-party social proof (verbatim App Store reviews) beside the final download CTA.",
+  "sourceComponent": "src/components/ReviewsCarousel.jsx",
+  "scrollStops": [
+    "footer"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "mustFollow": "footer.launch"
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "reviewIds",
+      "starsPerReview"
+    ],
+    "properties": {
+      "reviewIds": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 6,
+        "uniqueItems": true,
+        "items": {
+          "enum": [
+            "review.01",
+            "review.02",
+            "review.03",
+            "review.04",
+            "review.05",
+            "review.06"
+          ]
+        }
+      },
+      "starsPerReview": {
+        "const": 5
+      }
+    }
+  },
+  "fieldBudgets": {},
+  "motion": {
+    "pattern": "auto-advance-carousel",
+    "trigger": "time",
+    "reducedMotionFallback": "instant-state-change",
+    "durationTokens": [
+      "carousel-pause"
+    ],
+    "notes": "translate3d to centred card; auto-advance every 5000ms; move max(220ms, dist/800px/s) standard easing; drag with 6px threshold; edge mask gradient"
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "cards 320px, gap 32px, -mx-10"
+      ]
+    },
+    {
+      "query": "md",
+      "changes": [
+        "cards 400px, gap 48px"
+      ]
+    }
+  ],
+  "accessibility": [
+    "sr-only list mirrors reviews; visual track aria-hidden"
+  ],
+  "assetRoles": [],
+  "referenceContent": {
+    "reviewIds": [
+      "review.01",
+      "review.02",
+      "review.03",
+      "review.04",
+      "review.05",
+      "review.06"
+    ],
+    "starsPerReview": 5
+  },
+  "evidenceIds": [
+    "ev.src.carousel",
+    "ev.src.carousel-reviews",
+    "ev.src.carousel-ease",
+    "ev.src.carousel-item",
+    "ev.spec.reviews"
+  ],
+  "notes": "Reviews are real third-party user content: referenced only by id from verbatimReviews; generators must never write new review text, alter it, or attribute it to new authors (min 3 so the infinite carousel still wraps; the source repeats the list >=3 times).",
+  "verbatimReviews": {
+    "review.01": {
+      "title": "Way better than Gmail!",
+      "author": "soda_cowboy",
+      "body": "I can’t believe how smooth this app runs. Really terrific ai integration too. Excited to see how it develops."
+    },
+    "review.02": {
+      "title": "Fast, thoughtful, and delightful",
+      "author": "JamesL55",
+      "body": "I’ve been using Avec throughout the beta, and it quickly became my default email app. The experience is fast, focused, and thoughtfully designed in a way that makes other email apps feel slow by comparison. This is one of the few email apps that actually makes email feel lighter."
+    },
+    "review.03": {
+      "title": "The only way to handle email",
+      "author": "evntylr",
+      "body": "Email has always been awful. I monitor 8 email accounts, and it sucks. I have tried every single product in the category, and Avec is the very first that has actually made a difference; I don’t think I can go back to regular email. I can’t wait to see what is next from the Avec team!"
+    },
+    "review.04": {
+      "title": "The best email app",
+      "author": "BUGGSSSSSS!!!!!",
+      "body": "Avec makes managing your inbox insanely easy. Some of my favorite features are notifications that include a really accurate summary so a new message is glanceable and the ability to speak when drafting or searching."
+    },
+    "review.05": {
+      "title": "Smoothest emailing experience",
+      "author": "Rudraksh Awasthi",
+      "body": "With all the emailing apps stuck in 2015, avec makes that experience smoother and more modern. Love the miscellaneous emails at the end of the stack and the most convenient unsubscribe feature."
+    },
+    "review.06": {
+      "title": "Hate managing email? Me too!",
+      "author": "Vahwdsss",
+      "body": "Avec has saved me so much time managing email. It’s easily the best email app out there and I’ve tried them all. I’m sure Superhuman wishes they were Avec."
+    }
+  }
+}

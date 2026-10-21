@@ -72,8 +72,8 @@ until a second caller actually appears.
 | 11 | EXPAND | `expand.be-here-now` | page-local |
 | 12 | EXPAND | `expand.search-demo` | page-local |
 | 13 | EXPAND | `expand.notifications-demo` | page-local |
-| 14 | PROOF | `proof.reviews-carousel` | page-local |
-| 15 | FOOTER | `footer.launch` | page-local |
+| 14 | FOOTER | `footer.launch` | page-local |
+| 15 | PROOF | `proof.reviews-carousel` | page-local |
 | 16 | FOOTER | `footer.bar` | shared ×2 |
 
 ### Legal pages (not captured) — `template.legal`

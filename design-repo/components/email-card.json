@@ -1,0 +1,20 @@
+{
+  "id": "component.email-card",
+  "layer": "component",
+  "purpose": "Fictional email preview card (subject, sender row, To, clipped body with fade, Reply button).",
+  "composes": [
+    "primitive.avatar"
+  ],
+  "tokens": [
+    "component.email-card.text",
+    "component.email-card.meta",
+    "component.email-card.reply-bg",
+    "component.email-card.radius",
+    "component.email-card.shadow",
+    "semantic.text.reply-hint"
+  ],
+  "evidenceIds": [
+    "ev.src.emailstack-card",
+    "ev.src.emailstack-reply"
+  ]
+}

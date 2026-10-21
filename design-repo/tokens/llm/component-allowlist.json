@@ -1,0 +1,165 @@
+{
+  "version": "1.0.0",
+  "entries": {
+    "primitive.cta-button": {
+      "layer": "primitive",
+      "file": "primitives/cta-button.json"
+    },
+    "primitive.icon-button": {
+      "layer": "primitive",
+      "file": "primitives/icon-button.json"
+    },
+    "primitive.word-reveal-text": {
+      "layer": "primitive",
+      "file": "primitives/word-reveal-text.json"
+    },
+    "primitive.star-rating": {
+      "layer": "primitive",
+      "file": "primitives/star-rating.json"
+    },
+    "primitive.key-chip": {
+      "layer": "primitive",
+      "file": "primitives/key-chip.json"
+    },
+    "primitive.avatar": {
+      "layer": "primitive",
+      "file": "primitives/avatar.json"
+    },
+    "primitive.media-video": {
+      "layer": "primitive",
+      "file": "primitives/media-video.json"
+    },
+    "primitive.progress-dot": {
+      "layer": "primitive",
+      "file": "primitives/progress-dot.json"
+    },
+    "component.email-card": {
+      "layer": "component",
+      "file": "components/email-card.json"
+    },
+    "component.swipe-overlay": {
+      "layer": "component",
+      "file": "components/swipe-overlay.json"
+    },
+    "component.glass-card": {
+      "layer": "component",
+      "file": "components/glass-card.json"
+    },
+    "component.review-card": {
+      "layer": "component",
+      "file": "components/review-card.json"
+    },
+    "component.modal-card": {
+      "layer": "component",
+      "file": "components/modal-card.json"
+    },
+    "component.game-intro-card": {
+      "layer": "component",
+      "file": "components/game-intro-card.json"
+    },
+    "component.notification-banner": {
+      "layer": "component",
+      "file": "components/notification-banner.json"
+    },
+    "shell.header": {
+      "layer": "section",
+      "file": "sections/shell.header.json",
+      "instantiableInPageSpec": true
+    },
+    "shell.progress-dots": {
+      "layer": "section",
+      "file": "sections/shell.progress-dots.json",
+      "instantiableInPageSpec": true
+    },
+    "shell.scroll-hint": {
+      "layer": "section",
+      "file": "sections/shell.scroll-hint.json",
+      "instantiableInPageSpec": true
+    },
+    "shell.notify-modal": {
+      "layer": "section",
+      "file": "sections/shell.notify-modal.json",
+      "instantiableInPageSpec": true
+    },
+    "hero.copy": {
+      "layer": "section",
+      "file": "sections/hero.copy.json",
+      "instantiableInPageSpec": true
+    },
+    "hero.video": {
+      "layer": "section",
+      "file": "sections/hero.video.json",
+      "instantiableInPageSpec": true
+    },
+    "deck.word-reveal-copy": {
+      "layer": "section",
+      "file": "sections/deck.word-reveal-copy.json",
+      "instantiableInPageSpec": true
+    },
+    "deck.email-stack": {
+      "layer": "section",
+      "file": "sections/deck.email-stack.json",
+      "instantiableInPageSpec": true
+    },
+    "deck.triage-game": {
+      "layer": "section",
+      "file": "sections/deck.triage-game.json",
+      "instantiableInPageSpec": true
+    },
+    "expand.compose-demo": {
+      "layer": "section",
+      "file": "sections/expand.compose-demo.json",
+      "instantiableInPageSpec": true
+    },
+    "expand.be-here-now": {
+      "layer": "section",
+      "file": "sections/expand.be-here-now.json",
+      "instantiableInPageSpec": true
+    },
+    "expand.search-demo": {
+      "layer": "section",
+      "file": "sections/expand.search-demo.json",
+      "instantiableInPageSpec": true
+    },
+    "expand.notifications-demo": {
+      "layer": "section",
+      "file": "sections/expand.notifications-demo.json",
+      "instantiableInPageSpec": true
+    },
+    "proof.reviews-carousel": {
+      "layer": "section",
+      "file": "sections/proof.reviews-carousel.json",
+      "instantiableInPageSpec": true
+    },
+    "footer.launch": {
+      "layer": "section",
+      "file": "sections/footer.launch.json",
+      "instantiableInPageSpec": true
+    },
+    "footer.bar": {
+      "layer": "section",
+      "file": "sections/footer.bar.json",
+      "instantiableInPageSpec": true
+    }
+  },
+  "settableNodeProperties": [
+    "content",
+    "id",
+    "motion",
+    "section",
+    "variant"
+  ],
+  "assetRoles": [
+    "avatar.initials",
+    "avatar.sender-photo",
+    "brand.app-icon",
+    "brand.glyph",
+    "brand.wordmark",
+    "media.ambient-video",
+    "media.hero-demo-video",
+    "media.phone-demo-video",
+    "media.section-preview-frame",
+    "thirdparty.platform-icon",
+    "thirdparty.store-badge"
+  ]
+}

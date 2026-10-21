@@ -1,0 +1,125 @@
+{
+  "id": "shell.scroll-hint",
+  "layer": "section",
+  "category": "SHELL",
+  "purpose": "Teaches the non-standard paging interaction after the visitor idles.",
+  "sourceComponent": "src/components/ScrollHint.jsx",
+  "scrollStops": [
+    "hero",
+    "deck_intro",
+    "deck_swipe_done",
+    "deck_swipe_later",
+    "triage_game",
+    "compose_intro",
+    "compose_record",
+    "compose_drafted",
+    "low_importance",
+    "deck_empty",
+    "search",
+    "notifications",
+    "footer"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "position": "shell",
+    "fixed": true
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "leadText",
+      "trailText",
+      "hiddenOnStops",
+      "idleDelayMs"
+    ],
+    "properties": {
+      "leadText": {
+        "type": "string",
+        "minLength": 1
+      },
+      "trailText": {
+        "type": "string",
+        "minLength": 1
+      },
+      "hiddenOnStops": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "enum": [
+            "hero",
+            "deck_intro",
+            "deck_swipe_done",
+            "deck_swipe_later",
+            "triage_game",
+            "compose_intro",
+            "compose_record",
+            "compose_drafted",
+            "low_importance",
+            "deck_empty",
+            "search",
+            "notifications",
+            "footer"
+          ]
+        }
+      },
+      "idleDelayMs": {
+        "const": 5000
+      }
+    }
+  },
+  "fieldBudgets": {
+    "leadText": {
+      "maxWords": 4,
+      "realMaxWordCount": 3
+    },
+    "trailText": {
+      "maxWords": 7,
+      "realMaxWordCount": 5
+    }
+  },
+  "motion": {
+    "pattern": "idle-fade-float",
+    "trigger": "time",
+    "reducedMotionFallback": "instant-state-change",
+    "durationTokens": [
+      "stage",
+      "fast"
+    ],
+    "notes": "fade in 500ms after 5s idle, out 150ms on scroll; animate-float 2s infinite"
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "hidden"
+      ]
+    }
+  ],
+  "accessibility": [
+    "pointer-events-none; decorative hint"
+  ],
+  "assetRoles": [],
+  "referenceContent": {
+    "leadText": "Scroll or use",
+    "trailText": "to page through this site",
+    "hiddenOnStops": [
+      "hero",
+      "triage_game",
+      "compose_record",
+      "search",
+      "notifications",
+      "footer"
+    ],
+    "idleDelayMs": 5000
+  },
+  "evidenceIds": [
+    "ev.src.scroll-hint",
+    "ev.src.scroll-hint-delay",
+    "ev.spec.hint"
+  ]
+}

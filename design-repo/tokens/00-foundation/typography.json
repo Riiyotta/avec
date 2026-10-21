@@ -1,0 +1,241 @@
+{
+  "font": {
+    "gt-standard": {
+      "$type": "fontFamily",
+      "$value": [
+        "gtStandard",
+        "gtStandard Fallback",
+        "ui-sans-serif",
+        "system-ui",
+        "sans-serif"
+      ],
+      "measuredFrom": [
+        "ev.css.font-gt",
+        "ev.spec.fonts"
+      ],
+      "license": "COMMERCIAL - GT Standard (Grilli Type) variable font shipped by the source site. Licence for reuse outside avec.ai is NOT established; a generator/consumer must obtain its own licence or substitute.",
+      "axes": {
+        "opsz": "driven by .type-* font-variation-settings",
+        "wght": "400-700 incl. fractional 440/550"
+      }
+    },
+    "inter": {
+      "$type": "fontFamily",
+      "$value": [
+        "Inter",
+        "Inter Fallback",
+        "ui-sans-serif",
+        "system-ui",
+        "sans-serif"
+      ],
+      "measuredFrom": [
+        "ev.spec.fonts"
+      ],
+      "license": "SIL Open Font License (Inter); seven unicode-range subsets in public/fonts.",
+      "usage": "fake email cards, search/notification cards, Be here now, avatar initials"
+    },
+    "system-ui": {
+      "$type": "fontFamily",
+      "$value": [
+        "ui-sans-serif",
+        "system-ui",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Segoe UI",
+        "Roboto",
+        "sans-serif"
+      ],
+      "measuredFrom": [
+        "ev.src.hero-rating"
+      ],
+      "usage": "hero rating row only (mimics App Store UI)"
+    }
+  },
+  "fontWeight": {
+    "regular": {
+      "$type": "fontWeight",
+      "$value": 400,
+      "measuredFrom": [
+        "ev.spec.type-measured"
+      ]
+    },
+    "email-body": {
+      "$type": "fontWeight",
+      "$value": 440,
+      "measuredFrom": [
+        "ev.src.emailstack-card"
+      ]
+    },
+    "medium": {
+      "$type": "fontWeight",
+      "$value": 500,
+      "measuredFrom": [
+        "ev.css.root-weights"
+      ]
+    },
+    "game-button": {
+      "$type": "fontWeight",
+      "$value": 550,
+      "measuredFrom": [
+        "ev.spec.type-measured"
+      ]
+    },
+    "semibold": {
+      "$type": "fontWeight",
+      "$value": 600,
+      "measuredFrom": [
+        "ev.css.root-weights"
+      ]
+    },
+    "bold": {
+      "$type": "fontWeight",
+      "$value": 700,
+      "measuredFrom": [
+        "ev.css.root-weights"
+      ]
+    }
+  },
+  "type": {
+    "display": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.gt-standard}",
+        "fontSize": "clamp(2.5rem,5vw,4rem)",
+        "lineHeight": "1",
+        "letterSpacing": "-0.025em",
+        "fontVariationSettings": "\"opsz\" 30"
+      },
+      "measuredFrom": [
+        "ev.css.type-display",
+        "ev.spec.type-measured"
+      ]
+    },
+    "display-footer": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.gt-standard}",
+        "fontSize": "clamp(2.5rem,5vw,4rem)",
+        "lineHeight": "1",
+        "letterSpacing": "-0.025em",
+        "fontVariationSettings": "\"opsz\" 30",
+        "responsive": {
+          "maxMdFontSize": "max(1.5rem,10.3vw - 5px)"
+        }
+      },
+      "measuredFrom": [
+        "ev.css.type-display-footer",
+        "ev.spec.type-measured"
+      ]
+    },
+    "hero": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.gt-standard}",
+        "fontSize": "clamp(1.75rem,6vw,3.5rem)",
+        "lineHeight": "1.08",
+        "letterSpacing": "-0.025em",
+        "fontVariationSettings": "\"opsz\" 30",
+        "responsive": {
+          "mdFontSize": "clamp(2.25rem,3.4vw,3.5rem)"
+        }
+      },
+      "measuredFrom": [
+        "ev.css.type-hero",
+        "ev.spec.type-measured"
+      ]
+    },
+    "title": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.gt-standard}",
+        "fontSize": "1.5rem",
+        "lineHeight": "1.2",
+        "letterSpacing": "-0.03em",
+        "fontVariationSettings": "\"opsz\" 26",
+        "responsive": {
+          "mdFontSize": "2rem"
+        }
+      },
+      "measuredFrom": [
+        "ev.css.type-title",
+        "ev.spec.type-measured"
+      ]
+    },
+    "body-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.gt-standard}",
+        "fontSize": "clamp(1.25rem,2.2vw,1.75rem)",
+        "lineHeight": "1.2",
+        "letterSpacing": "-0.02em",
+        "fontVariationSettings": "\"opsz\" 20"
+      },
+      "measuredFrom": [
+        "ev.css.type-body-lg",
+        "ev.spec.type-measured"
+      ]
+    },
+    "body": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.gt-standard}",
+        "fontSize": "1rem",
+        "lineHeight": "1.5",
+        "letterSpacing": "-0.01em",
+        "fontVariationSettings": "\"opsz\" 16",
+        "responsive": {
+          "mdFontSize": "1.25rem"
+        }
+      },
+      "measuredFrom": [
+        "ev.css.type-body",
+        "ev.spec.type-measured"
+      ]
+    },
+    "body-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.gt-standard}",
+        "fontSize": "0.875rem",
+        "lineHeight": "1.35",
+        "letterSpacing": "-0.02em",
+        "fontVariationSettings": "\"opsz\" 14",
+        "responsive": {
+          "mdFontSize": "1.125rem"
+        }
+      },
+      "measuredFrom": [
+        "ev.css.type-body-sm",
+        "ev.spec.type-measured"
+      ]
+    },
+    "button": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.gt-standard}",
+        "fontSize": "0.9375rem",
+        "lineHeight": "0.9",
+        "letterSpacing": "0",
+        "fontVariationSettings": "\"opsz\" 15"
+      },
+      "measuredFrom": [
+        "ev.css.type-button",
+        "ev.spec.type-measured"
+      ]
+    },
+    "caption": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.gt-standard}",
+        "fontSize": "0.75rem",
+        "lineHeight": "1.35",
+        "letterSpacing": "-0.02em",
+        "fontVariationSettings": "\"opsz\" 10"
+      },
+      "measuredFrom": [
+        "ev.css.type-caption",
+        "ev.spec.type-measured"
+      ]
+    }
+  }
+}

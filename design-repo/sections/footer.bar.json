@@ -1,0 +1,134 @@
+{
+  "id": "footer.bar",
+  "layer": "section",
+  "category": "FOOTER",
+  "purpose": "Legal entity, social and legal links.",
+  "sourceComponent": "src/components/Footer.jsx",
+  "scrollStops": [
+    "footer"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "mustBeLast": true
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "copyright",
+      "socialLinks",
+      "legalLinks"
+    ],
+    "properties": {
+      "copyright": {
+        "const": "Copyright © 2025-2026 Nearly Extraterrestrial Technology, Inc."
+      },
+      "socialLinks": {
+        "const": [
+          {
+            "label": "X",
+            "href": "https://x.com/avec"
+          },
+          {
+            "label": "YouTube",
+            "href": "https://www.youtube.com/@avecmail"
+          },
+          {
+            "label": "Instagram",
+            "href": "https://www.instagram.com/avecmail/"
+          },
+          {
+            "label": "LinkedIn",
+            "href": "https://www.linkedin.com/company/avec-ai"
+          },
+          {
+            "label": "hi@avec.ai",
+            "href": "mailto:hi@avec.ai"
+          }
+        ]
+      },
+      "legalLinks": {
+        "const": [
+          {
+            "label": "Terms of Service",
+            "href": "/terms"
+          },
+          {
+            "label": "Privacy Policy",
+            "href": "/privacy-policy"
+          }
+        ]
+      }
+    }
+  },
+  "fieldBudgets": {},
+  "motion": {
+    "pattern": "static",
+    "trigger": "none",
+    "reducedMotionFallback": "static",
+    "durationTokens": []
+  },
+  "responsive": [
+    {
+      "query": "max-width:452px",
+      "changes": [
+        "2-col grid: copyright spans, social col 1, legal col 2"
+      ]
+    },
+    {
+      "query": "md",
+      "changes": [
+        "row, justify-between, py 22px, links gap 24"
+      ]
+    }
+  ],
+  "accessibility": [
+    "plain anchors"
+  ],
+  "assetRoles": [],
+  "referenceContent": {
+    "copyright": "Copyright © 2025-2026 Nearly Extraterrestrial Technology, Inc.",
+    "socialLinks": [
+      {
+        "label": "X",
+        "href": "https://x.com/avec"
+      },
+      {
+        "label": "YouTube",
+        "href": "https://www.youtube.com/@avecmail"
+      },
+      {
+        "label": "Instagram",
+        "href": "https://www.instagram.com/avecmail/"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/company/avec-ai"
+      },
+      {
+        "label": "hi@avec.ai",
+        "href": "mailto:hi@avec.ai"
+      }
+    ],
+    "legalLinks": [
+      {
+        "label": "Terms of Service",
+        "href": "/terms"
+      },
+      {
+        "label": "Privacy Policy",
+        "href": "/privacy-policy"
+      }
+    ]
+  },
+  "evidenceIds": [
+    "ev.src.footer-links",
+    "ev.src.footer-copy",
+    "ev.src.footer-bar"
+  ],
+  "notes": "Legal entity name, social handles and legal hrefs are pinned consts (real company data). /terms and /privacy-policy targets were never captured."
+}

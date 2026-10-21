@@ -1,0 +1,102 @@
+{
+  "id": "deck.word-reveal-copy",
+  "layer": "section",
+  "category": "DECK",
+  "purpose": "Explain triage in three beats that reveal in lock-step with the card swipes.",
+  "sourceComponent": "src/components/Deck.jsx + WordReveal.jsx",
+  "scrollStops": [
+    "deck_intro",
+    "deck_swipe_done",
+    "deck_swipe_later",
+    "triage_game"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "group": "deck"
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "chunks",
+      "aside"
+    ],
+    "properties": {
+      "chunks": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 3,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "aside": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "fieldBudgets": {
+    "chunks[]": {
+      "maxWords": 15,
+      "realMaxWordCount": 12
+    },
+    "aside": {
+      "maxWords": 8,
+      "realMaxWordCount": 6
+    }
+  },
+  "motion": {
+    "pattern": "char-reveal-scrub",
+    "trigger": "scroll-scrub",
+    "reducedMotionFallback": "instant-state-change",
+    "durationTokens": [
+      "word-step"
+    ],
+    "notes": "chunk 0 per-character via useScrollApproach; chunks 1-2 via clamp(float-i); dim black@.15 -> black; color transition .12s"
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "text below panel (flex-col-reverse)"
+      ]
+    },
+    {
+      "query": "max-md and max-height:700px",
+      "changes": [
+        "type-body + tracking-tighter"
+      ]
+    },
+    {
+      "query": "snug",
+      "changes": [
+        "pl-4"
+      ]
+    }
+  ],
+  "accessibility": [
+    "text is real DOM text (spans per char)"
+  ],
+  "assetRoles": [],
+  "referenceContent": {
+    "chunks": [
+      "Avec prioritizes your inbox and shows your important emails one by one.",
+      "Swipe to mark them done",
+      "or save for later."
+    ],
+    "aside": "(Yes, it's like Tinder for email)"
+  },
+  "evidenceIds": [
+    "ev.src.deck-copy",
+    "ev.src.wordreveal",
+    "ev.src.wordreveal-dim",
+    "ev.src.deck"
+  ],
+  "notes": "Exactly 3 chunks: the deck float has 3 steps (useScrollFloat(ref, 3)). Copy mentions 'Tinder' (third-party trademark) - keep as a comparison only."
+}

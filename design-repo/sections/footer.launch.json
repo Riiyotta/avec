@@ -1,0 +1,215 @@
+{
+  "id": "footer.launch",
+  "layer": "section",
+  "category": "FOOTER",
+  "purpose": "Close the story with the availability statement and both conversion CTAs.",
+  "sourceComponent": "src/components/Footer.jsx",
+  "scrollStops": [
+    "footer"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "headlineLines",
+      "glyph",
+      "primaryCta",
+      "secondaryCta"
+    ],
+    "properties": {
+      "headlineLines": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "glyph": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "brand.glyph"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^(/assets/|inline:)"
+          }
+        }
+      },
+      "primaryCta": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "href",
+          "icon"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "href": {
+            "enum": [
+              "https://testflight.apple.com/join/3JR2HxjZ"
+            ]
+          },
+          "icon": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assetRole"
+            ],
+            "properties": {
+              "assetRole": {
+                "enum": [
+                  "thirdparty.store-badge"
+                ]
+              },
+              "assetRef": {
+                "type": "string",
+                "pattern": "^(/assets/|inline:)"
+              }
+            }
+          }
+        }
+      },
+      "secondaryCta": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "action",
+          "icon"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "action": {
+            "const": "open-notify-modal"
+          },
+          "icon": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assetRole"
+            ],
+            "properties": {
+              "assetRole": {
+                "enum": [
+                  "thirdparty.platform-icon"
+                ]
+              },
+              "assetRef": {
+                "type": "string",
+                "pattern": "^(/assets/|inline:)"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "fieldBudgets": {
+    "headlineLines[]": {
+      "maxWords": 7,
+      "realMaxWordCount": 5
+    },
+    "primaryCta.label": {
+      "maxWords": 4,
+      "realMaxWordCount": 3
+    },
+    "secondaryCta.label": {
+      "maxWords": 3,
+      "realMaxWordCount": 2
+    }
+  },
+  "motion": {
+    "pattern": "static",
+    "trigger": "none",
+    "reducedMotionFallback": "static",
+    "durationTokens": [
+      "press"
+    ]
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "glyph above 2 nowrap lines in type-display-footer (max(1.5rem,10.3vw-5px))",
+        "buttons stacked full width gap 8"
+      ]
+    },
+    {
+      "query": "md",
+      "changes": [
+        "inline glyph 0.85em + whitespace-pre-line headline, type-display",
+        "buttons in a row gap 12"
+      ]
+    },
+    {
+      "query": "md and max-height:700px",
+      "changes": [
+        "headline type-hero"
+      ]
+    }
+  ],
+  "accessibility": [
+    "h2 headline"
+  ],
+  "assetRoles": [
+    "brand.glyph",
+    "thirdparty.store-badge",
+    "thirdparty.platform-icon"
+  ],
+  "referenceContent": {
+    "headlineLines": [
+      "Avec is available for",
+      "free on the App Store."
+    ],
+    "glyph": {
+      "assetRole": "brand.glyph",
+      "assetRef": "inline:Icons.AvecLogo"
+    },
+    "primaryCta": {
+      "label": "Get early access",
+      "href": "https://testflight.apple.com/join/3JR2HxjZ",
+      "icon": {
+        "assetRole": "thirdparty.store-badge",
+        "assetRef": "/assets/testflight.png"
+      }
+    },
+    "secondaryCta": {
+      "label": "Get notified",
+      "action": "open-notify-modal",
+      "icon": {
+        "assetRole": "thirdparty.platform-icon"
+      }
+    }
+  },
+  "evidenceIds": [
+    "ev.src.footer-headline",
+    "ev.src.footer-order",
+    "ev.src.content-footer",
+    "ev.shot.desktop.footer",
+    "ev.shot.mobile.footer"
+  ],
+  "notes": "Exactly 2 headline lines (whitespace-pre-line / two block spans in source)."
+}

@@ -1,0 +1,88 @@
+{
+  "breakpoint": {
+    "sm": {
+      "$type": "breakpoint",
+      "$value": "40rem",
+      "measuredFrom": [
+        "ev.spec.breakpoints"
+      ]
+    },
+    "md": {
+      "$type": "breakpoint",
+      "$value": "48rem",
+      "measuredFrom": [
+        "ev.spec.breakpoints"
+      ]
+    },
+    "lg": {
+      "$type": "breakpoint",
+      "$value": "64rem",
+      "measuredFrom": [
+        "ev.spec.breakpoints"
+      ]
+    },
+    "dots-right-6": {
+      "$type": "breakpoint",
+      "$value": "1220px",
+      "measuredFrom": [
+        "ev.spec.breakpoints"
+      ]
+    },
+    "container-1280": {
+      "$type": "breakpoint",
+      "$value": "1380px",
+      "measuredFrom": [
+        "ev.css.section-max-w"
+      ]
+    },
+    "container-1440": {
+      "$type": "breakpoint",
+      "$value": "2000px",
+      "measuredFrom": [
+        "ev.css.section-max-w"
+      ]
+    },
+    "snug": {
+      "$type": "breakpoint",
+      "$value": "(min-width:768px) and (max-width:1155.98px)",
+      "measuredFrom": [
+        "ev.spec.breakpoints"
+      ]
+    },
+    "capped": {
+      "$type": "breakpoint",
+      "$value": "(min-width:1156px)",
+      "measuredFrom": [
+        "ev.spec.breakpoints"
+      ]
+    },
+    "short-phone": {
+      "$type": "breakpoint",
+      "$value": "(max-width:767.98px) and (max-height:639.98px)",
+      "measuredFrom": [
+        "ev.spec.breakpoints"
+      ]
+    },
+    "compact-height": {
+      "$type": "breakpoint",
+      "$value": "(max-height:700px)",
+      "measuredFrom": [
+        "ev.spec.breakpoints"
+      ]
+    },
+    "tall-height": {
+      "$type": "breakpoint",
+      "$value": "(min-height:960px)",
+      "measuredFrom": [
+        "ev.css.search-anchor-tall"
+      ]
+    },
+    "pointer-fine": {
+      "$type": "breakpoint",
+      "$value": "(pointer:fine)",
+      "measuredFrom": [
+        "ev.spec.breakpoints"
+      ]
+    }
+  }
+}

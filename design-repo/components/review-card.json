@@ -1,0 +1,14 @@
+{
+  "id": "component.review-card",
+  "layer": "component",
+  "purpose": "Review article: h3 title, star row + author, body; black@50%.",
+  "composes": [
+    "primitive.star-rating"
+  ],
+  "tokens": [
+    "type.body"
+  ],
+  "evidenceIds": [
+    "ev.src.carousel-item"
+  ]
+}

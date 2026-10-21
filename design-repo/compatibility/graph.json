@@ -1,0 +1,134 @@
+{
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "TEMPLATE_GENERATION_ELIGIBLE",
+      "severity": "error",
+      "rule": "PageSpec.template must be generationEligible in templates.json (template.legal is not: never captured).",
+      "evidenceIds": [
+        "ev.spec.legal"
+      ]
+    },
+    {
+      "id": "ROUTE_MATCHES_TEMPLATE",
+      "severity": "error",
+      "rule": "PageSpec.route must be one of its template's routes; template.home is homeRouteOnly ('/').",
+      "evidenceIds": [
+        "ev.src.app"
+      ]
+    },
+    {
+      "id": "NODE_SEQUENCE_MATCHES_TEMPLATE",
+      "severity": "error",
+      "rule": "Node (section,variant) sequence must equal the declared template's node list in order: every required node present, no extra or repeated nodes, no reordering.",
+      "evidenceIds": [
+        "ev.src.app",
+        "ev.src.footer-order"
+      ]
+    },
+    {
+      "id": "SHELL_FIRST",
+      "severity": "error",
+      "rule": "All shell.* nodes precede every scroll-content node (fixed overlays mounted before the scroll story).",
+      "evidenceIds": [
+        "ev.src.app"
+      ]
+    },
+    {
+      "id": "ONE_HERO",
+      "severity": "error",
+      "rule": "Exactly one hero.copy, and it is the first non-shell node, immediately followed by hero.video.",
+      "exception": "template.legal has no hero but is not generation-eligible, so the rule never runs against it.",
+      "evidenceIds": [
+        "ev.src.hero"
+      ]
+    },
+    {
+      "id": "DECK_GROUP_CONTIGUOUS",
+      "severity": "error",
+      "rule": "deck.word-reveal-copy, deck.email-stack, deck.triage-game are contiguous and in that order (one sticky frame, one 3-step scroll float).",
+      "evidenceIds": [
+        "ev.src.deck"
+      ]
+    },
+    {
+      "id": "EXPAND_GROUP_CONTIGUOUS",
+      "severity": "error",
+      "rule": "expand.compose-demo, expand.be-here-now, expand.search-demo, expand.notifications-demo are contiguous and in that order (one sticky frame, one integer state 0..6).",
+      "evidenceIds": [
+        "ev.src.expand-state"
+      ]
+    },
+    {
+      "id": "FOOTER_SEQUENCE",
+      "severity": "error",
+      "rule": "Final three nodes are footer.launch, proof.reviews-carousel, footer.bar (real DOM order inside <footer>); footer.bar is last.",
+      "evidenceIds": [
+        "ev.src.footer-order"
+      ]
+    },
+    {
+      "id": "STOP_COUNT_MATCHES_TEMPLATE",
+      "severity": "error",
+      "rule": "shell.progress-dots content.stopCount equals the template's scrollStops length (13).",
+      "evidenceIds": [
+        "ev.src.progress-dots-frames",
+        "ev.spec.viewports"
+      ]
+    },
+    {
+      "id": "HINT_STOPS_VALID",
+      "severity": "error",
+      "rule": "shell.scroll-hint hiddenOnStops must all be stop ids of the template.",
+      "evidenceIds": [
+        "ev.src.scroll-hint"
+      ]
+    },
+    {
+      "id": "MOTION_MATCHES_CONTRACT",
+      "severity": "error",
+      "rule": "Each node's motion pattern/trigger/reducedMotionFallback equals its section contract's motion.",
+      "evidenceIds": [
+        "ev.css.reduced-motion"
+      ]
+    },
+    {
+      "id": "MAX_WORDS",
+      "severity": "error",
+      "rule": "Every budgeted text field obeys its section contract's fieldBudgets maxWords.",
+      "evidenceIds": [
+        "ev.src.content-hero"
+      ]
+    },
+    {
+      "id": "ASSET_ROLE_POLICY",
+      "severity": "error",
+      "rule": "assetRef must be in the role's allowedRefs; generate-new-allowed roles carry no assetRef; sender-photo avatars must be bound to the card's sender.",
+      "evidenceIds": [
+        "ev.src.content-emails"
+      ]
+    },
+    {
+      "id": "VIDEO_BUDGET",
+      "severity": "warn",
+      "rule": "Warn if more than 3 nodes carry video asset roles (the measured page has exactly 3: hero.video, expand.compose-demo, expand.be-here-now).",
+      "evidenceIds": [
+        "ev.spec.assets"
+      ]
+    },
+    {
+      "id": "EMAIL_STACK_SWIPES",
+      "severity": "warn",
+      "rule": "Warn if deck.email-stack has fewer than 4 cards: the source shows 2 swiped cards plus a visible stack behind them.",
+      "evidenceIds": [
+        "ev.src.emailstack-container"
+      ]
+    }
+  ],
+  "notEnforced": [
+    {
+      "id": "NO_ADJACENT_SAME_CATEGORY",
+      "reason": "Deliberately not applied: on this site same-category adjacency is the structure itself (SHELL x4, DECK x3, EXPAND x4 share one sticky frame each). Enforcing it would reject the only real page."
+    }
+  ]
+}

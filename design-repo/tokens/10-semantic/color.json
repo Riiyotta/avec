@@ -1,0 +1,150 @@
+{
+  "$description": "Semantic colour intents. Every $value is an alias to a foundation token; themes/light.json resolves them.",
+  "semantic": {
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.foreground}",
+        "measuredFrom": [
+          "ev.css.body"
+        ]
+      },
+      "display": {
+        "$type": "color",
+        "$value": "{color.black}",
+        "measuredFrom": [
+          "ev.spec.type-measured"
+        ]
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "measuredFrom": [
+          "ev.src.expand-headline"
+        ]
+      },
+      "placeholder": {
+        "$type": "color",
+        "$value": "{color.soft}",
+        "measuredFrom": [
+          "ev.css.text-soft"
+        ]
+      },
+      "source-label": {
+        "$type": "color",
+        "$value": "{color.neutral-500}",
+        "measuredFrom": [
+          "ev.src.expand-sources"
+        ]
+      },
+      "reply-hint": {
+        "$type": "color",
+        "$value": "{color.blue-100}",
+        "measuredFrom": [
+          "ev.src.emailstack-reply"
+        ]
+      }
+    },
+    "surface": {
+      "page": {
+        "$type": "color",
+        "$value": "{color.background}",
+        "measuredFrom": [
+          "ev.css.body"
+        ]
+      },
+      "card": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "measuredFrom": [
+          "ev.src.emailstack-card"
+        ]
+      },
+      "panel": {
+        "$type": "color",
+        "$value": "{color.surface}",
+        "measuredFrom": [
+          "ev.src.deck-bg"
+        ]
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.surface-alt}",
+        "measuredFrom": [
+          "ev.src.cta-sizes"
+        ]
+      }
+    },
+    "action": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.brand}",
+        "measuredFrom": [
+          "ev.src.notify-modal"
+        ]
+      },
+      "primary-hover": {
+        "$type": "color",
+        "$value": "{color.brand-alt}",
+        "measuredFrom": [
+          "ev.css.brand-alt"
+        ]
+      }
+    },
+    "state": {
+      "done": {
+        "$type": "color",
+        "$value": "{color.accent-green}",
+        "measuredFrom": [
+          "ev.src.deck-bg"
+        ]
+      },
+      "later": {
+        "$type": "color",
+        "$value": "{color.accent-sky}",
+        "measuredFrom": [
+          "ev.src.deck-bg"
+        ]
+      },
+      "record": {
+        "$type": "color",
+        "$value": "{color.accent-red}",
+        "measuredFrom": [
+          "ev.src.expand-stage-bg"
+        ]
+      }
+    },
+    "stage": {
+      "compose": {
+        "$type": "color",
+        "$value": "{color.brand}",
+        "measuredFrom": [
+          "ev.src.expand-stage-bg"
+        ]
+      },
+      "drafted": {
+        "$type": "color",
+        "$value": "{color.accent-amber}",
+        "measuredFrom": [
+          "ev.src.expand-stage-bg"
+        ]
+      }
+    },
+    "feedback": {
+      "correct": {
+        "$type": "color",
+        "$value": "{color.green-700}",
+        "measuredFrom": [
+          "ev.src.game-intro"
+        ]
+      },
+      "incorrect": {
+        "$type": "color",
+        "$value": "{color.red-700}",
+        "measuredFrom": [
+          "ev.src.game-intro"
+        ]
+      }
+    }
+  }
+}

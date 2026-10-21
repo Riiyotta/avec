@@ -1,0 +1,55 @@
+{
+  "elevation": {
+    "header": {
+      "$type": "shadow",
+      "$value": "0px 1px 21px 0px rgba(0,0,0,.05), 0px 11px 9px 0px rgba(0,0,0,.03), 0px 2px 4px 0px rgba(0,0,0,.02)",
+      "measuredFrom": [
+        "ev.src.header",
+        "ev.spec.shadows"
+      ]
+    },
+    "lg": {
+      "$type": "shadow",
+      "$value": "0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1)",
+      "measuredFrom": [
+        "ev.css.shadow-lg"
+      ]
+    },
+    "xl": {
+      "$type": "shadow",
+      "$value": "0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1)",
+      "measuredFrom": [
+        "ev.css.shadow-xl"
+      ]
+    },
+    "email-card": {
+      "$type": "shadow",
+      "$value": "0 0 0 0.33px rgba(0,0,0,.07), 0 2px 8px 0 rgba(0,0,0,.06)",
+      "measuredFrom": [
+        "ev.src.emailstack-card"
+      ]
+    },
+    "glass": {
+      "$type": "shadow",
+      "$value": "inset 0 -2px 4px -2px rgba(0,0,0,.08), 0 2px 2px -2px rgba(0,0,0,.08), 0 4px 4px -2px rgba(0,0,0,.08), inset 0 8px 8px -8px #fff, inset 0 4px 2px -4px #fff",
+      "measuredFrom": [
+        "ev.src.expand-glass",
+        "ev.spec.shadows"
+      ]
+    },
+    "notif-card": {
+      "$type": "shadow",
+      "$value": "0 12px 32px -18px rgba(0,0,0,.5)",
+      "measuredFrom": [
+        "ev.src.expand-notif-card"
+      ]
+    },
+    "be-here-now-glow": {
+      "$type": "shadow",
+      "$value": "inset 0 4px 14px 0 #FFFFFF60, 0 0 24px 0 #008CFF90",
+      "measuredFrom": [
+        "ev.src.expand-btn-shadow"
+      ]
+    }
+  }
+}

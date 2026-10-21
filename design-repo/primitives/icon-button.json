@@ -1,0 +1,19 @@
+{
+  "id": "primitive.icon-button",
+  "layer": "primitive",
+  "purpose": "40px round translucent media control (pause/play/replay).",
+  "props": {
+    "state": [
+      "pause",
+      "play",
+      "replay"
+    ]
+  },
+  "tokens": [
+    "blur.sm",
+    "iconSize.video-control"
+  ],
+  "evidenceIds": [
+    "ev.src.herovideo"
+  ]
+}

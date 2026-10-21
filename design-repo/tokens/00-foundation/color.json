@@ -1,0 +1,125 @@
+{
+  "$description": "Foundation colours. Hex values are the #hex fallbacks the original compiled CSS ships beside its lab() values. neutral-700 (#404040) is in :root but only used by the dormant ScrollStory laptop, so it is deliberately excluded.",
+  "color": {
+    "background": {
+      "$type": "color",
+      "$value": "#f7f6f4",
+      "measuredFrom": [
+        "ev.css.root-tokens",
+        "ev.spec.color-table"
+      ]
+    },
+    "foreground": {
+      "$type": "color",
+      "$value": "#171717",
+      "measuredFrom": [
+        "ev.css.root-tokens"
+      ]
+    },
+    "black": {
+      "$type": "color",
+      "$value": "#000000",
+      "measuredFrom": [
+        "ev.css.root-tokens"
+      ]
+    },
+    "white": {
+      "$type": "color",
+      "$value": "#ffffff",
+      "measuredFrom": [
+        "ev.css.root-tokens"
+      ]
+    },
+    "brand": {
+      "$type": "color",
+      "$value": "#0050ff",
+      "measuredFrom": [
+        "ev.css.root-tokens"
+      ]
+    },
+    "brand-alt": {
+      "$type": "color",
+      "$value": "#226ef4",
+      "measuredFrom": [
+        "ev.css.brand-alt"
+      ]
+    },
+    "accent-green": {
+      "$type": "color",
+      "$value": "#03ce4c",
+      "measuredFrom": [
+        "ev.css.root-tokens"
+      ]
+    },
+    "accent-red": {
+      "$type": "color",
+      "$value": "#f73c1d",
+      "measuredFrom": [
+        "ev.css.root-tokens"
+      ]
+    },
+    "accent-sky": {
+      "$type": "color",
+      "$value": "#36b7ff",
+      "measuredFrom": [
+        "ev.css.root-tokens"
+      ]
+    },
+    "accent-amber": {
+      "$type": "color",
+      "$value": "#ffac1f",
+      "measuredFrom": [
+        "ev.css.accent-amber"
+      ]
+    },
+    "surface": {
+      "$type": "color",
+      "$value": "#e5e2dc",
+      "measuredFrom": [
+        "ev.css.root-tokens"
+      ]
+    },
+    "surface-alt": {
+      "$type": "color",
+      "$value": "#edecea",
+      "measuredFrom": [
+        "ev.css.surface-alt"
+      ]
+    },
+    "soft": {
+      "$type": "color",
+      "$value": "#a0b4c4",
+      "measuredFrom": [
+        "ev.css.text-soft"
+      ]
+    },
+    "green-700": {
+      "$type": "color",
+      "$value": "#008138",
+      "measuredFrom": [
+        "ev.css.root-text"
+      ]
+    },
+    "red-700": {
+      "$type": "color",
+      "$value": "#bf000f",
+      "measuredFrom": [
+        "ev.css.root-text"
+      ]
+    },
+    "blue-100": {
+      "$type": "color",
+      "$value": "#dbeafe",
+      "measuredFrom": [
+        "ev.css.root-text"
+      ]
+    },
+    "neutral-500": {
+      "$type": "color",
+      "$value": "#737373",
+      "measuredFrom": [
+        "ev.css.root-text"
+      ]
+    }
+  }
+}

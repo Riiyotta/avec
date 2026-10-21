@@ -1,0 +1,34 @@
+{
+  "id": "primitive.cta-button",
+  "layer": "primitive",
+  "purpose": "Bordered pill-rect CTA (link or button) with leading icon; sizes sm (header, 46px) and lg (hero/footer, 64px).",
+  "props": {
+    "size": [
+      "sm",
+      "lg"
+    ],
+    "label": "string",
+    "icon": "assetRole thirdparty.store-badge | thirdparty.platform-icon",
+    "kind": [
+      "link",
+      "button"
+    ]
+  },
+  "tokens": [
+    "component.cta.border",
+    "component.cta.radius-sm",
+    "component.cta.radius-lg",
+    "component.cta.press-scale",
+    "semantic.surface.hover",
+    "type.button",
+    "type.body"
+  ],
+  "states": {
+    "hover": "bg surface-alt (hover:hover only)",
+    "active": "scale .97, transform 120ms"
+  },
+  "evidenceIds": [
+    "ev.src.cta-sizes",
+    "ev.src.cta-url"
+  ]
+}

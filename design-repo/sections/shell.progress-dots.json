@@ -1,0 +1,109 @@
+{
+  "id": "shell.progress-dots",
+  "layer": "section",
+  "category": "SHELL",
+  "purpose": "Wayfinding for a 13-stop scroll story: shows position and allows direct jumps.",
+  "sourceComponent": "src/components/ProgressDots.jsx",
+  "scrollStops": [
+    "hero",
+    "deck_intro",
+    "deck_swipe_done",
+    "deck_swipe_later",
+    "triage_game",
+    "compose_intro",
+    "compose_record",
+    "compose_drafted",
+    "low_importance",
+    "deck_empty",
+    "search",
+    "notifications",
+    "footer"
+  ],
+  "variants": [
+    "default"
+  ],
+  "constraints": {
+    "onePerPage": true,
+    "required": true,
+    "position": "shell",
+    "fixed": true
+  },
+  "contentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "stopCount",
+      "previewFrames"
+    ],
+    "properties": {
+      "stopCount": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "previewFrames": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "media.section-preview-frame"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^(/assets/|inline:)"
+          }
+        }
+      }
+    }
+  },
+  "fieldBudgets": {},
+  "motion": {
+    "pattern": "dot-opacity-scrub",
+    "trigger": "scroll-scrub",
+    "reducedMotionFallback": "instant-state-change",
+    "durationTokens": [
+      "press",
+      "fast"
+    ],
+    "notes": "opacity = 1 passed, 0.1+0.9*fraction next, 0.1 later; tooltip 120ms scale/blur"
+  },
+  "responsive": [
+    {
+      "query": "max-md",
+      "changes": [
+        "hidden"
+      ]
+    },
+    {
+      "query": "min-width:1220px",
+      "changes": [
+        "right-6 instead of right-2"
+      ]
+    }
+  ],
+  "accessibility": [
+    "each dot is a button with sr-only 'Scroll to section N'",
+    "aria-current=step on active dot",
+    "ArrowUp/ArrowDown step between stops"
+  ],
+  "assetRoles": [
+    "media.section-preview-frame"
+  ],
+  "referenceContent": {
+    "stopCount": 13,
+    "previewFrames": {
+      "assetRole": "media.section-preview-frame"
+    }
+  },
+  "evidenceIds": [
+    "ev.src.progress-dots",
+    "ev.src.progress-dots-paint",
+    "ev.src.progress-dots-frames",
+    "ev.spec.dots"
+  ],
+  "notes": "stopCount must equal the template's scrollStops length (13). All 13 tooltip frames are present on disk."
+}

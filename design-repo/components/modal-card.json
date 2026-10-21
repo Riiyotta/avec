@@ -1,0 +1,18 @@
+{
+  "id": "component.modal-card",
+  "layer": "component",
+  "purpose": "Centered 28px-radius dialog card on blurred black/50 overlay.",
+  "composes": [
+    "primitive.cta-button"
+  ],
+  "tokens": [
+    "component.modal.radius",
+    "component.modal.overlay",
+    "semantic.action.primary",
+    "semantic.action.primary-hover",
+    "semantic.text.placeholder"
+  ],
+  "evidenceIds": [
+    "ev.src.notify-modal"
+  ]
+}

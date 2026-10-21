@@ -1,0 +1,614 @@
+{
+  "pageSpecVersion": "1.0.0",
+  "template": "template.home",
+  "route": "/",
+  "theme": "light",
+  "meta": {
+    "title": "Avec - Handle your inbox in one minute a day",
+    "description": "Made for people who hate email. Works with your existing Gmail account. Download for free on the App Store."
+  },
+  "nodes": [
+    {
+      "id": "n00",
+      "section": "shell.header",
+      "variant": "default",
+      "content": {
+        "logo": {
+          "assetRole": "brand.wordmark",
+          "assetRef": "/assets/avec-logo.svg"
+        },
+        "primaryCta": {
+          "label": "Get early access",
+          "href": "https://testflight.apple.com/join/3JR2HxjZ",
+          "icon": {
+            "assetRole": "thirdparty.store-badge",
+            "assetRef": "/assets/testflight.png"
+          }
+        },
+        "secondaryCta": {
+          "label": "Get notified",
+          "action": "open-notify-modal",
+          "icon": {
+            "assetRole": "thirdparty.platform-icon"
+          }
+        }
+      },
+      "motion": {
+        "pattern": "static",
+        "trigger": "none",
+        "reducedMotionFallback": "static",
+        "durationTokens": [
+          "press"
+        ]
+      }
+    },
+    {
+      "id": "n01",
+      "section": "shell.progress-dots",
+      "variant": "default",
+      "content": {
+        "stopCount": 13,
+        "previewFrames": {
+          "assetRole": "media.section-preview-frame"
+        }
+      },
+      "motion": {
+        "pattern": "dot-opacity-scrub",
+        "trigger": "scroll-scrub",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "press",
+          "fast"
+        ]
+      }
+    },
+    {
+      "id": "n02",
+      "section": "shell.scroll-hint",
+      "variant": "default",
+      "content": {
+        "leadText": "Scroll or use",
+        "trailText": "to page through this site",
+        "hiddenOnStops": [
+          "hero",
+          "triage_game",
+          "compose_record",
+          "search",
+          "notifications",
+          "footer"
+        ],
+        "idleDelayMs": 5000
+      },
+      "motion": {
+        "pattern": "idle-fade-float",
+        "trigger": "time",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "stage",
+          "fast"
+        ]
+      }
+    },
+    {
+      "id": "n03",
+      "section": "shell.notify-modal",
+      "variant": "default",
+      "content": {
+        "title": "Get notified",
+        "subtitle": "We’ll email you when Avec is available for more platforms",
+        "inputPlaceholder": "you@example.com",
+        "submitLabel": "Submit",
+        "retryLabel": "Try again",
+        "successMessage": "You're on the list!",
+        "icon": {
+          "assetRole": "thirdparty.platform-icon"
+        }
+      },
+      "motion": {
+        "pattern": "blur-scale-in",
+        "trigger": "interaction",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "modal"
+        ]
+      }
+    },
+    {
+      "id": "n04",
+      "section": "hero.copy",
+      "variant": "default",
+      "content": {
+        "headline": "Handle your inbox in one minute a day",
+        "subheadline": "Made for people who hate email. Works with your existing Gmail account.",
+        "cta": {
+          "label": "Get early access",
+          "href": "https://testflight.apple.com/join/3JR2HxjZ",
+          "icon": {
+            "assetRole": "thirdparty.store-badge",
+            "assetRef": "/assets/testflight.png"
+          }
+        },
+        "rating": {
+          "storeBadge": {
+            "assetRole": "thirdparty.store-badge",
+            "assetRef": "/assets/app-store-wordmark.svg"
+          },
+          "reviewCountLabel": "400+ reviews",
+          "score": "5.0",
+          "stars": 5
+        }
+      },
+      "motion": {
+        "pattern": "static",
+        "trigger": "none",
+        "reducedMotionFallback": "static",
+        "durationTokens": [
+          "press"
+        ]
+      }
+    },
+    {
+      "id": "n05",
+      "section": "hero.video",
+      "variant": "default",
+      "content": {
+        "primaryVideo": {
+          "assetRole": "media.hero-demo-video",
+          "assetRef": "/assets/hero-triage.mp4"
+        },
+        "loopVideo": {
+          "assetRole": "media.ambient-video",
+          "assetRef": "/assets/hero-waves.mp4"
+        },
+        "overlayCtaLabel": "Scroll to learn more"
+      },
+      "motion": {
+        "pattern": "video-crossfade",
+        "trigger": "load",
+        "reducedMotionFallback": "instant-transitions-video-unchanged",
+        "durationTokens": [
+          "crossfade"
+        ]
+      }
+    },
+    {
+      "id": "n06",
+      "section": "deck.word-reveal-copy",
+      "variant": "default",
+      "content": {
+        "chunks": [
+          "Avec prioritizes your inbox and shows your important emails one by one.",
+          "Swipe to mark them done",
+          "or save for later."
+        ],
+        "aside": "(Yes, it's like Tinder for email)"
+      },
+      "motion": {
+        "pattern": "char-reveal-scrub",
+        "trigger": "scroll-scrub",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "word-step"
+        ]
+      }
+    },
+    {
+      "id": "n07",
+      "section": "deck.email-stack",
+      "variant": "default",
+      "content": {
+        "cards": [
+          {
+            "subject": "Location change for tonight's practice",
+            "sender": "Coach Marcus",
+            "time": "2 days ago",
+            "to": "You and 23 others",
+            "body": "Hi Soccer Families,\n\nDue to flooding at our usual field, tonight's practice has been moved to East Field at Lincoln Park. Same time, 5:30 PM. Street parking available on Elm. Enter through the north gate.\n\nSee you on the field!\nCoach Marcus",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/coach-marcus.png"
+            }
+          },
+          {
+            "subject": "Group gift for Sarah's 40th?",
+            "sender": "Nina Park",
+            "time": "2 days ago",
+            "to": "You, Matt C, Elise R",
+            "body": "Hey all,\n\nSo we're doing a group gift for Sarah's 40th right? I know she's been eyeing that Le Creuset Dutch oven forever. Found a few color options here. Can everyone vote?\n\nI'll order but need to know by Friday so it arrives in time. Venmo me whenever, I'll send the total once we pick.\n\nNina",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/nina-park.png"
+            }
+          },
+          {
+            "subject": "Finch Team IRL in Austin",
+            "sender": "Dana Chen",
+            "time": "2 days ago",
+            "to": "You",
+            "body": "So the Finch deal is moving faster than expected– their team wants to meet in person while you're in Austin next week. Can you make Thursday afternoon work? I know you were planning to fly back that morning, but this could lock in the whole contract.\n\nAlso, would you be okay leading the conversation solo? I'll prep you beforehand, but I can't make the trip.\n\nDana",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/dana-chen.png"
+            }
+          },
+          {
+            "subject": "Your storage is almost full",
+            "sender": "Dropbox",
+            "time": "2 days ago",
+            "to": "You",
+            "body": "You've used 94% of your storage. Once you reach your limit, files will stop syncing across your devices.\n\nUpgrade to Dropbox Plus for 2TB of space and uninterrupted access to everything you've saved.",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/dropbox.png"
+            }
+          },
+          {
+            "subject": "Re: Candidate Interview",
+            "sender": "Tomás Reyes",
+            "time": "2 days ago",
+            "to": "You, Julie M, Brooks C",
+            "body": "Hi all,\n\nNeed everyone's notes on Janelle Morris (PM candidate) before I send her our decision. My take: strong communicator, but I'm wondering about ramp time on Austin.\n\nCan you drop your thoughts in the doc by Thursday morning?",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/tomas-reyes.png"
+            }
+          },
+          {
+            "subject": "Permission slip due Friday: 2nd Grade Spring Nature Walk",
+            "sender": "Riverside Elementary School",
+            "time": "2 days ago",
+            "to": "2nd Grade Families",
+            "body": "A reminder that signed permission slips for the 2nd Grade Spring Nature Walk are due this Friday, May 9th. The trip will take place at Marin Creek Park on May 14th.\n\nPlease return forms to your child's teacher.\n\nThank you!",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/riverside-elementary.png"
+            }
+          },
+          {
+            "subject": "Your flight to Austin is ready for check-in",
+            "sender": "Pacific Air Lines",
+            "time": "2 days ago",
+            "to": "You",
+            "body": "Check-in is now open for Flight PA 284 to Austin–Bergstrom, departing tomorrow at 7:45am from Terminal B, Gate 22.\n\nDownload your boarding pass for faster airport screening.\n\nHave a great flight!",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/pacific-airlines.png"
+            }
+          },
+          {
+            "subject": "A spot opened up in Saturday's class",
+            "sender": "PilatesPass",
+            "time": "2 days ago",
+            "to": "You",
+            "body": "A spot just opened up in Saturday's 9am Pilates with Maya — a class you've been waitlisted for.\n\nConfirm your booking now, before it's offered to the next member.",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/pilates-pass.png"
+            }
+          },
+          {
+            "subject": "Hey, are you grabbing Leo today?",
+            "sender": "Jordan",
+            "time": "2 days ago",
+            "to": "You",
+            "body": "Quick one — are you picking Leo up or should I swing by after my 4pm? Just need to know before 3 so I can plan.\n\nAlso I think he left his cleats at yours. Can you check?\n\nThanks babe",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/jordan.png"
+            }
+          },
+          {
+            "subject": "Get The Gist: Leadership, Tech & Culture",
+            "sender": "The Gist",
+            "time": "2 days ago",
+            "to": "You",
+            "body": "5 New stories for Wednesday:\n\nAre flat hierarchies making a comeback?\nThe AI tools reshaping product teams\nWhat Gen Z wants\nThe return of the 40-hour work week\nRIP Annual performance reviews\n\n...and more. Tap to read your full briefing.",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/the-gist.png"
+            }
+          },
+          {
+            "subject": "Your April statement is ready",
+            "sender": "Pacific Gas & Electric",
+            "time": "2 days ago",
+            "to": "You",
+            "body": "Dear Customer,\n\nYour April statement is now available.\n\nAmount due: $127.43\nDue date: May 2, 2025\n\nYou're enrolled in autopay. The total Amount Due will be automatically debited from your account on the 15th of the month.\n\nThank you,\nPG&E",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/pacific-gas-electric.png"
+            }
+          },
+          {
+            "subject": "Can we swap pick-up days this week?",
+            "sender": "Sarah Chen-Ramirez",
+            "time": "2 days ago",
+            "to": "You, Jordan",
+            "body": "Hi! I have a conflict Thursday morning and won't be able to do pick-up. Any chance you'd be willing to swap days this week?\n\nI'm flexible on which day works for you. Friday or Monday both work on my end.\n\nThank you!",
+            "avatar": {
+              "assetRole": "avatar.sender-photo",
+              "assetRef": "/assets/avatars/sara-chen-ramirez.png"
+            }
+          }
+        ],
+        "swipeLabels": {
+          "right": "Done",
+          "left": "Later"
+        },
+        "replyLabel": "Reply",
+        "replyHint": "Hold to voice compose"
+      },
+      "motion": {
+        "pattern": "card-swipe-scrub",
+        "trigger": "scroll-scrub",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "card"
+        ]
+      }
+    },
+    {
+      "id": "n08",
+      "section": "deck.triage-game",
+      "variant": "default",
+      "content": {
+        "chip": "Experience it yourself",
+        "title": "Play Avec Stack Challenge",
+        "durationSeconds": 20,
+        "instructionsPointer": "Use the arrow keys to match each card's label",
+        "instructionsTouch": "Tap/swipe to match each card's label",
+        "startPromptPointer": "Click or press Enter to begin",
+        "startPromptTouch": "Tap to begin",
+        "scoring": {
+          "correct": 1,
+          "incorrect": -1
+        }
+      },
+      "motion": {
+        "pattern": "game-state-keyframes",
+        "trigger": "interaction",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "card-enter",
+          "card"
+        ]
+      }
+    },
+    {
+      "id": "n09",
+      "section": "expand.compose-demo",
+      "variant": "default",
+      "content": {
+        "captions": {
+          "reply": "Use voice to send emails in seconds. Say a few key points and let Avec draft a perfect email for you.",
+          "dictation": "“Okay yeah I can do Thursday afternoon, we can change my flight to the evening, and",
+          "dictationCont": "yes I can lead it — maybe we can do a quick prep Wednesday?”",
+          "learn": "Avec writes emails that sound distinctively like you. Review it, tweak it, and send it.",
+          "triage": "Not every email deserves the same attention. Handle less important emails with just one swipe."
+        },
+        "phoneVideo": {
+          "assetRole": "media.phone-demo-video",
+          "assetRef": "/assets/phone-demo.webm"
+        },
+        "stageSequence": [
+          "surface",
+          "accent-red",
+          "brand",
+          "accent-amber",
+          "surface"
+        ]
+      },
+      "motion": {
+        "pattern": "clip-stage-state",
+        "trigger": "scroll-state",
+        "reducedMotionFallback": "instant-transitions-video-unchanged",
+        "durationTokens": [
+          "stage",
+          "phone-md",
+          "fast"
+        ]
+      }
+    },
+    {
+      "id": "n10",
+      "section": "expand.be-here-now",
+      "variant": "default",
+      "content": {
+        "label": "Be here now",
+        "expandVideo": {
+          "assetRole": "media.ambient-video",
+          "assetRef": "/assets/wave_desktop.webm"
+        }
+      },
+      "motion": {
+        "pattern": "button-expand-state",
+        "trigger": "scroll-state",
+        "reducedMotionFallback": "instant-transitions-video-unchanged",
+        "durationTokens": [
+          "stage",
+          "fast"
+        ]
+      }
+    },
+    {
+      "id": "n11",
+      "section": "expand.search-demo",
+      "variant": "default",
+      "content": {
+        "headline": "Find anything in seconds. Instead of sifting through threads, just ask.",
+        "query": "Find my 1099s from last year",
+        "answer": "You received a 2025 1099-NEC from Smith Engineers LLC on January 11, 2026 and a 1099 Consolidated from Acorns.",
+        "sources": [
+          {
+            "initial": "SE",
+            "name": "Smith Engineers LLC",
+            "subject": "Your 1099 Tax Documents are available",
+            "preview": "Hi Maura, your 1099 is now available to dow...",
+            "avatar": {
+              "assetRole": "avatar.initials",
+              "colorToken": "accent-green"
+            }
+          },
+          {
+            "initial": "A",
+            "name": "Acorns",
+            "subject": "2025 Tax information from Acorns",
+            "preview": "We wanted to give you a heads up that 2025 Acorns tax forms will be available in the coming weeks.",
+            "avatar": {
+              "assetRole": "avatar.initials",
+              "colorToken": "accent-sky"
+            }
+          }
+        ]
+      },
+      "motion": {
+        "pattern": "typing-query-state",
+        "trigger": "scroll-state",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "type-char",
+          "headline",
+          "card"
+        ]
+      }
+    },
+    {
+      "id": "n12",
+      "section": "expand.notifications-demo",
+      "variant": "default",
+      "content": {
+        "headline": "Stay informed, without opening your inbox. Avec sends smart notifications that tell you what’s happening and what to do next.",
+        "sender": "Pacific Airlines",
+        "time": "9:41 AM",
+        "bannerBody": "New departure Thursday 7:45pm. Seat assignment 2A. Download boarding pass.",
+        "emailSubject": "Updated departure time and seat assignment for your flight",
+        "emailBody": "Hi Diego,\n\nYour Pacific Airlines flight has a new departure time: Thursday at 7:45 PM.\nSeat assignment: 2A\n\nYour boarding pass is now available. Please download it before arriving at the airport, and be sure to check your flight status again before heading to the terminal.\n\nThank you for flying with Pacific Airlines.\n\nSafe travels,\nPacific Airlines Customer Care",
+        "bannerIcon": {
+          "assetRole": "brand.app-icon",
+          "assetRef": "/assets/square-logo-195.png"
+        },
+        "senderAvatar": {
+          "assetRole": "avatar.sender-photo",
+          "assetRef": "/assets/avatars/pacific-airlines.png"
+        }
+      },
+      "motion": {
+        "pattern": "card-stagger-state",
+        "trigger": "scroll-state",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "stage",
+          "card"
+        ]
+      }
+    },
+    {
+      "id": "n13",
+      "section": "footer.launch",
+      "variant": "default",
+      "content": {
+        "headlineLines": [
+          "Avec is available for",
+          "free on the App Store."
+        ],
+        "glyph": {
+          "assetRole": "brand.glyph",
+          "assetRef": "inline:Icons.AvecLogo"
+        },
+        "primaryCta": {
+          "label": "Get early access",
+          "href": "https://testflight.apple.com/join/3JR2HxjZ",
+          "icon": {
+            "assetRole": "thirdparty.store-badge",
+            "assetRef": "/assets/testflight.png"
+          }
+        },
+        "secondaryCta": {
+          "label": "Get notified",
+          "action": "open-notify-modal",
+          "icon": {
+            "assetRole": "thirdparty.platform-icon"
+          }
+        }
+      },
+      "motion": {
+        "pattern": "static",
+        "trigger": "none",
+        "reducedMotionFallback": "static",
+        "durationTokens": [
+          "press"
+        ]
+      }
+    },
+    {
+      "id": "n14",
+      "section": "proof.reviews-carousel",
+      "variant": "default",
+      "content": {
+        "reviewIds": [
+          "review.01",
+          "review.02",
+          "review.03",
+          "review.04",
+          "review.05",
+          "review.06"
+        ],
+        "starsPerReview": 5
+      },
+      "motion": {
+        "pattern": "auto-advance-carousel",
+        "trigger": "time",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "carousel-pause"
+        ]
+      }
+    },
+    {
+      "id": "n15",
+      "section": "footer.bar",
+      "variant": "default",
+      "content": {
+        "copyright": "Copyright © 2025-2026 Nearly Extraterrestrial Technology, Inc.",
+        "socialLinks": [
+          {
+            "label": "X",
+            "href": "https://x.com/avec"
+          },
+          {
+            "label": "YouTube",
+            "href": "https://www.youtube.com/@avecmail"
+          },
+          {
+            "label": "Instagram",
+            "href": "https://www.instagram.com/avecmail/"
+          },
+          {
+            "label": "LinkedIn",
+            "href": "https://www.linkedin.com/company/avec-ai"
+          },
+          {
+            "label": "hi@avec.ai",
+            "href": "mailto:hi@avec.ai"
+          }
+        ],
+        "legalLinks": [
+          {
+            "label": "Terms of Service",
+            "href": "/terms"
+          },
+          {
+            "label": "Privacy Policy",
+            "href": "/privacy-policy"
+          }
+        ]
+      },
+      "motion": {
+        "pattern": "static",
+        "trigger": "none",
+        "reducedMotionFallback": "static",
+        "durationTokens": []
+      }
+    }
+  ]
+}

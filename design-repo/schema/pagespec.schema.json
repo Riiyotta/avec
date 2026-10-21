@@ -1,0 +1,1757 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "avec-design-repo/pagespec.schema.json",
+  "title": "Avec PageSpec",
+  "description": "Machine contract for a generated Avec page composition. Structure-level rules JSON Schema cannot express live in semantic_validate.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "pageSpecVersion",
+    "template",
+    "route",
+    "theme",
+    "meta",
+    "nodes"
+  ],
+  "properties": {
+    "pageSpecVersion": {
+      "const": "1.0.0"
+    },
+    "template": {
+      "enum": [
+        "template.home"
+      ]
+    },
+    "route": {
+      "type": "string",
+      "pattern": "^/[a-z0-9\\-/]*$"
+    },
+    "theme": {
+      "enum": [
+        "light"
+      ]
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "description"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 70
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/node"
+      }
+    }
+  },
+  "definitions": {
+    "motion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pattern",
+        "trigger",
+        "reducedMotionFallback"
+      ],
+      "properties": {
+        "pattern": {
+          "enum": [
+            "auto-advance-carousel",
+            "blur-scale-in",
+            "button-expand-state",
+            "card-stagger-state",
+            "card-swipe-scrub",
+            "char-reveal-scrub",
+            "clip-stage-state",
+            "dot-opacity-scrub",
+            "game-state-keyframes",
+            "idle-fade-float",
+            "static",
+            "typing-query-state",
+            "video-crossfade"
+          ]
+        },
+        "trigger": {
+          "enum": [
+            "interaction",
+            "load",
+            "none",
+            "scroll-scrub",
+            "scroll-state",
+            "time"
+          ]
+        },
+        "reducedMotionFallback": {
+          "enum": [
+            "instant-state-change",
+            "instant-transitions-video-unchanged",
+            "static"
+          ]
+        },
+        "durationTokens": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "card",
+              "card-enter",
+              "carousel-pause",
+              "crossfade",
+              "fast",
+              "headline",
+              "hint-idle",
+              "instant-reduced",
+              "modal",
+              "phone-md",
+              "press",
+              "stage",
+              "type-char",
+              "word-step"
+            ]
+          }
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "section",
+        "variant",
+        "content",
+        "motion"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^n[0-9]{2}$"
+        },
+        "section": {
+          "enum": [
+            "shell.header",
+            "shell.progress-dots",
+            "shell.scroll-hint",
+            "shell.notify-modal",
+            "hero.copy",
+            "hero.video",
+            "deck.word-reveal-copy",
+            "deck.email-stack",
+            "deck.triage-game",
+            "expand.compose-demo",
+            "expand.be-here-now",
+            "expand.search-demo",
+            "expand.notifications-demo",
+            "proof.reviews-carousel",
+            "footer.launch",
+            "footer.bar"
+          ]
+        },
+        "variant": {
+          "type": "string"
+        },
+        "content": {
+          "type": "object"
+        },
+        "motion": {
+          "$ref": "#/definitions/motion"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "shell.header"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.shell.header"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "static"
+                  },
+                  "trigger": {
+                    "const": "none"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "static"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "shell.progress-dots"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.shell.progress-dots"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "dot-opacity-scrub"
+                  },
+                  "trigger": {
+                    "const": "scroll-scrub"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-state-change"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "shell.scroll-hint"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.shell.scroll-hint"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "idle-fade-float"
+                  },
+                  "trigger": {
+                    "const": "time"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-state-change"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "shell.notify-modal"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.shell.notify-modal"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "blur-scale-in"
+                  },
+                  "trigger": {
+                    "const": "interaction"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-state-change"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "hero.copy"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.hero.copy"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "static"
+                  },
+                  "trigger": {
+                    "const": "none"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "static"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "hero.video"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.hero.video"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "video-crossfade"
+                  },
+                  "trigger": {
+                    "const": "load"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-transitions-video-unchanged"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "deck.word-reveal-copy"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.deck.word-reveal-copy"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "char-reveal-scrub"
+                  },
+                  "trigger": {
+                    "const": "scroll-scrub"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-state-change"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "deck.email-stack"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.deck.email-stack"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "card-swipe-scrub"
+                  },
+                  "trigger": {
+                    "const": "scroll-scrub"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-state-change"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "deck.triage-game"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.deck.triage-game"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "game-state-keyframes"
+                  },
+                  "trigger": {
+                    "const": "interaction"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-state-change"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "expand.compose-demo"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.expand.compose-demo"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "clip-stage-state"
+                  },
+                  "trigger": {
+                    "const": "scroll-state"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-transitions-video-unchanged"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "expand.be-here-now"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.expand.be-here-now"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "button-expand-state"
+                  },
+                  "trigger": {
+                    "const": "scroll-state"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-transitions-video-unchanged"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "expand.search-demo"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.expand.search-demo"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "typing-query-state"
+                  },
+                  "trigger": {
+                    "const": "scroll-state"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-state-change"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "expand.notifications-demo"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.expand.notifications-demo"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "card-stagger-state"
+                  },
+                  "trigger": {
+                    "const": "scroll-state"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-state-change"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "proof.reviews-carousel"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.proof.reviews-carousel"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "auto-advance-carousel"
+                  },
+                  "trigger": {
+                    "const": "time"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "instant-state-change"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "footer.launch"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.footer.launch"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "static"
+                  },
+                  "trigger": {
+                    "const": "none"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "static"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "section": {
+                "const": "footer.bar"
+              }
+            },
+            "required": [
+              "section"
+            ]
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "$ref": "#/definitions/content.footer.bar"
+              },
+              "variant": {
+                "enum": [
+                  "default"
+                ]
+              },
+              "motion": {
+                "properties": {
+                  "pattern": {
+                    "const": "static"
+                  },
+                  "trigger": {
+                    "const": "none"
+                  },
+                  "reducedMotionFallback": {
+                    "const": "static"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "content.shell.header": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "logo",
+        "primaryCta",
+        "secondaryCta"
+      ],
+      "properties": {
+        "logo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assetRole"
+          ],
+          "properties": {
+            "assetRole": {
+              "enum": [
+                "brand.wordmark"
+              ]
+            },
+            "assetRef": {
+              "type": "string",
+              "pattern": "^(/assets/|inline:)"
+            }
+          }
+        },
+        "primaryCta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "label",
+            "href",
+            "icon"
+          ],
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "href": {
+              "enum": [
+                "https://testflight.apple.com/join/3JR2HxjZ"
+              ]
+            },
+            "icon": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole"
+              ],
+              "properties": {
+                "assetRole": {
+                  "enum": [
+                    "thirdparty.store-badge"
+                  ]
+                },
+                "assetRef": {
+                  "type": "string",
+                  "pattern": "^(/assets/|inline:)"
+                }
+              }
+            }
+          }
+        },
+        "secondaryCta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "label",
+            "action",
+            "icon"
+          ],
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "action": {
+              "const": "open-notify-modal"
+            },
+            "icon": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole"
+              ],
+              "properties": {
+                "assetRole": {
+                  "enum": [
+                    "thirdparty.platform-icon"
+                  ]
+                },
+                "assetRef": {
+                  "type": "string",
+                  "pattern": "^(/assets/|inline:)"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "content.shell.progress-dots": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stopCount",
+        "previewFrames"
+      ],
+      "properties": {
+        "stopCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "previewFrames": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assetRole"
+          ],
+          "properties": {
+            "assetRole": {
+              "enum": [
+                "media.section-preview-frame"
+              ]
+            },
+            "assetRef": {
+              "type": "string",
+              "pattern": "^(/assets/|inline:)"
+            }
+          }
+        }
+      }
+    },
+    "content.shell.scroll-hint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "leadText",
+        "trailText",
+        "hiddenOnStops",
+        "idleDelayMs"
+      ],
+      "properties": {
+        "leadText": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trailText": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hiddenOnStops": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "hero",
+              "deck_intro",
+              "deck_swipe_done",
+              "deck_swipe_later",
+              "triage_game",
+              "compose_intro",
+              "compose_record",
+              "compose_drafted",
+              "low_importance",
+              "deck_empty",
+              "search",
+              "notifications",
+              "footer"
+            ]
+          }
+        },
+        "idleDelayMs": {
+          "const": 5000
+        }
+      }
+    },
+    "content.shell.notify-modal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "subtitle",
+        "inputPlaceholder",
+        "submitLabel",
+        "retryLabel",
+        "successMessage",
+        "icon"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subtitle": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputPlaceholder": {
+          "const": "you@example.com"
+        },
+        "submitLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retryLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "successMessage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "icon": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assetRole"
+          ],
+          "properties": {
+            "assetRole": {
+              "enum": [
+                "thirdparty.platform-icon"
+              ]
+            },
+            "assetRef": {
+              "type": "string",
+              "pattern": "^(/assets/|inline:)"
+            }
+          }
+        }
+      }
+    },
+    "content.hero.copy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "headline",
+        "subheadline",
+        "cta",
+        "rating"
+      ],
+      "properties": {
+        "headline": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subheadline": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "label",
+            "href",
+            "icon"
+          ],
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "href": {
+              "enum": [
+                "https://testflight.apple.com/join/3JR2HxjZ"
+              ]
+            },
+            "icon": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole"
+              ],
+              "properties": {
+                "assetRole": {
+                  "enum": [
+                    "thirdparty.store-badge"
+                  ]
+                },
+                "assetRef": {
+                  "type": "string",
+                  "pattern": "^(/assets/|inline:)"
+                }
+              }
+            }
+          }
+        },
+        "rating": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "storeBadge",
+            "reviewCountLabel",
+            "score",
+            "stars"
+          ],
+          "properties": {
+            "storeBadge": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole"
+              ],
+              "properties": {
+                "assetRole": {
+                  "enum": [
+                    "thirdparty.store-badge"
+                  ]
+                },
+                "assetRef": {
+                  "type": "string",
+                  "pattern": "^(/assets/|inline:)"
+                }
+              }
+            },
+            "reviewCountLabel": {
+              "const": "400+ reviews"
+            },
+            "score": {
+              "const": "5.0"
+            },
+            "stars": {
+              "const": 5
+            }
+          }
+        }
+      }
+    },
+    "content.hero.video": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "primaryVideo",
+        "loopVideo",
+        "overlayCtaLabel"
+      ],
+      "properties": {
+        "primaryVideo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assetRole"
+          ],
+          "properties": {
+            "assetRole": {
+              "enum": [
+                "media.hero-demo-video"
+              ]
+            },
+            "assetRef": {
+              "type": "string",
+              "pattern": "^(/assets/|inline:)"
+            }
+          }
+        },
+        "loopVideo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assetRole"
+          ],
+          "properties": {
+            "assetRole": {
+              "enum": [
+                "media.ambient-video"
+              ]
+            },
+            "assetRef": {
+              "type": "string",
+              "pattern": "^(/assets/|inline:)"
+            }
+          }
+        },
+        "overlayCtaLabel": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "content.deck.word-reveal-copy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "chunks",
+        "aside"
+      ],
+      "properties": {
+        "chunks": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "aside": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "content.deck.email-stack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cards",
+        "swipeLabels",
+        "replyLabel",
+        "replyHint"
+      ],
+      "properties": {
+        "cards": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "subject",
+              "sender",
+              "time",
+              "to",
+              "body",
+              "avatar"
+            ],
+            "properties": {
+              "subject": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sender": {
+                "type": "string",
+                "minLength": 1
+              },
+              "time": {
+                "type": "string",
+                "minLength": 1
+              },
+              "to": {
+                "type": "string",
+                "minLength": 1
+              },
+              "body": {
+                "type": "string",
+                "minLength": 1
+              },
+              "avatar": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "assetRole"
+                ],
+                "properties": {
+                  "assetRole": {
+                    "enum": [
+                      "avatar.sender-photo",
+                      "avatar.initials"
+                    ]
+                  },
+                  "assetRef": {
+                    "type": "string",
+                    "pattern": "^(/assets/|inline:)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "swipeLabels": {
+          "const": {
+            "right": "Done",
+            "left": "Later"
+          }
+        },
+        "replyLabel": {
+          "const": "Reply"
+        },
+        "replyHint": {
+          "const": "Hold to voice compose"
+        }
+      }
+    },
+    "content.deck.triage-game": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "chip",
+        "title",
+        "durationSeconds",
+        "instructionsPointer",
+        "instructionsTouch",
+        "startPromptPointer",
+        "startPromptTouch",
+        "scoring"
+      ],
+      "properties": {
+        "chip": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "durationSeconds": {
+          "const": 20
+        },
+        "instructionsPointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instructionsTouch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "startPromptPointer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "startPromptTouch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scoring": {
+          "const": {
+            "correct": 1,
+            "incorrect": -1
+          }
+        }
+      }
+    },
+    "content.expand.compose-demo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "captions",
+        "phoneVideo",
+        "stageSequence"
+      ],
+      "properties": {
+        "captions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reply",
+            "dictation",
+            "dictationCont",
+            "learn",
+            "triage"
+          ],
+          "properties": {
+            "reply": {
+              "type": "string",
+              "minLength": 1
+            },
+            "dictation": {
+              "type": "string",
+              "minLength": 1
+            },
+            "dictationCont": {
+              "type": "string",
+              "minLength": 1
+            },
+            "learn": {
+              "type": "string",
+              "minLength": 1
+            },
+            "triage": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "phoneVideo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assetRole"
+          ],
+          "properties": {
+            "assetRole": {
+              "enum": [
+                "media.phone-demo-video"
+              ]
+            },
+            "assetRef": {
+              "type": "string",
+              "pattern": "^(/assets/|inline:)"
+            }
+          }
+        },
+        "stageSequence": {
+          "const": [
+            "surface",
+            "accent-red",
+            "brand",
+            "accent-amber",
+            "surface"
+          ]
+        }
+      }
+    },
+    "content.expand.be-here-now": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "expandVideo"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expandVideo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assetRole"
+          ],
+          "properties": {
+            "assetRole": {
+              "enum": [
+                "media.ambient-video"
+              ]
+            },
+            "assetRef": {
+              "type": "string",
+              "pattern": "^(/assets/|inline:)"
+            }
+          }
+        }
+      }
+    },
+    "content.expand.search-demo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "headline",
+        "query",
+        "answer",
+        "sources"
+      ],
+      "properties": {
+        "headline": {
+          "type": "string",
+          "minLength": 1
+        },
+        "query": {
+          "type": "string",
+          "minLength": 1
+        },
+        "answer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "initial",
+              "name",
+              "subject",
+              "preview",
+              "avatar"
+            ],
+            "properties": {
+              "initial": {
+                "type": "string",
+                "pattern": "^[A-Z]{1,2}$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "subject": {
+                "type": "string",
+                "minLength": 1
+              },
+              "preview": {
+                "type": "string",
+                "minLength": 1
+              },
+              "avatar": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "assetRole",
+                  "colorToken"
+                ],
+                "properties": {
+                  "assetRole": {
+                    "const": "avatar.initials"
+                  },
+                  "colorToken": {
+                    "enum": [
+                      "accent-green",
+                      "accent-sky"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "content.expand.notifications-demo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "headline",
+        "sender",
+        "time",
+        "bannerBody",
+        "emailSubject",
+        "emailBody",
+        "bannerIcon",
+        "senderAvatar"
+      ],
+      "properties": {
+        "headline": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sender": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bannerBody": {
+          "type": "string",
+          "minLength": 1
+        },
+        "emailSubject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "emailBody": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bannerIcon": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assetRole"
+          ],
+          "properties": {
+            "assetRole": {
+              "enum": [
+                "brand.app-icon"
+              ]
+            },
+            "assetRef": {
+              "type": "string",
+              "pattern": "^(/assets/|inline:)"
+            }
+          }
+        },
+        "senderAvatar": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assetRole"
+          ],
+          "properties": {
+            "assetRole": {
+              "enum": [
+                "avatar.sender-photo",
+                "avatar.initials"
+              ]
+            },
+            "assetRef": {
+              "type": "string",
+              "pattern": "^(/assets/|inline:)"
+            }
+          }
+        }
+      }
+    },
+    "content.proof.reviews-carousel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reviewIds",
+        "starsPerReview"
+      ],
+      "properties": {
+        "reviewIds": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "review.01",
+              "review.02",
+              "review.03",
+              "review.04",
+              "review.05",
+              "review.06"
+            ]
+          }
+        },
+        "starsPerReview": {
+          "const": 5
+        }
+      }
+    },
+    "content.footer.launch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "headlineLines",
+        "glyph",
+        "primaryCta",
+        "secondaryCta"
+      ],
+      "properties": {
+        "headlineLines": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "glyph": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assetRole"
+          ],
+          "properties": {
+            "assetRole": {
+              "enum": [
+                "brand.glyph"
+              ]
+            },
+            "assetRef": {
+              "type": "string",
+              "pattern": "^(/assets/|inline:)"
+            }
+          }
+        },
+        "primaryCta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "label",
+            "href",
+            "icon"
+          ],
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "href": {
+              "enum": [
+                "https://testflight.apple.com/join/3JR2HxjZ"
+              ]
+            },
+            "icon": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole"
+              ],
+              "properties": {
+                "assetRole": {
+                  "enum": [
+                    "thirdparty.store-badge"
+                  ]
+                },
+                "assetRef": {
+                  "type": "string",
+                  "pattern": "^(/assets/|inline:)"
+                }
+              }
+            }
+          }
+        },
+        "secondaryCta": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "label",
+            "action",
+            "icon"
+          ],
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "action": {
+              "const": "open-notify-modal"
+            },
+            "icon": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole"
+              ],
+              "properties": {
+                "assetRole": {
+                  "enum": [
+                    "thirdparty.platform-icon"
+                  ]
+                },
+                "assetRef": {
+                  "type": "string",
+                  "pattern": "^(/assets/|inline:)"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "content.footer.bar": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "copyright",
+        "socialLinks",
+        "legalLinks"
+      ],
+      "properties": {
+        "copyright": {
+          "const": "Copyright © 2025-2026 Nearly Extraterrestrial Technology, Inc."
+        },
+        "socialLinks": {
+          "const": [
+            {
+              "label": "X",
+              "href": "https://x.com/avec"
+            },
+            {
+              "label": "YouTube",
+              "href": "https://www.youtube.com/@avecmail"
+            },
+            {
+              "label": "Instagram",
+              "href": "https://www.instagram.com/avecmail/"
+            },
+            {
+              "label": "LinkedIn",
+              "href": "https://www.linkedin.com/company/avec-ai"
+            },
+            {
+              "label": "hi@avec.ai",
+              "href": "mailto:hi@avec.ai"
+            }
+          ]
+        },
+        "legalLinks": {
+          "const": [
+            {
+              "label": "Terms of Service",
+              "href": "/terms"
+            },
+            {
+              "label": "Privacy Policy",
+              "href": "/privacy-policy"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
