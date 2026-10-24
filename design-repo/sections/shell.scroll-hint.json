@@ -189,5 +189,18 @@
     ],
     "idleDelayMs": 5000
   },
-  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source.",
+  "semantic": {
+    "id": "shell.scroll-hint",
+    "category": "layer"
+  },
+  "source": {
+    "id": null,
+    "tag": "div",
+    "file": "src/components/ScrollHint.jsx",
+    "lines": "34-39",
+    "citation": "ev.prov.shell-scroll-hint"
+  },
+  "retrievalEligible": false,
+  "retrievalReason": "Fixed transient hint overlay that fades in after idle time and carries no page content; runtime utility UI, not a section."
 }

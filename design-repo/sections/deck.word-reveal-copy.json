@@ -133,5 +133,17 @@
     ],
     "aside": "(Think flashcards, but for mail)"
   },
-  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source.",
+  "semantic": {
+    "id": "deck.word-reveal-copy",
+    "category": "feature"
+  },
+  "source": {
+    "id": null,
+    "tag": "div",
+    "file": "src/components/Deck.jsx",
+    "lines": "46-55",
+    "citation": "ev.prov.deck-word-reveal-copy"
+  },
+  "retrievalEligible": true
 }

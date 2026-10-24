@@ -60,6 +60,13 @@ Read this before you generate anything. None of it has been smoothed over.
    single lines, so its citations use `contains` rather than line ranges.
 9. **Only a light theme exists.** The source has no dark mode, so do not generate one.
 
+## Section contracts: provenance, taxonomy, retrieval, page-wrapper gate
+
+Every contract has a closed `semantic {id, category}` (what the AI sees; `id` = the contract id) and a closed `source {id, tag, file, lines, citation}` (the real element it came from; `verify_all` re-reads the range).
+`retrievalEligible` is false for runtime/utility UI (`shell.notify-modal`, `shell.scroll-hint`; reason 30+ chars) and pinned in both `verify_all.py` and `semantic_validate.py`. `schema/section-contract.schema.json` closes the contract shape.
+`extraction/wrapper_gate.py` measures against `sectionHeights` (1440x900, `extraction/measure_sections.mjs` to re-measure): a hero over 1800px warns, over 3000px fails; a node holding over 50% of the page warns, over 60% fails; the whitelist
+(`extraction/wrapper-whitelist.json`) is empty. Today: the tallest in-flow node is `expand.compose-demo` at 3,600 of 11,700px (30.8%), the hero is 900px. Heights depend on the 900px viewport (the page is built from 100dvh runways).
+
 ## Generated mode (PageSpec `mode: "generated"`)
 
 `mode` is required and closed: `reference` | `generated` (`pageSpecVersion` 1.1.0). `schema/example.pagespec.json` is `reference`;
@@ -114,8 +121,8 @@ primitives/ components/     content-agnostic building blocks
 sections/                   16 section contracts (ids reused from ../ia.json): purpose, contentSchema, fieldBudgets, motion, responsive, a11y, referenceContent, generatedAssetRoles, generatedContentSchema, generatedReferenceContent
 templates/                  templates.json (node lists and 13 scroll stops), routes.json (3 routes, each assigned once)
 compatibility/graph.json    25 enforced rules (error/warn; 10 are GENERATED_MODE_*), plus the rules deliberately not enforced
-schema/                     pagespec.schema.json (Draft-07), example.pagespec.json (reference), examples/generated.template.home.pagespec.json, semantic_validate.py, tests/adversarial_test.py
-extraction/                 measured-values.json (evidence ledger and corrections), verify_all.py
+schema/                     pagespec.schema.json (Draft-07), section-contract.schema.json (closed), example.pagespec.json (reference), examples/generated.template.home.pagespec.json, semantic_validate.py, tests/adversarial_test.py
+extraction/                 measured-values.json (evidence ledger, corrections, sectionHeights), verify_all.py, wrapper_gate.py, wrapper-whitelist.json, measure_sections.mjs
 ```
 
 ## Running the checks
@@ -125,7 +132,7 @@ You need Python 3 and `jsonschema`.
 ```bash
 python3 schema/semantic_validate.py            # both examples (reference and generated) → 0 errors
 python3 schema/tests/adversarial_test.py       # every mutation rejected by its expected rule, controls pass, drift caught
-python3 extraction/verify_all.py               # 20 repo-level checks
+python3 extraction/verify_all.py               # 24 repo-level checks
 ```
 
 The scripts find the repo root from their own location. Citations resolve against the parent
@@ -159,8 +166,9 @@ asset-file existence checks and the ia.json checks. Every internal check still r
 | blockedAssetRoles | 3 |
 | generationSafeAssetRoles | 11 |
 | generatedExamples | 1 |
-| graphRules | 25 |
-| evidenceEntries | 169 |
+| retrievalIneligibleSections | 2 |
+| graphRules | 30 |
+| evidenceEntries | 186 |
 | corrections | 6 |
 <!-- counts:end -->
 

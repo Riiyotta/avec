@@ -337,5 +337,17 @@
     "replyLabel": "Reply",
     "replyHint": "Press and speak to reply"
   },
-  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source.",
+  "semantic": {
+    "id": "deck.email-stack",
+    "category": "feature"
+  },
+  "source": {
+    "id": null,
+    "tag": "div",
+    "file": "src/components/Deck.jsx",
+    "lines": "60-62",
+    "citation": "ev.prov.deck-email-stack"
+  },
+  "retrievalEligible": true
 }

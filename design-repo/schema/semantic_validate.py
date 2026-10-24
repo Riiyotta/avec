@@ -35,6 +35,23 @@ PLACEHOLDER_URL = re.compile(r"^(#|/[a-z0-9\-/]*|https://example\.(com|org|net)(
 URLISH = re.compile(r"(https?://|mailto:|(^|\s)//|\bwww\.)", re.I)
 
 
+# ---- section contracts: taxonomy, provenance, retrieval eligibility. Pinned HERE (second source of truth next to each
+# contract's own fields; extraction/verify_all.py keeps its own independent copy), so editing a contract alone cannot loosen them.
+SECTION_TAXONOMY = {
+    "shell.header": "shell", "shell.progress-dots": "shell", "shell.scroll-hint": "layer", "shell.notify-modal": "layer",
+    "hero.copy": "hero", "hero.video": "hero",
+    "deck.word-reveal-copy": "feature", "deck.email-stack": "feature", "deck.triage-game": "feature",
+    "expand.compose-demo": "feature", "expand.be-here-now": "content", "expand.search-demo": "feature", "expand.notifications-demo": "feature",
+    "proof.reviews-carousel": "proof", "footer.launch": "cta", "footer.bar": "footer",
+}
+# Runtime / utility UI is the only retrieval-ineligible set (default true). A modal and a transient hint overlay.
+RETRIEVAL_PINNED = {"shell.notify-modal": False, "shell.scroll-hint": False}
+MIN_RETRIEVAL_REASON = 30
+UTILITY_WORDS = ("cookie", "consent", "modal", "dialog", "overlay", "toast", "popup", "lightbox", "drawer", "snackbar", "preloader", "cursor")
+CONVERSION_FIELDS = {"cta", "primaryCta", "secondaryCta"}
+CONVERSION_CATEGORIES = {"hero", "shell", "cta", "layer"}
+
+
 class Context:
     def __init__(self, repo=REPO):
         self.repo = repo
@@ -43,6 +60,8 @@ class Context:
         self.templates = j("templates/templates.json")["templates"]
         self.graph = j("compatibility/graph.json")
         self.assets = j("assets/asset-roles.json")
+        self.contract_schema = j("schema/section-contract.schema.json")
+        self._contract_findings = None
         self.sections = {}
         sdir = os.path.join(repo, "sections")
         for f in sorted(os.listdir(sdir)):
@@ -89,6 +108,56 @@ def strings(obj, path=""):
 def grams(text, n):
     w = re.findall(r"[a-z0-9']+", text.lower().replace("\u2019", "'"))
     return {" ".join(w[i:i + n]) for i in range(len(w) - n + 1)}
+
+
+def contract_findings(ctx):
+    """Section-contract rules, evaluated on ctx.sections (cached per context): {ruleId: [messages]}."""
+    if ctx._contract_findings is not None:
+        return ctx._contract_findings
+    out = {k: [] for k in ("SECTION_CONTRACT_SCHEMA", "SECTION_TAXONOMY_PINNED", "CONVERSION_BLOCK_CLASSED_CTA", "RETRIEVAL_ELIGIBILITY_PINNED", "SECTION_SOURCE_STRUCTURE")}
+    cv = Draft7Validator(ctx.contract_schema)
+    claimed = {}
+    for sid, c in sorted(ctx.sections.items()):
+        for e in cv.iter_errors(c):
+            out["SECTION_CONTRACT_SCHEMA"].append(f"{sid}: {'/'.join(map(str, e.path)) or '<root>'}: {e.message[:140]}")
+        sem, src = c.get("semantic") or {}, c.get("source") or {}
+        if sem.get("id") != sid:
+            out["SECTION_CONTRACT_SCHEMA"].append(f"{sid}: semantic.id {sem.get('id')!r} must equal the contract id")
+        want = SECTION_TAXONOMY.get(sid)
+        if want is None:
+            out["SECTION_TAXONOMY_PINNED"].append(f"{sid}: no pinned taxonomy in semantic_validate.py (review it, then pin it)")
+        elif sem.get("category") != want:
+            out["SECTION_TAXONOMY_PINNED"].append(f"{sid}: semantic.category {sem.get('category')!r} but pinned {want!r}")
+        props = set(((c.get("contentSchema") or {}).get("properties") or {}))
+        if props & CONVERSION_FIELDS and sem.get("category") not in CONVERSION_CATEGORIES:
+            out["CONVERSION_BLOCK_CLASSED_CTA"].append(f"{sid}: carries conversion fields {sorted(props & CONVERSION_FIELDS)} but is classed {sem.get('category')!r}")
+        if props & {"reviewIds", "reviews"} and sem.get("category") != "proof":
+            out["CONVERSION_BLOCK_CLASSED_CTA"].append(f"{sid}: review content must be classed proof, not {sem.get('category')!r}")
+        got = c.get("retrievalEligible", True)
+        pin = RETRIEVAL_PINNED.get(sid, True)
+        if got is not pin:
+            out["RETRIEVAL_ELIGIBILITY_PINNED"].append(f"{sid}: retrievalEligible is {got!r} but pinned {pin!r}")
+        if any(w in sid for w in UTILITY_WORDS) and got is not False:
+            out["RETRIEVAL_ELIGIBILITY_PINNED"].append(f"{sid} looks like utility/runtime UI and must set retrievalEligible false")
+        if got is False and len(c.get("retrievalReason") or "") < MIN_RETRIEVAL_REASON:
+            out["RETRIEVAL_ELIGIBILITY_PINNED"].append(f"{sid}: retrievalEligible false needs a retrievalReason of {MIN_RETRIEVAL_REASON}+ characters")
+        a, b = (list(map(int, str(src.get("lines", "")).split("-"))) + [0, 0])[:2] if str(src.get("lines", "")).count("-") == 1 else (0, 0)
+        if not (1 <= a <= b):
+            out["SECTION_SOURCE_STRUCTURE"].append(f"{sid}: source.lines {src.get('lines')!r} must be 'a-b' with 1 <= a <= b")
+        if src.get("id") == sid:
+            out["SECTION_SOURCE_STRUCTURE"].append(f"{sid}: source.id must not equal the contract id (provenance is not taxonomy)")
+        if str(src.get("file", "")).startswith("/") or ".." in str(src.get("file", "")).split("/"):
+            out["SECTION_SOURCE_STRUCTURE"].append(f"{sid}: source.file must be project-relative")
+        key = (src.get("file"), src.get("lines"))
+        if key in claimed:
+            out["SECTION_SOURCE_STRUCTURE"].append(f"{claimed[key]} and {sid} claim the same source range {key[0]}:{key[1]}")
+        claimed[key] = sid
+    ctx._contract_findings = out
+    return out
+
+
+def _contract_rule(rid):
+    return lambda ctx, spec: contract_findings(ctx)[rid]
 
 
 def _sections(spec):
@@ -449,6 +518,11 @@ RULES = {
     "ASSET_ROLE_POLICY": r_asset_policy,
     "VIDEO_BUDGET": r_video_budget,
     "EMAIL_STACK_SWIPES": r_email_swipes,
+    "SECTION_CONTRACT_SCHEMA": _contract_rule("SECTION_CONTRACT_SCHEMA"),
+    "SECTION_TAXONOMY_PINNED": _contract_rule("SECTION_TAXONOMY_PINNED"),
+    "CONVERSION_BLOCK_CLASSED_CTA": _contract_rule("CONVERSION_BLOCK_CLASSED_CTA"),
+    "RETRIEVAL_ELIGIBILITY_PINNED": _contract_rule("RETRIEVAL_ELIGIBILITY_PINNED"),
+    "SECTION_SOURCE_STRUCTURE": _contract_rule("SECTION_SOURCE_STRUCTURE"),
     "GENERATED_MODE_REFERENCE_ASSET": r_gen_reference_asset,
     "GENERATED_MODE_ROLE": r_gen_role,
     "GENERATED_MODE_SOURCE_BRAND": _scan("brand", "names or marks the Avec brand"),

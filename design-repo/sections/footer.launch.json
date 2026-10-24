@@ -359,5 +359,17 @@
       }
     }
   },
-  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source.",
+  "semantic": {
+    "id": "footer.launch",
+    "category": "cta"
+  },
+  "source": {
+    "id": null,
+    "tag": "div",
+    "file": "src/components/Footer.jsx",
+    "lines": "49-60",
+    "citation": "ev.prov.footer-launch"
+  },
+  "retrievalEligible": true
 }

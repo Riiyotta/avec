@@ -64,82 +64,98 @@
     "shell.header": {
       "layer": "section",
       "file": "sections/shell.header.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "shell.progress-dots": {
       "layer": "section",
       "file": "sections/shell.progress-dots.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "shell.scroll-hint": {
       "layer": "section",
       "file": "sections/shell.scroll-hint.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": false
     },
     "shell.notify-modal": {
       "layer": "section",
       "file": "sections/shell.notify-modal.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": false
     },
     "hero.copy": {
       "layer": "section",
       "file": "sections/hero.copy.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "hero.video": {
       "layer": "section",
       "file": "sections/hero.video.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "deck.word-reveal-copy": {
       "layer": "section",
       "file": "sections/deck.word-reveal-copy.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "deck.email-stack": {
       "layer": "section",
       "file": "sections/deck.email-stack.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "deck.triage-game": {
       "layer": "section",
       "file": "sections/deck.triage-game.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "expand.compose-demo": {
       "layer": "section",
       "file": "sections/expand.compose-demo.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "expand.be-here-now": {
       "layer": "section",
       "file": "sections/expand.be-here-now.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "expand.search-demo": {
       "layer": "section",
       "file": "sections/expand.search-demo.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "expand.notifications-demo": {
       "layer": "section",
       "file": "sections/expand.notifications-demo.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "proof.reviews-carousel": {
       "layer": "section",
       "file": "sections/proof.reviews-carousel.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "footer.launch": {
       "layer": "section",
       "file": "sections/footer.launch.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     },
     "footer.bar": {
       "layer": "section",
       "file": "sections/footer.bar.json",
-      "instantiableInPageSpec": true
+      "instantiableInPageSpec": true,
+      "retrievalEligible": true
     }
   },
   "settableNodeProperties": [
@@ -175,5 +191,6 @@
   "pageSpecModes": [
     "generated",
     "reference"
-  ]
+  ],
+  "retrievalNote": "entries.<section>.retrievalEligible must equal the section contract's retrievalEligible; verify_all.py enforces the parity and pins the values independently (EXPECT_RETRIEVAL), and semantic_validate.py pins them again (RETRIEVAL_PINNED)."
 }

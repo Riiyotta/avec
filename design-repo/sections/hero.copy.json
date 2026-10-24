@@ -312,5 +312,17 @@
       "stars": 0
     }
   },
-  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source.",
+  "semantic": {
+    "id": "hero.copy",
+    "category": "hero"
+  },
+  "source": {
+    "id": null,
+    "tag": "div",
+    "file": "src/components/Hero.jsx",
+    "lines": "10-29",
+    "citation": "ev.prov.hero-copy"
+  },
+  "retrievalEligible": true
 }

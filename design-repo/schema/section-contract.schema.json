@@ -1,0 +1,357 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "avec-design-repo/section-contract.schema.json",
+  "title": "Section contract (closed)",
+  "description": "Closed Draft-07 schema every sections/*.json must satisfy. `semantic` is the taxonomy the AI sees (id equals the contract id, category from a closed set); `source` is provenance (the real file, tag and line range the contract was extracted from, plus a ledger citation); they are separate objects and must not be merged. retrievalEligible is a closed boolean: false marks runtime/utility UI (modal, overlay, hint, cookie/consent, toast) and then needs retrievalReason (30+ chars); an eligible section must not carry a reason.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "layer",
+    "category",
+    "semantic",
+    "source",
+    "retrievalEligible",
+    "purpose",
+    "sourceComponent",
+    "scrollStops",
+    "variants",
+    "constraints",
+    "contentSchema",
+    "fieldBudgets",
+    "motion",
+    "responsive",
+    "accessibility",
+    "assetRoles",
+    "generatedAssetRoles",
+    "generatedContentSchema",
+    "generatedReferenceContent",
+    "referenceContent",
+    "evidenceIds"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]+\\.[a-z0-9-]+$"
+    },
+    "layer": {
+      "const": "section"
+    },
+    "category": {
+      "enum": [
+        "SHELL",
+        "HERO",
+        "DECK",
+        "EXPAND",
+        "PROOF",
+        "FOOTER"
+      ]
+    },
+    "semantic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "category"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z]+\\.[a-z0-9-]+$"
+        },
+        "category": {
+          "enum": [
+            "shell",
+            "hero",
+            "feature",
+            "content",
+            "proof",
+            "cta",
+            "footer",
+            "layer"
+          ]
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "tag",
+        "file",
+        "lines",
+        "citation"
+      ],
+      "properties": {
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "The id attribute on the source element, or null when it has none."
+        },
+        "tag": {
+          "enum": [
+            "nav",
+            "header",
+            "section",
+            "footer",
+            "div",
+            "main",
+            "aside"
+          ]
+        },
+        "file": {
+          "type": "string",
+          "pattern": "^(?!.*\\.\\.)src/[A-Za-z0-9_./-]+$",
+          "description": "Project-relative source file (never absolute)."
+        },
+        "lines": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*-[1-9][0-9]*$",
+          "description": "Inclusive line range; verify_all.py re-reads it from the real file."
+        },
+        "citation": {
+          "type": "string",
+          "pattern": "^ev\\.prov\\.[a-z0-9-]+$",
+          "description": "Ledger entry in extraction/measured-values.json that cites this file and range."
+        }
+      }
+    },
+    "retrievalEligible": {
+      "type": "boolean",
+      "default": true
+    },
+    "retrievalReason": {
+      "type": "string",
+      "minLength": 30
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceComponent": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scrollStops": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "variants": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "onePerPage",
+        "required"
+      ],
+      "properties": {
+        "onePerPage": {
+          "type": "boolean"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "group": {
+          "type": "string",
+          "minLength": 1
+        },
+        "position": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fixed": {
+          "type": "boolean"
+        },
+        "mustFollow": {
+          "type": "string",
+          "minLength": 1
+        },
+        "portal": {
+          "type": "boolean"
+        },
+        "mustBeFirstContent": {
+          "type": "boolean"
+        },
+        "mustBeLast": {
+          "type": "boolean"
+        }
+      }
+    },
+    "contentSchema": {
+      "type": "object"
+    },
+    "fieldBudgets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "maxWords",
+          "realMaxWordCount"
+        ],
+        "properties": {
+          "maxWords": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "realMaxWordCount": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "motion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pattern",
+        "trigger",
+        "reducedMotionFallback",
+        "durationTokens"
+      ],
+      "properties": {
+        "pattern": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trigger": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reducedMotionFallback": {
+          "type": "string",
+          "minLength": 1
+        },
+        "durationTokens": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "responsive": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "query",
+          "changes"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1
+          },
+          "changes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "accessibility": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "assetRoles": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "generatedAssetRoles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "generatedContentSchema": {
+      "type": "object"
+    },
+    "generatedReferenceContent": {
+      "type": "object"
+    },
+    "generatedModeNotes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "referenceContent": {
+      "type": "object"
+    },
+    "evidenceIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^ev\\.[A-Za-z0-9._-]+$"
+      }
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verbatimReviews": {
+      "type": "object"
+    }
+  },
+  "if": {
+    "required": [
+      "retrievalEligible"
+    ],
+    "properties": {
+      "retrievalEligible": {
+        "const": false
+      }
+    }
+  },
+  "then": {
+    "required": [
+      "retrievalReason"
+    ]
+  },
+  "else": {
+    "not": {
+      "required": [
+        "retrievalReason"
+      ]
+    }
+  }
+}

@@ -335,5 +335,17 @@
       }
     }
   },
-  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source.",
+  "semantic": {
+    "id": "shell.header",
+    "category": "shell"
+  },
+  "source": {
+    "id": null,
+    "tag": "header",
+    "file": "src/components/Header.jsx",
+    "lines": "6-16",
+    "citation": "ev.prov.shell-header"
+  },
+  "retrievalEligible": true
 }

@@ -35,6 +35,7 @@ def load(name, rel, repo=REPO):
 
 sv = load("sv", "schema/semantic_validate.py")
 va = load("va", "extraction/verify_all.py")
+wg = load("wg", "extraction/wrapper_gate.py")
 CTX = sv.Context(REPO)
 EXAMPLE = json.load(open(os.path.join(REPO, "schema", "example.pagespec.json"), encoding="utf-8"))
 GEN = json.load(open(os.path.join(REPO, "schema", "examples", "generated.template.home.pagespec.json"), encoding="utf-8"))
@@ -193,6 +194,182 @@ GEN_MUTATIONS = [
 ]
 
 
+# ------------------------------------------------------------------ section-contract mutations (Part A2)
+# Each mutates an in-memory copy of the section contracts and runs the semantic validator's contract rules on it.
+def _ctx_with(fn):
+    c2 = copy.copy(CTX)
+    c2.sections = copy.deepcopy(CTX.sections)
+    c2._contract_findings = None
+    fn(c2.sections)
+    return c2
+
+
+def _s(sid, path, val):
+    def fn(secs):
+        o = secs[sid]
+        for k in path[:-1]:
+            o = o[k]
+        o[path[-1]] = val
+    return fn
+
+
+def _del(sid, path):
+    def fn(secs):
+        o = secs[sid]
+        for k in path[:-1]:
+            o = o[k]
+        o.pop(path[-1])
+    return fn
+
+
+def _syn(new_id, category="layer", eligible=True):
+    def fn(secs):
+        c = copy.deepcopy(secs["shell.notify-modal"])
+        c["id"] = new_id
+        c["semantic"] = {"id": new_id, "category": category}
+        c["source"]["lines"] = "1-2"
+        c["retrievalEligible"] = eligible
+        if eligible:
+            c.pop("retrievalReason", None)
+        secs[new_id] = c
+    return fn
+
+
+def _dup_range(secs):
+    secs["footer.bar"]["source"]["lines"] = secs["footer.launch"]["source"]["lines"]
+    secs["footer.bar"]["source"]["file"] = secs["footer.launch"]["source"]["file"]
+
+
+def _both(*fns):
+    def fn(secs):
+        for f in fns:
+            f(secs)
+    return fn
+
+
+REASON_OK = "Pretend this section is utility chrome so that it never reaches retrieval."
+CONTRACT_MUTATIONS = [
+    # ---- retrieval eligibility (runtime/utility UI is excluded, everything else is not)
+    ("retrieval: notify modal made retrievable", "RETRIEVAL_ELIGIBILITY_PINNED", _s("shell.notify-modal", ["retrievalEligible"], True)),
+    ("retrieval: scroll hint made retrievable", "RETRIEVAL_ELIGIBILITY_PINNED", _s("shell.scroll-hint", ["retrievalEligible"], True)),
+    ("retrieval: hero marked ineligible (valid reason)", "RETRIEVAL_ELIGIBILITY_PINNED", _both(_s("hero.copy", ["retrievalEligible"], False), _s("hero.copy", ["retrievalReason"], REASON_OK))),
+    ("retrieval: content section marked ineligible (valid reason)", "RETRIEVAL_ELIGIBILITY_PINNED", _both(_s("expand.be-here-now", ["retrievalEligible"], False), _s("expand.be-here-now", ["retrievalReason"], REASON_OK))),
+    ("retrieval: reviews carousel marked ineligible", "RETRIEVAL_ELIGIBILITY_PINNED", _both(_s("proof.reviews-carousel", ["retrievalEligible"], False), _s("proof.reviews-carousel", ["retrievalReason"], REASON_OK))),
+    ("retrieval: modal reason shorter than 30 chars (pinned rule)", "RETRIEVAL_ELIGIBILITY_PINNED", _s("shell.notify-modal", ["retrievalReason"], "decorative modal")),
+    ("retrieval: modal reason shorter than 30 chars (schema)", "SECTION_CONTRACT_SCHEMA", _s("shell.notify-modal", ["retrievalReason"], "decorative modal")),
+    ("retrieval: modal reason removed", "SECTION_CONTRACT_SCHEMA", _del("shell.notify-modal", ["retrievalReason"])),
+    ("retrieval: flag is a string, not a boolean", "SECTION_CONTRACT_SCHEMA", _s("shell.notify-modal", ["retrievalEligible"], "false")),
+    ("retrieval: flag is null", "SECTION_CONTRACT_SCHEMA", _s("shell.scroll-hint", ["retrievalEligible"], None)),
+    ("retrieval: flag removed from a contract", "SECTION_CONTRACT_SCHEMA", _del("hero.copy", ["retrievalEligible"])),
+    ("retrieval: reason present on an eligible section", "SECTION_CONTRACT_SCHEMA", _s("hero.copy", ["retrievalReason"], "A reason that has no business on an eligible section.")),
+    ("retrieval: cookie-consent section left eligible", "RETRIEVAL_ELIGIBILITY_PINNED", _syn("shell.cookie-consent")),
+    ("retrieval: success-toast section left eligible", "RETRIEVAL_ELIGIBILITY_PINNED", _syn("shell.success-toast", category="shell")),
+    ("retrieval: preloader section left eligible", "RETRIEVAL_ELIGIBILITY_PINNED", _syn("shell.preloader", category="shell")),
+    # ---- taxonomy / classing
+    ("taxonomy: footer.launch re-classed content (conversion block)", "CONVERSION_BLOCK_CLASSED_CTA", _s("footer.launch", ["semantic", "category"], "content")),
+    ("taxonomy: footer.launch re-classed content (pinned table)", "SECTION_TAXONOMY_PINNED", _s("footer.launch", ["semantic", "category"], "content")),
+    ("taxonomy: reviews carousel re-classed feature", "CONVERSION_BLOCK_CLASSED_CTA", _s("proof.reviews-carousel", ["semantic", "category"], "feature")),
+    ("taxonomy: email stack re-classed hero", "SECTION_TAXONOMY_PINNED", _s("deck.email-stack", ["semantic", "category"], "hero")),
+    ("taxonomy: category outside the closed set", "SECTION_CONTRACT_SCHEMA", _s("hero.video", ["semantic", "category"], "banner")),
+    ("taxonomy: a new section with no pinned category", "SECTION_TAXONOMY_PINNED", _syn("feature.extra", category="feature", eligible=True)),
+    ("semantic.id differs from the contract id", "SECTION_CONTRACT_SCHEMA", _s("hero.copy", ["semantic", "id"], "source.hero-wrapper")),
+    ("semantic object removed", "SECTION_CONTRACT_SCHEMA", _del("hero.copy", ["semantic"])),
+    ("semantic carries a source field (merged objects)", "SECTION_CONTRACT_SCHEMA", _s("hero.copy", ["semantic", "tag"], "section")),
+    # ---- source provenance
+    ("source object removed", "SECTION_CONTRACT_SCHEMA", _del("hero.copy", ["source"])),
+    ("source: extra property", "SECTION_CONTRACT_SCHEMA", _s("hero.copy", ["source", "category"], "hero")),
+    ("source: tag outside the closed set", "SECTION_CONTRACT_SCHEMA", _s("hero.copy", ["source", "tag"], "marquee")),
+    ("source: file escapes the project", "SECTION_CONTRACT_SCHEMA", _s("hero.copy", ["source", "file"], "src/../../secret.jsx")),
+    ("source: absolute file", "SECTION_CONTRACT_SCHEMA", _s("hero.copy", ["source", "file"], "/etc/passwd")),
+    ("source: malformed line range", "SECTION_CONTRACT_SCHEMA", _s("hero.copy", ["source", "lines"], "15")),
+    ("source: reversed line range", "SECTION_SOURCE_STRUCTURE", _s("hero.copy", ["source", "lines"], "38-15")),
+    ("source: two sections claim the same range", "SECTION_SOURCE_STRUCTURE", _dup_range),
+    ("source: citation is not a provenance ledger id", "SECTION_CONTRACT_SCHEMA", _s("hero.copy", ["source", "citation"], "ev.src.hero-copy")),
+    ("contract: extra top-level property", "SECTION_CONTRACT_SCHEMA", _s("hero.copy", ["wrapperClass"], "section-frame")),
+]
+
+
+# ------------------------------------------------------------------ whole-page-wrapper gate cases (Part D)
+WG_NODES, WG_CATS, WG_HEIGHTS, WG_WHITELIST = wg.load_inputs(REPO)
+HK, LK, FK = "hero.copy/default", "expand.compose-demo/default", "footer.bar/default"
+
+
+def _h(key, px):
+    """Set one node's height and keep pageHeight consistent so only the intended rule can fire."""
+    def f(h, w):
+        h["pageHeight"] += px - h["sections"][key]["heightPx"] if h["sections"][key]["inFlow"] else 0
+        h["sections"][key]["heightPx"] = px
+    return f
+
+
+def _chain(*fns):
+    def f(h, w):
+        for fn in fns:
+            fn(h, w)
+    return f
+
+
+def _wl(key, rules, cap, just="Reviewed: this node legitimately spans the whole fold on this page type.", reviewer="agent-attestation:test-reviewer"):
+    sec_, var = key.split("/")
+    return lambda h, w: w.append({"section": sec_, "variant": var, "rules": rules, "maxHeightPx": cap, "justification": just, "reviewer": reviewer, "reviewedOn": "2026-10-24"})
+
+
+def _only_inflow(h, w):
+    for k, mm in h["sections"].items():
+        mm["inFlow"] = k in (HK, LK)
+    h["pageHeight"] = sum(mm["heightPx"] for mm in h["sections"].values() if mm["inFlow"])
+
+
+WRAPPER_CASES = [
+    ("hero 1900px (> 1800)", "HERO_HEIGHT_WARN", "warn", _h(HK, 1900)),
+    ("hero 3100px (> 3000)", "HERO_HEIGHT_FAIL", "error", _h(HK, 3100)),
+    ("hero video 3100px (second hero contract)", "HERO_HEIGHT_FAIL", "error", lambda h, w: h["sections"]["hero.video/default"].__setitem__("heightPx", 3100)),
+    ("hero 3100px, reviewed whitelist cap 3200", "HERO_HEIGHT_FAIL_WHITELISTED", "warn", _chain(_h(HK, 3100), _wl(HK, ["HERO_HEIGHT_FAIL"], 3200))),
+    ("hero 3300px exceeds whitelist cap 3200", "HERO_HEIGHT_FAIL", "error", _chain(_h(HK, 3300), _wl(HK, ["HERO_HEIGHT_FAIL"], 3200))),
+    ("whitelist for the wrong rule does not exempt", "HERO_HEIGHT_FAIL", "error", _chain(_h(HK, 3100), _wl(HK, ["SECTION_SHARE_FAIL"], 3200))),
+    ("whitelist justification too short", "WHITELIST_INVALID", "error", _chain(_h(HK, 3100), _wl(HK, ["HERO_HEIGHT_FAIL"], 3200, just="trust me"))),
+    ("whitelist reviewer is not human:/agent-attestation:", "WHITELIST_INVALID", "error", _chain(_h(HK, 3100), _wl(HK, ["HERO_HEIGHT_FAIL"], 3200, reviewer="looks fine"))),
+    ("whitelist entry for a non-node", "WHITELIST_INVALID", "error", _wl("hero.nope/default", ["HERO_HEIGHT_FAIL"], 3200)),
+    ("whitelist entry that exempts nothing", "WHITELIST_UNUSED", "warn", _wl(HK, ["HERO_HEIGHT_FAIL"], 3200)),
+    ("one node 51% of in-flow height", "SECTION_SHARE_WARN", "warn", _h(LK, 8500)),
+    ("one node 66% of in-flow height", "SECTION_SHARE_FAIL", "error", _h(LK, 16000)),
+    ("66% share, reviewed whitelist cap 16500", "SECTION_SHARE_FAIL_WHITELISTED", "warn", _chain(_h(LK, 16000), _wl(LK, ["SECTION_SHARE_FAIL"], 16500))),
+    ("missing measurement for a node", "MEASUREMENT_MISSING", "error", lambda h, w: h["sections"].pop(FK)),
+    ("measurement without a height", "MEASUREMENT_MISSING", "error", lambda h, w: h["sections"][FK].__setitem__("heightPx", None)),
+    ("stale measurement for a removed node", "MEASUREMENT_MISSING", "error", lambda h, w: h["sections"].__setitem__("hero.gone/default", dict(h["sections"][FK]))),
+    ("sectionHeights absent altogether", "MEASUREMENT_MISSING", "error", lambda h, w: h.pop("sections")),
+    ("measured at the wrong viewport width", "MEASUREMENT_INCONSISTENT", "error", lambda h, w: h["viewport"].__setitem__("width", 1280)),
+    ("heights do not add up to pageHeight", "MEASUREMENT_INCONSISTENT", "error", lambda h, w: h.__setitem__("pageHeight", 9999)),
+]
+WRAPPER_NEGATIVES = [("2 in-flow nodes: share rule skipped, no share finding", ("SECTION_SHARE_WARN", "SECTION_SHARE_FAIL"), _only_inflow)]
+
+
+def run_wrapper():
+    bad = 0
+    e, w, _ = wg.evaluate(WG_NODES, WG_CATS, copy.deepcopy(WG_HEIGHTS), copy.deepcopy(WG_WHITELIST))
+    ok = not e and not w
+    bad += not ok
+    print(f"  {'PASS' if ok else 'FAIL'}  CONTROL  wrapper gate on the measured page  errors={len(e)} warnings={len(w)}")
+    for name, code, sev, fn in WRAPPER_CASES:
+        h, wl = copy.deepcopy(WG_HEIGHTS), copy.deepcopy(WG_WHITELIST)
+        fn(h, wl)
+        e, w, _ = wg.evaluate(WG_NODES, WG_CATS, h, wl)
+        got = [x for x in (e if sev == "error" else w) if x[0] == code]
+        ok = bool(got)
+        if sev == "warn" and e and not code.startswith("WHITELIST"):
+            ok = False
+        bad += not ok
+        print(f"  {'REJECTED' if ok and sev == 'error' else 'FLAGGED' if ok else 'NOT-CAUGHT'}  [wrapper] {name}  [expect {code}/{sev}{'' if ok else '; errors=%s warns=%s' % (sorted({x[0] for x in e}), sorted({x[0] for x in w}))}]")
+    for name, codes, fn in WRAPPER_NEGATIVES:
+        h, wl = copy.deepcopy(WG_HEIGHTS), copy.deepcopy(WG_WHITELIST)
+        fn(h, wl)
+        e, w, info = wg.evaluate(WG_NODES, WG_CATS, h, wl)
+        ok = not [x for x in e + w if x[0] in codes] and not e and any("skipped" in i for i in info)
+        bad += not ok
+        print(f"  {'PASS' if ok else 'FAIL'}  ACCEPT  [wrapper] {name}")
+    return bad, len(WRAPPER_CASES) + len(WRAPPER_NEGATIVES) + 1
+
+
 def synth_controls():
     out = []
     for tid, t in CTX.templates.items():
@@ -283,9 +460,9 @@ def drop_regex(cat, rx):
     return lambda r: jedit(r, "assets/asset-roles.json", lambda d: d["sourceBrand"]["patterns"][cat]["regex"].remove(rx))
 
 
-def validator_text(a, b):
+def validator_text(a, b, rel="schema/semantic_validate.py"):
     def fn(r):
-        p = os.path.join(r, "schema", "semantic_validate.py")
+        p = os.path.join(r, *rel.split("/"))
         t = open(p, encoding="utf-8").read()
         assert a in t, a
         open(p, "w", encoding="utf-8").write(t.replace(a, b))
@@ -339,10 +516,67 @@ DRIFT_GEN = [
     ("generated example removed", "generated_mode", lambda r: os.remove(os.path.join(r, "schema", "examples", "generated.template.home.pagespec.json"))),
     ("reference example flipped to mode generated", "example_schema", lambda r: jedit(r, "schema/example.pagespec.json", lambda d: d.update(mode="generated"))),
     ("manifest pageSpecVersion drifts from the schema", "version_parity", lambda r: jedit(r, "registry.manifest.json", lambda d: d.update(pageSpecVersion="1.0.0"))),
-    ("manifest repositoryVersion drifts from the CHANGELOG", "version_parity", lambda r: jedit(r, "registry.manifest.json", lambda d: d.update(repositoryVersion="1.2.0"))),
+    ("manifest repositoryVersion drifts from the CHANGELOG", "version_parity", lambda r: jedit(r, "registry.manifest.json", lambda d: d.update(repositoryVersion="1.9.0"))),
     ("manifest asset-availability count wrong", "manifest_counts", lambda r: jedit(r, "registry.manifest.json", lambda d: d["counts"].update(generationSafeAssetRoles=12))),
 ]
-DRIFT += DRIFT_GEN
+def sec_edit(sid, fn):
+    return lambda r: jedit(r, f"sections/{sid}.json", fn)
+
+
+def ledger_heights(fn):
+    return lambda r: jedit(r, "extraction/measured-values.json", lambda d: fn(d["sectionHeights"]))
+
+
+def _hero_tall(sh):
+    sh["sections"]["hero.copy/default"]["heightPx"] = 3500
+    sh["pageHeight"] += 3500 - 900
+
+
+def _share_65(sh):
+    sh["sections"]["expand.compose-demo/default"]["heightPx"] = 16000
+    sh["pageHeight"] += 16000 - 3600
+
+
+def _bad_whitelist(d):
+    d["entries"].append({"section": "hero.copy", "variant": "default", "rules": ["HERO_HEIGHT_FAIL"], "maxHeightPx": 3200,
+                         "justification": "ok", "reviewer": "me", "reviewedOn": "2026-10-24"})
+
+
+def _retr_unpin_both(r):
+    jedit(r, "sections/shell.notify-modal.json", lambda d: (d.update(retrievalEligible=True), d.pop("retrievalReason")))
+    jedit(r, "tokens/llm/component-allowlist.json", lambda d: d["entries"]["shell.notify-modal"].update(retrievalEligible=True))
+    validator_text('RETRIEVAL_PINNED = {"shell.notify-modal": False, "shell.scroll-hint": False}', 'RETRIEVAL_PINNED = {"shell.scroll-hint": False}')(r)
+
+
+DRIFT_CONTRACT = [
+    ("notify modal flipped to retrievable in the contract only", "retrieval_eligibility", sec_edit("shell.notify-modal", lambda d: (d.update(retrievalEligible=True), d.pop("retrievalReason")))),
+    ("allowlist retrievalEligible diverges from the contract", "retrieval_eligibility", lambda r: jedit(r, "tokens/llm/component-allowlist.json", lambda d: d["entries"]["shell.scroll-hint"].update(retrievalEligible=True))),
+    ("PIN: contract + allowlist + semantic_validate pin flipped together (verify_all's own pin objects)", "retrieval_eligibility", _retr_unpin_both),
+    ("hero marked ineligible with a valid reason", "retrieval_eligibility", sec_edit("hero.copy", lambda d: d.update(retrievalEligible=False, retrievalReason="Pretend this hero is utility chrome so it never reaches retrieval."))),
+    ("modal retrievalReason shortened below 30 chars", "retrieval_eligibility", sec_edit("shell.notify-modal", lambda d: d.update(retrievalReason="decorative modal"))),
+    ("semantic_validate taxonomy pin edited alone (differs from verify_all's)", "retrieval_eligibility", validator_text('"footer.launch": "cta"', '"footer.launch": "content"')),
+    ("PIN: footer.launch re-classed content in the contract", "section_contracts", sec_edit("footer.launch", lambda d: d["semantic"].update(category="content"))),
+    ("reviews carousel re-classed feature", "section_contracts", sec_edit("proof.reviews-carousel", lambda d: d["semantic"].update(category="feature"))),
+    ("semantic object removed from a contract", "section_contracts", sec_edit("hero.copy", lambda d: d.pop("semantic"))),
+    ("source object removed from a contract", "section_contracts", sec_edit("hero.copy", lambda d: d.pop("source"))),
+    ("contract schema opened (additionalProperties true)", "section_contracts", lambda r: jedit(r, "schema/section-contract.schema.json", lambda d: d.update(additionalProperties=True))),
+    ("contract schema no longer requires source", "section_contracts", lambda r: jedit(r, "schema/section-contract.schema.json", lambda d: d["required"].remove("source"))),
+    ("contract schema deleted", "section_contracts", lambda r: os.remove(os.path.join(r, "schema", "section-contract.schema.json"))),
+    ("source citation points at the wrong ledger lines", "source_provenance", lambda r: jedit(r, "extraction/measured-values.json", lambda d: d["evidence"]["ev.prov.hero-copy"].update(lines="1-2"))),
+    ("source citation is not a ledger entry", "source_provenance", sec_edit("hero.copy", lambda d: d["source"].update(citation="ev.prov.nope"))),
+    ("retrievalIneligibleSections count drifts", "manifest_counts", lambda r: jedit(r, "registry.manifest.json", lambda d: d["counts"].update(retrievalIneligibleSections=0))),
+    ("gate: sectionHeights deleted", "wrapper_gate", lambda r: jedit(r, "extraction/measured-values.json", lambda d: d.pop("sectionHeights"))),
+    ("gate: hero measured 3500px (page wrapper)", "wrapper_gate", ledger_heights(_hero_tall)),
+    ("gate: one node holds 66% of the page", "wrapper_gate", ledger_heights(_share_65)),
+    ("gate: a node's measurement deleted", "wrapper_gate", ledger_heights(lambda sh: sh["sections"].pop("footer.bar/default"))),
+    ("gate: measured at the wrong viewport", "wrapper_gate", ledger_heights(lambda sh: sh["viewport"].update(width=1280))),
+    ("gate: heights no longer add up to pageHeight", "wrapper_gate", ledger_heights(lambda sh: sh.update(pageHeight=9999))),
+    ("gate: whitelist entry with a short justification and bad reviewer", "wrapper_gate", lambda r: jedit(r, "extraction/wrapper-whitelist.json", _bad_whitelist)),
+    ("PIN: wrapper_gate HERO_FAIL_PX loosened to 9000", "wrapper_gate", validator_text("HERO_FAIL_PX = 3000", "HERO_FAIL_PX = 9000", "extraction/wrapper_gate.py")),
+    ("PIN: wrapper_gate SHARE_FAIL loosened to 0.95", "wrapper_gate", validator_text("SHARE_FAIL = 0.60", "SHARE_FAIL = 0.95", "extraction/wrapper_gate.py")),
+    ("PIN: wrapper_gate viewport width changed to 1280", "wrapper_gate", validator_text("VIEWPORT_WIDTH = 1440", "VIEWPORT_WIDTH = 1280", "extraction/wrapper_gate.py")),
+]
+DRIFT += DRIFT_GEN + DRIFT_CONTRACT
 CITATION_DRIFT = [
     ("citation out of range", {"ev.demo": dict(GOOD_EV["ev.demo"], lines="2-40")}),
     ("citation in range but wrong content", {"ev.demo": dict(GOOD_EV["ev.demo"], lines="1", expect="const beta")}),
@@ -362,6 +596,17 @@ def main():
             ok = bool(errs) and rule in rules
             fails += not ok
             print(f"  {'REJECTED' if ok else 'NOT-CAUGHT'}  [{tag}] {name}  [expect {rule}; got {sorted(rules) or 'no errors'}]")
+
+    print("== Part A2: section-contract mutations (retrieval eligibility, taxonomy, provenance)")
+    for name, rule, fn in CONTRACT_MUTATIONS:
+        errs, _ = sv.validate(copy.deepcopy(EXAMPLE), _ctx_with(fn))
+        rules = {r for r, _ in errs}
+        ok = bool(errs) and rule in rules
+        fails += not ok
+        print(f"  {'REJECTED' if ok else 'NOT-CAUGHT'}  [contract] {name}  [expect {rule}; got {sorted(rules) or 'no errors'}]")
+    print("== Part D: whole-page-wrapper gate (measured heights, extraction/wrapper_gate.py)")
+    wbad, wn = run_wrapper()
+    fails += wbad
 
     print("== Part B: controls (must pass with zero errors)")
     controls = [("unmutated example.pagespec.json (mode reference, real assets)", copy.deepcopy(EXAMPLE)),
@@ -392,6 +637,36 @@ def main():
             print(f"  {'CAUGHT' if ok else 'MISSED'}  {name}  [{check}: clean={'pass' if clean_ok else 'FAIL'}, drifted={'fail' if caught else 'pass'}]")
         finally:
             shutil.rmtree(d)
+    src_tree = os.path.join(os.path.dirname(REPO), "src")
+    n_src = 0
+    if os.path.isdir(src_tree):
+        print("== Part C2: section source ranges re-read from a copy of the real source tree")
+        def with_tree():
+            d, r = scratch()
+            shutil.copytree(src_tree, os.path.join(d, "src"))
+            return d, r
+        def src_cases():
+            yield "control: unmodified contracts against the real files", None, True
+            yield "hero.copy range shifted by one line", sec_edit("hero.copy", lambda x: x["source"].update(lines="11-30")), False
+            yield "wrong tag claimed for a header element", sec_edit("shell.header", lambda x: x["source"].update(tag="footer")), False
+            yield "range runs past the end of the file", sec_edit("footer.bar", lambda x: x["source"].update(lines="61-9999")), False
+            yield "source file does not exist", sec_edit("footer.bar", lambda x: x["source"].update(file="src/components/Gone.jsx")), False
+            yield "source.id claims an id the element lacks", sec_edit("footer.bar", lambda x: x["source"].update(id="footer")), False
+            yield "source file replaced by a different real file", sec_edit("hero.video", lambda x: x["source"].update(file="src/components/Hero.jsx")), False
+        for name, fn, control in src_cases():
+            d, r = with_tree()
+            try:
+                if fn:
+                    fn(r)
+                res = va.run_checks(r, d, quiet=True)["source_provenance"]
+                ok = (not res[0]) if control else bool(res[0])
+                fails += not ok
+                n_src += 1
+                print(f"  {'PASS' if control and ok else 'CAUGHT' if ok else 'FAIL' if control else 'MISSED'}  {name}  [source_provenance: {'fail' if res[0] else 'pass'}{(' - ' + res[0][0][:80]) if res[0] else ''}]")
+            finally:
+                shutil.rmtree(d)
+    else:
+        print("== Part C2 skipped: no sibling src/ tree next to this design-repo (standalone copy)")
     for name, ev in [("citation control (valid fake citation)", GOOD_EV)] + CITATION_DRIFT:
         d, r = scratch()
         try:
@@ -407,8 +682,8 @@ def main():
         finally:
             shutil.rmtree(d)
 
-    total = len(MUTATIONS) + len(GEN_MUTATIONS) + len(controls) + len(DRIFT) + len(CITATION_DRIFT) + 1
-    print(f"\n{total - fails}/{total} adversarial expectations met ({len(MUTATIONS)} reference + {len(GEN_MUTATIONS)} generated PageSpec mutations, {len(controls)} controls, {len(DRIFT) + len(CITATION_DRIFT)} repo-drift injections, 1 citation control)")
+    total = n_src + wn + len(CONTRACT_MUTATIONS) + len(MUTATIONS) + len(GEN_MUTATIONS) + len(controls) + len(DRIFT) + len(CITATION_DRIFT) + 1
+    print(f"\n{total - fails}/{total} adversarial expectations met ({len(MUTATIONS)} reference + {len(GEN_MUTATIONS)} generated PageSpec mutations, {len(CONTRACT_MUTATIONS)} contract mutations, {wn} wrapper-gate cases, {n_src} source-range cases, {len(controls)} controls, {len(DRIFT) + len(CITATION_DRIFT)} repo-drift injections, 1 citation control)")
     return 1 if fails else 0
 
 

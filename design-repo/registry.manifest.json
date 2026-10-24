@@ -1,6 +1,6 @@
 {
   "repositoryId": "avec-design-repo",
-  "repositoryVersion": "1.1.0",
+  "repositoryVersion": "1.2.0",
   "pageSpecVersion": "1.1.0",
   "allowlistVersion": "1.0.0",
   "versionFieldNote": "allowlistVersion is MACHINE-CHECKED (extraction/verify_all.py version_parity fails if it drifts from tokens/llm/component-allowlist.json). counts are MACHINE-CHECKED (manifest_counts recomputes every number from disk). repositoryVersion (= newest CHANGELOG heading) and pageSpecVersion (= the schema const, which PageSpecs must declare) are cross-checked by version_parity; bumping them stays a hand edit.",
@@ -47,7 +47,11 @@
     "tokenCatalog": "tokens/llm/token-catalog.json",
     "tokenPolicy": "tokens/llm/token-policy.json",
     "themeLight": "tokens/themes/light.json",
-    "exampleGenerated": "schema/examples/generated.template.home.pagespec.json"
+    "exampleGenerated": "schema/examples/generated.template.home.pagespec.json",
+    "contractSchema": "schema/section-contract.schema.json",
+    "wrapperGate": "extraction/wrapper_gate.py",
+    "wrapperWhitelist": "extraction/wrapper-whitelist.json",
+    "measureSections": "extraction/measure_sections.mjs"
   },
   "counts": {
     "foundationTokens": 111,
@@ -66,8 +70,9 @@
     "blockedAssetRoles": 3,
     "generationSafeAssetRoles": 11,
     "generatedExamples": 1,
-    "graphRules": 25,
-    "evidenceEntries": 169,
+    "retrievalIneligibleSections": 2,
+    "graphRules": 30,
+    "evidenceEntries": 186,
     "corrections": 6
   },
   "modes": {

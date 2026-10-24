@@ -9,7 +9,10 @@ Checks (each prints PASS / FAIL / WARN):
   no_zip_inside, generated_mode (reference / generated PageSpec mode: per-role availability PINNED in this
   file, substitutes, per-section generatedAssetRoles, generated schemas, sourceBrand patterns traced to the
   source and probed against PINNED strings, one reference and one generated example per eligible template,
-  and an end-to-end leak self-test of the validator).
+  and an end-to-end leak self-test of the validator), section_contracts (closed contract schema, semantic vs
+  source objects, taxonomy pinned here), retrieval_eligibility (pinned here and in semantic_validate.py, allowlist
+  parity), source_provenance (every source range re-read from the real file when the source tree is present),
+  wrapper_gate (measured heights, extraction/wrapper_gate.py; thresholds pinned here too).
 
 Drift-proofing: schema/tests/adversarial_test.py copies this repo to a scratch dir, injects each
 class of drift (phantom allowlist entry, out-of-range / wrong-content citation, wrong manifest count,
@@ -56,6 +59,19 @@ PINNED_SOURCE_PROBES = {
     "media": ["/assets/hero-triage.mp4", "wave_desktop.webm", "square-logo-195.png", "5d520b4b4002bff5"],
     "copy": ["Handle your inbox in one minute a day", "Tinder for email", "Made for people who hate email"],
 }
+# Section taxonomy and retrieval eligibility, pinned in CODE (semantic_validate.py keeps a second copy): editing a
+# contract or the allowlist alone cannot change what a section is classed as or whether it is retrievable.
+EXPECT_TAXONOMY = {
+    "shell.header": "shell", "shell.progress-dots": "shell", "shell.scroll-hint": "layer", "shell.notify-modal": "layer",
+    "hero.copy": "hero", "hero.video": "hero",
+    "deck.word-reveal-copy": "feature", "deck.email-stack": "feature", "deck.triage-game": "feature",
+    "expand.compose-demo": "feature", "expand.be-here-now": "content", "expand.search-demo": "feature", "expand.notifications-demo": "feature",
+    "proof.reviews-carousel": "proof", "footer.launch": "cta", "footer.bar": "footer",
+}
+EXPECT_RETRIEVAL = {sid: sid not in ("shell.notify-modal", "shell.scroll-hint") for sid in EXPECT_TAXONOMY}
+UTILITY_WORDS = ("cookie", "consent", "modal", "dialog", "overlay", "toast", "popup", "lightbox", "drawer", "snackbar", "preloader", "cursor")
+# Wrapper gate thresholds, pinned here as well as in extraction/wrapper_gate.py (changing one file alone is caught).
+GATE_PINS = {"HERO_WARN_PX": 1800, "HERO_FAIL_PX": 3000, "SHARE_WARN": 0.50, "SHARE_FAIL": 0.60, "MIN_INFLOW_SECTIONS": 3, "VIEWPORT_WIDTH": 1440}
 PINNED_RULE_FOR = {"brand": "GENERATED_MODE_SOURCE_BRAND", "storeMarks": "GENERATED_MODE_STORE_MARK", "urls": "GENERATED_MODE_SOURCE_URL",
                    "reviews": "GENERATED_MODE_REVIEW", "ratings": "GENERATED_MODE_RATING", "people": "GENERATED_MODE_PERSON",
                    "media": "GENERATED_MODE_MEDIA", "copy": "GENERATED_MODE_SOURCE_COPY"}
@@ -126,6 +142,7 @@ def compute_counts(repo):
         "blockedAssetRoles": sum(1 for r in jload(repo, "assets/asset-roles.json")["roles"].values() if r.get("availability") == "blocked-for-generation"),
         "generationSafeAssetRoles": sum(1 for r in jload(repo, "assets/asset-roles.json")["roles"].values() if r.get("availability") == "generation-safe"),
         "generatedExamples": len(example_files(repo, "generated")),
+        "retrievalIneligibleSections": sum(1 for f in os.listdir(os.path.join(repo, "sections")) if f.endswith(".json") and jload(repo, "sections/" + f).get("retrievalEligible", True) is False),
         "graphRules": len(graph["rules"]),
         "evidenceEntries": len(mv["evidence"]),
         "corrections": len(mv["corrections"]),
@@ -709,6 +726,144 @@ def c_generated_mode(repo, src):
     return errs, warns
 
 
+def _sections_of(repo):
+    return {s["id"]: s for s in (jload(repo, "sections/" + f) for f in sorted(os.listdir(os.path.join(repo, "sections"))) if f.endswith(".json"))}
+
+
+def c_section_contracts(repo, src):
+    """Closed contract schema; semantic {id, category} and source {id, tag, file, lines, citation} are separate; taxonomy pinned here; CTA/review classing."""
+    errs = []
+    cs = jload(repo, "schema/section-contract.schema.json")
+    try:
+        Draft7Validator.check_schema(cs)
+    except Exception as e:
+        return [f"section-contract schema invalid: {str(e)[:200]}"], []
+    v = Draft7Validator(cs)
+    secs = _sections_of(repo)
+    for sid, c in sorted(secs.items()):
+        for e in v.iter_errors(c):
+            errs.append(f"{sid}: {'/'.join(map(str, e.path)) or '<root>'}: {e.message[:140]}")
+        if c.get("semantic", {}).get("id") != sid:
+            errs.append(f"{sid}: semantic.id must equal the contract id")
+        if c.get("source", {}).get("id") == sid:
+            errs.append(f"{sid}: source.id must not equal the contract id")
+        got = c.get("semantic", {}).get("category")
+        if sid not in EXPECT_TAXONOMY:
+            errs.append(f"{sid} has no entry in verify_all EXPECT_TAXONOMY (review it, then pin it)")
+        elif got != EXPECT_TAXONOMY[sid]:
+            errs.append(f"{sid}: category {got!r}, verify_all pins {EXPECT_TAXONOMY[sid]!r}")
+        props = set((c.get("contentSchema") or {}).get("properties", {}))
+        if props & {"cta", "primaryCta", "secondaryCta"} and got not in ("hero", "shell", "cta", "layer"):
+            errs.append(f"{sid}: carries CTA fields but is classed {got!r}")
+        if props & {"reviewIds", "reviews"} and got != "proof":
+            errs.append(f"{sid}: review content is not classed proof")
+    for sid in EXPECT_TAXONOMY:
+        if sid not in secs:
+            errs.append(f"pinned section {sid} has no contract")
+    if cs.get("additionalProperties") is not False:
+        errs.append("section-contract schema is not closed (additionalProperties must be false)")
+    for k in ("semantic", "source"):
+        if cs["properties"].get(k, {}).get("additionalProperties") is not False:
+            errs.append(f"section-contract schema: {k} object is not closed")
+    for k in ("semantic", "source", "retrievalEligible"):
+        if k not in cs.get("required", []):
+            errs.append(f"section-contract schema must require {k}")
+    seen = {}
+    for sid, c in secs.items():
+        k = (c["source"]["file"], c["source"]["lines"])
+        if k in seen:
+            errs.append(f"{seen[k]} and {sid} claim the same source range {k}")
+        seen[k] = sid
+    return errs, []
+
+
+def c_retrieval(repo, src):
+    """retrievalEligible pinned in this file AND semantic_validate.py; allowlist parity; reason 30+ chars."""
+    errs = []
+    secs = _sections_of(repo)
+    al = jload(repo, "tokens/llm/component-allowlist.json")["entries"]
+    for sid, c in secs.items():
+        got = c.get("retrievalEligible", True)
+        if got is not EXPECT_RETRIEVAL.get(sid, True):
+            errs.append(f"{sid}: retrievalEligible {got!r}, verify_all pins {EXPECT_RETRIEVAL.get(sid, True)!r}")
+        if got is False and len(c.get("retrievalReason") or "") < 30:
+            errs.append(f"{sid}: retrievalEligible false without a 30+ char retrievalReason")
+        if got is not False and "retrievalReason" in c:
+            errs.append(f"{sid}: retrievalReason present on an eligible section")
+        if (any(w in sid for w in UTILITY_WORDS) or c.get("semantic", {}).get("category") == "layer") and got is not False:
+            errs.append(f"{sid} looks like utility/runtime UI but is retrieval-eligible")
+        if al.get(sid, {}).get("retrievalEligible") is not got:
+            errs.append(f"{sid}: allowlist retrievalEligible {al.get(sid, {}).get('retrievalEligible')!r} != contract {got!r}")
+    sv = load_validator(repo)
+    if getattr(sv, "RETRIEVAL_PINNED", None) != {k: v for k, v in EXPECT_RETRIEVAL.items() if v is False}:
+        errs.append(f"semantic_validate.RETRIEVAL_PINNED {getattr(sv, 'RETRIEVAL_PINNED', None)} differs from verify_all's pin")
+    if getattr(sv, "SECTION_TAXONOMY", None) != EXPECT_TAXONOMY:
+        errs.append("semantic_validate.SECTION_TAXONOMY differs from verify_all's EXPECT_TAXONOMY")
+    return errs, []
+
+
+def c_source_provenance(repo, src):
+    """Every contract's source range is re-read from the real file; the tag opens/closes at the cited lines."""
+    errs, warns = [], []
+    secs = _sections_of(repo)
+    ev = jload(repo, "extraction/measured-values.json")["evidence"]
+    tree = bool(src) and any(os.path.exists(os.path.join(src, c["source"]["file"])) for c in secs.values())
+    checked = 0
+    for sid, c in sorted(secs.items()):
+        s_ = c["source"]
+        e = ev.get(s_["citation"])
+        if e is None:
+            errs.append(f"{sid}: source.citation {s_['citation']} is not a ledger entry")
+        elif e.get("path") != s_["file"] or e.get("lines") != s_["lines"]:
+            errs.append(f"{sid}: ledger entry {s_['citation']} cites {e.get('path')}:{e.get('lines')}, not {s_['file']}:{s_['lines']}")
+        full = os.path.join(src or "", s_["file"])
+        if not os.path.exists(full):
+            if tree:
+                errs.append(f"{sid}: source.file {s_['file']} does not exist in the source tree")
+            continue
+        checked += 1
+        flines = open(full, encoding="utf-8").read().split("\n")
+        a, b = (int(x) for x in s_["lines"].split("-"))
+        if a < 1 or b < a or b > len(flines):
+            errs.append(f"{sid}: source.lines {s_['lines']} out of range ({s_['file']} has {len(flines)} lines)")
+            continue
+        if "<" + s_["tag"] not in flines[a - 1]:
+            errs.append(f"{sid}: line {a} of {s_['file']} does not open <{s_['tag']}>: {flines[a - 1].strip()[:60]!r}")
+        if "</" + s_["tag"] + ">" not in flines[b - 1]:
+            errs.append(f"{sid}: line {b} of {s_['file']} does not close </{s_['tag']}>: {flines[b - 1].strip()[:60]!r}")
+        if s_["id"] is None and ' id="' in flines[a - 1]:
+            errs.append(f"{sid}: source.id is null but the element has an id attribute")
+        if s_["id"] is not None and f'id="{s_["id"]}"' not in flines[a - 1]:
+            errs.append(f"{sid}: source.id {s_['id']!r} not on line {a}")
+    if checked == 0:
+        warns.append("source tree absent: source ranges were not re-read (structure and ledger links were still checked)")
+    return errs, warns
+
+
+def c_wrapper_gate(repo, src):
+    wg = load_module_at(repo, "extraction/wrapper_gate.py")
+    errs = []
+    for k, want in GATE_PINS.items():
+        if getattr(wg, k, None) != want:
+            errs.append(f"wrapper_gate.{k} is {getattr(wg, k, None)!r} but verify_all pins {want!r}")
+    templates = jload(repo, "templates/templates.json")["templates"]
+    nodes = [n for t in templates.values() for n in t["nodes"]]
+    secs = _sections_of(repo)
+    cats = {sid: c.get("semantic", {}).get("category") for sid, c in secs.items()}
+    ledger = jload(repo, "extraction/measured-values.json")
+    wl = jload(repo, "extraction/wrapper-whitelist.json")
+    gerr, gwarn, ginfo = wg.evaluate(nodes, cats, ledger.get("sectionHeights"), wl.get("entries"))
+    errs += [f"{c}: {m}" for c, m in gerr]
+    return errs, [f"{c}: {m}" for c, m in gwarn] + [f"note: {m}" for m in ginfo]
+
+
+def load_module_at(repo, rel):
+    spec = importlib.util.spec_from_file_location("mod_" + str(abs(hash((repo, rel)))), os.path.join(repo, rel))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def c_no_zip(repo, src):
     return [f"zip inside package: {os.path.relpath(p, repo)}" for p in all_files(repo) if p.endswith(".zip")], []
 
@@ -721,6 +876,8 @@ CHECKS = [
     ("graph_validator_parity", c_graph_parity), ("schema_contract_parity", c_schema_contract), ("tokens", c_tokens),
     ("token_policy", c_token_policy), ("templates_routes", c_templates), ("ia_consistency", c_ia), ("no_zip_inside", c_no_zip),
     ("generated_mode", c_generated_mode),
+    ("section_contracts", c_section_contracts), ("retrieval_eligibility", c_retrieval),
+    ("source_provenance", c_source_provenance), ("wrapper_gate", c_wrapper_gate),
 ]
 
 

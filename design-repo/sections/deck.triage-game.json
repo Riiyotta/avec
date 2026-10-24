@@ -205,5 +205,17 @@
       "incorrect": -1
     }
   },
-  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source.",
+  "semantic": {
+    "id": "deck.triage-game",
+    "category": "feature"
+  },
+  "source": {
+    "id": null,
+    "tag": "div",
+    "file": "src/components/Deck.jsx",
+    "lines": "63-65",
+    "citation": "ev.prov.deck-triage-game"
+  },
+  "retrievalEligible": true
 }

@@ -137,5 +137,17 @@
       "assetRole": "media.generated-product-visual"
     }
   },
-  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source.",
+  "semantic": {
+    "id": "expand.be-here-now",
+    "category": "content"
+  },
+  "source": {
+    "id": null,
+    "tag": "div",
+    "file": "src/components/Expand.jsx",
+    "lines": "467-550",
+    "citation": "ev.prov.expand-be-here-now"
+  },
+  "retrievalEligible": true
 }

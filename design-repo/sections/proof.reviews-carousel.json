@@ -205,5 +205,17 @@
       }
     ]
   },
-  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source.",
+  "semantic": {
+    "id": "proof.reviews-carousel",
+    "category": "proof"
+  },
+  "source": {
+    "id": null,
+    "tag": "div",
+    "file": "src/components/ReviewsCarousel.jsx",
+    "lines": "203-218",
+    "citation": "ev.prov.proof-reviews-carousel"
+  },
+  "retrievalEligible": true
 }

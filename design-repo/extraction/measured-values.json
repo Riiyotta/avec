@@ -1091,6 +1091,123 @@
       "path": "src/components/Hero.jsx",
       "expect": "400+ ",
       "description": "Source rating row (rating pattern)"
+    },
+    "ev.prov.shell-header": {
+      "kind": "lines",
+      "path": "src/components/Header.jsx",
+      "lines": "6-16",
+      "expect": "<header className=\"fixed top-0 right-0 l",
+      "description": "Provenance of shell.header: the element this contract was extracted from"
+    },
+    "ev.prov.shell-progress-dots": {
+      "kind": "lines",
+      "path": "src/components/ProgressDots.jsx",
+      "lines": "110-133",
+      "expect": "<div data-scroll-progress-dots=\"true\" cl",
+      "description": "Provenance of shell.progress-dots: the element this contract was extracted from"
+    },
+    "ev.prov.shell-scroll-hint": {
+      "kind": "lines",
+      "path": "src/components/ScrollHint.jsx",
+      "lines": "34-39",
+      "expect": "<div data-scroll-hint=\"true\" className={",
+      "description": "Provenance of shell.scroll-hint: the element this contract was extracted from"
+    },
+    "ev.prov.shell-notify-modal": {
+      "kind": "lines",
+      "path": "src/components/NotifyModal.jsx",
+      "lines": "65-134",
+      "expect": "<div",
+      "description": "Provenance of shell.notify-modal: the element this contract was extracted from"
+    },
+    "ev.prov.hero-copy": {
+      "kind": "lines",
+      "path": "src/components/Hero.jsx",
+      "lines": "10-29",
+      "expect": "<div className=\"flex shrink-0 flex-col g",
+      "description": "Provenance of hero.copy: the element this contract was extracted from"
+    },
+    "ev.prov.hero-video": {
+      "kind": "lines",
+      "path": "src/components/HeroVideo.jsx",
+      "lines": "94-136",
+      "expect": "<div className=\"relative aspect-square w",
+      "description": "Provenance of hero.video: the element this contract was extracted from"
+    },
+    "ev.prov.deck-word-reveal-copy": {
+      "kind": "lines",
+      "path": "src/components/Deck.jsx",
+      "lines": "46-55",
+      "expect": "<div className=\"flex shrink-0 flex-col j",
+      "description": "Provenance of deck.word-reveal-copy: the element this contract was extracted from"
+    },
+    "ev.prov.deck-email-stack": {
+      "kind": "lines",
+      "path": "src/components/Deck.jsx",
+      "lines": "60-62",
+      "expect": "<div className=\"absolute inset-0\" style=",
+      "description": "Provenance of deck.email-stack: the element this contract was extracted from"
+    },
+    "ev.prov.deck-triage-game": {
+      "kind": "lines",
+      "path": "src/components/Deck.jsx",
+      "lines": "63-65",
+      "expect": "<div className={cn('absolute inset-0 bg-",
+      "description": "Provenance of deck.triage-game: the element this contract was extracted from"
+    },
+    "ev.prov.expand-compose-demo": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "407-465",
+      "expect": "<div",
+      "description": "Provenance of expand.compose-demo: the element this contract was extracted from"
+    },
+    "ev.prov.expand-be-here-now": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "467-550",
+      "expect": "<div",
+      "description": "Provenance of expand.be-here-now: the element this contract was extracted from"
+    },
+    "ev.prov.expand-search-demo": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "552-605",
+      "expect": "<div",
+      "description": "Provenance of expand.search-demo: the element this contract was extracted from"
+    },
+    "ev.prov.expand-notifications-demo": {
+      "kind": "lines",
+      "path": "src/components/Expand.jsx",
+      "lines": "607-639",
+      "expect": "<div className=\"absolute left-1/2 z-30 w",
+      "description": "Provenance of expand.notifications-demo: the element this contract was extracted from"
+    },
+    "ev.prov.proof-reviews-carousel": {
+      "kind": "lines",
+      "path": "src/components/ReviewsCarousel.jsx",
+      "lines": "203-218",
+      "expect": "<div ref={viewport} onMouseEnter={() => ",
+      "description": "Provenance of proof.reviews-carousel: the element this contract was extracted from"
+    },
+    "ev.prov.footer-launch": {
+      "kind": "lines",
+      "path": "src/components/Footer.jsx",
+      "lines": "49-60",
+      "expect": "<div className=\"flex flex-1 flex-col ite",
+      "description": "Provenance of footer.launch: the element this contract was extracted from"
+    },
+    "ev.prov.footer-bar": {
+      "kind": "lines",
+      "path": "src/components/Footer.jsx",
+      "lines": "61-100",
+      "expect": "<div className=\"mx-6 mb-0 snap-end md:mx",
+      "description": "Provenance of footer.bar: the element this contract was extracted from"
+    },
+    "ev.measure.section-heights": {
+      "kind": "file",
+      "path": "src/App.jsx",
+      "description": "Page whose rendered section heights were measured (1440x900)"
     }
   },
   "corrections": [
@@ -1157,5 +1274,141 @@
     "scrollStops": 13,
     "outboundRuntimeRequests": "none (notify + leaderboard stubbed in src/lib/analytics.js; PostHog removed)",
     "liveCompany": "Avec / Nearly Extraterrestrial Technology, Inc. - real, live company; see assets/asset-roles.json licensing."
+  },
+  "sectionHeights": {
+    "$comment": "Rendered height of every template node at 1440x900, written by extraction/measure_sections.mjs and read by extraction/wrapper_gate.py. The page is one scroll root (main, h-dvh) whose sections are scroll runways in multiples of 100dvh: a node owns the runway between its first and last scroll-stop element (deck.email-stack = 3 stops, expand.compose-demo = 4), so these heights depend on the viewport height and are only valid at 900px. Nodes inside another node's block (hero video column, word-reveal copy, reviews carousel) are accountedIn that node and take no extra height. heightPx/position/inFlow/pageHeight/measuredOn/tool are machine-written; selector/nth/endSelector/click/accountedIn say how each node was found.",
+    "evidence": "ev.measure.section-heights",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "pageSelector": "main",
+    "measuredOn": "2026-10-24",
+    "tool": "playwright chromium 153.0.8010.12 via measure_sections.mjs",
+    "pageHeight": 11700,
+    "sections": {
+      "shell.header/default": {
+        "selector": "main > header",
+        "nth": 0,
+        "heightPx": 70,
+        "position": "fixed",
+        "inFlow": false
+      },
+      "shell.progress-dots/default": {
+        "selector": "[data-scroll-progress-dots]",
+        "nth": 0,
+        "heightPx": 146,
+        "position": "fixed",
+        "inFlow": false
+      },
+      "shell.scroll-hint/default": {
+        "selector": "[data-scroll-hint]",
+        "nth": 0,
+        "heightPx": 20,
+        "position": "fixed",
+        "inFlow": false
+      },
+      "shell.notify-modal/default": {
+        "selector": "body > div.fixed",
+        "click": "header button",
+        "nth": 0,
+        "heightPx": 900,
+        "position": "fixed",
+        "inFlow": false
+      },
+      "hero.copy/default": {
+        "selector": "section[data-section-name=\"hero\"]",
+        "nth": 0,
+        "heightPx": 900,
+        "position": "static",
+        "inFlow": true
+      },
+      "hero.video/default": {
+        "selector": "section[data-section-name=\"hero\"] div.aspect-square",
+        "accountedIn": "hero.copy/default",
+        "nth": 0,
+        "heightPx": 640,
+        "position": "relative",
+        "inFlow": false
+      },
+      "deck.word-reveal-copy/default": {
+        "selector": "main > section:nth-of-type(2) > div:nth-child(1) div.type-body-lg",
+        "accountedIn": "deck.email-stack/default",
+        "nth": 0,
+        "heightPx": 814,
+        "position": "static",
+        "inFlow": false
+      },
+      "deck.email-stack/default": {
+        "selector": "main > section:nth-of-type(2) > div:nth-child(1)",
+        "endSelector": "main > section:nth-of-type(2) > div:nth-child(3)",
+        "endEdge": "bottom",
+        "nth": 0,
+        "heightPx": 2700,
+        "position": "sticky",
+        "inFlow": true
+      },
+      "deck.triage-game/default": {
+        "selector": "main > section:nth-of-type(2) > div:nth-child(4)",
+        "nth": 0,
+        "heightPx": 900,
+        "position": "static",
+        "inFlow": true
+      },
+      "expand.compose-demo/default": {
+        "selector": "main > section:nth-of-type(3) > div:nth-child(1)",
+        "endSelector": "main > section:nth-of-type(3) > div:nth-child(4)",
+        "endEdge": "bottom",
+        "nth": 0,
+        "heightPx": 3600,
+        "position": "sticky",
+        "inFlow": true
+      },
+      "expand.be-here-now/default": {
+        "selector": "main > section:nth-of-type(3) > div:nth-child(5)",
+        "nth": 0,
+        "heightPx": 900,
+        "position": "static",
+        "inFlow": true
+      },
+      "expand.search-demo/default": {
+        "selector": "main > section:nth-of-type(3) > div:nth-child(6)",
+        "nth": 0,
+        "heightPx": 900,
+        "position": "static",
+        "inFlow": true
+      },
+      "expand.notifications-demo/default": {
+        "selector": "main > section:nth-of-type(3) > div:nth-child(7)",
+        "nth": 0,
+        "heightPx": 900,
+        "position": "static",
+        "inFlow": true
+      },
+      "footer.launch/default": {
+        "selector": "main > footer",
+        "endSelector": "main > footer > div:nth-child(2)",
+        "endEdge": "top",
+        "nth": 0,
+        "heightPx": 838.81,
+        "position": "static",
+        "inFlow": true
+      },
+      "proof.reviews-carousel/default": {
+        "selector": "main > footer > div:nth-child(1) > div:last-child",
+        "accountedIn": "footer.launch/default",
+        "nth": 0,
+        "heightPx": 244,
+        "position": "static",
+        "inFlow": false
+      },
+      "footer.bar/default": {
+        "selector": "main > footer > div:nth-child(2)",
+        "nth": 0,
+        "heightPx": 61.19,
+        "position": "static",
+        "inFlow": true
+      }
+    }
   }
 }

@@ -149,5 +149,17 @@
       "assetRole": "media.generated-product-visual"
     }
   },
-  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source.",
+  "semantic": {
+    "id": "shell.progress-dots",
+    "category": "shell"
+  },
+  "source": {
+    "id": null,
+    "tag": "div",
+    "file": "src/components/ProgressDots.jsx",
+    "lines": "110-133",
+    "citation": "ev.prov.shell-progress-dots"
+  },
+  "retrievalEligible": true
 }

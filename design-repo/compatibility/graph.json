@@ -210,6 +210,46 @@
         "ev.src.content-hero",
         "ev.src.content-expand"
       ]
+    },
+    {
+      "id": "SECTION_CONTRACT_SCHEMA",
+      "severity": "error",
+      "rule": "Every sections/*.json satisfies the closed schema/section-contract.schema.json; semantic.id equals the contract id.",
+      "evidenceIds": [
+        "ev.spec.assets"
+      ]
+    },
+    {
+      "id": "SECTION_TAXONOMY_PINNED",
+      "severity": "error",
+      "rule": "semantic.category of every section equals the table pinned in semantic_validate.py (and independently in verify_all.py); an unpinned section id is an error.",
+      "evidenceIds": [
+        "ev.src.app"
+      ]
+    },
+    {
+      "id": "CONVERSION_BLOCK_CLASSED_CTA",
+      "severity": "error",
+      "rule": "Sections whose content carries CTA fields are classed hero, shell, cta or layer; review content is classed proof; conversion blocks are never generic content or feature.",
+      "evidenceIds": [
+        "ev.src.cta-sizes"
+      ]
+    },
+    {
+      "id": "RETRIEVAL_ELIGIBILITY_PINNED",
+      "severity": "error",
+      "rule": "retrievalEligible is a closed boolean pinned per section (default true); runtime/utility UI (the notify modal, the scroll hint) is false with a retrievalReason of 30+ characters; an id that looks like cookie/consent/modal/dialog/overlay/toast/drawer is false.",
+      "evidenceIds": [
+        "ev.prov.shell-notify-modal"
+      ]
+    },
+    {
+      "id": "SECTION_SOURCE_STRUCTURE",
+      "severity": "error",
+      "rule": "source is a closed provenance object: lines 'a-b' with 1 <= a <= b, a project-relative file, source.id never equal to the contract id, no two contracts claim the same file range.",
+      "evidenceIds": [
+        "ev.prov.hero-copy"
+      ]
     }
   ],
   "notEnforced": [
