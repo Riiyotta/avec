@@ -92,5 +92,50 @@
     "ev.src.expand-btn-color",
     "ev.src.expand-btn-shadow",
     "ev.src.expand-wave-src"
-  ]
+  ],
+  "generatedAssetRoles": [
+    "media.generated-product-visual",
+    "media.user-supplied",
+    "content.original-copy"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "label",
+      "expandVideo"
+    ],
+    "properties": {
+      "label": {
+        "type": "string",
+        "minLength": 1
+      },
+      "expandVideo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "media.generated-product-visual",
+              "media.user-supplied"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^user-supplied:[A-Za-z0-9._/-]+$"
+          }
+        }
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "label": "Eyes up",
+    "expandVideo": {
+      "assetRole": "media.generated-product-visual"
+    }
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

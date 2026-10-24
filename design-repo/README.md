@@ -29,8 +29,10 @@ Read this before you generate anything. None of it has been smoothed over.
    search/notification demo content. The structure is not open to generation.
    `NO_ADJACENT_SAME_CATEGORY` is deliberately **not** enforced, because same-category adjacency is the
    page's structure (`compatibility/graph.json` → `notEnforced`).
-4. **This is a real, live company** (Avec / Nearly Extraterrestrial Technology, Inc.). See
-   `assets/asset-roles.json` for the rules on assets:
+4. **This is a real, live company** (Avec / Nearly Extraterrestrial Technology, Inc.). A PageSpec
+   declares a `mode`: `reference` (reproduces the source, rules below) or `generated` (a new page for
+   another brand, see "Generated mode"). See `assets/asset-roles.json` for the rules on assets in
+   reference mode:
    - Logos, the app icon, the Apple TestFlight/App Store marks and the Outlook/Android marks are
      `reuse-exact-only`. They must never be generated or redrawn.
    - The product videos, the wave footage, the dot-preview frames and the sender-photo avatars are
@@ -42,17 +44,46 @@ Read this before you generate anything. None of it has been smoothed over.
      rejected.
    - The rating (`400+ reviews`, `5.0`), the copyright entity, the social and legal links, and the
      TestFlight URL are pinned schema constants.
-5. **Commercial font.** GT Standard VF (`public/fonts/GT_Standard_VF-…woff2`) ships with the source
+5. **Generated mode forbids the source's identity.** Generation guidance: a `generated` PageSpec must not
+   contain Avec's logo or brand name, App Store / TestFlight marks or links, any real URL, real reviews or
+   reviewers, the source's rating, real or demo people, proprietary screenshots or video, or Avec's
+   marketing copy. The validator rejects them; the section below says how and what it cannot catch.
+6. **Commercial font.** GT Standard VF (`public/fonts/GT_Standard_VF-…woff2`) ships with the source
    site. A licence to reuse it outside avec.ai has **not** been established, so a consumer must license
    it or substitute another font. Inter is SIL OFL.
-6. **No outbound runtime requests.** The notify-me POST and the Stack Challenge leaderboard are
+7. **No outbound runtime requests.** The notify-me POST and the Stack Challenge leaderboard are
    stubbed in the source (`src/lib/analytics.js`), and PostHog was removed. A generated page must not
    wire the form or the game to any invented endpoint.
-7. **Token source.** `tailwind.config.js` (v3) exists but is unused, because `postcss.config.js` loads
+8. **Token source.** `tailwind.config.js` (v3) exists but is unused, because `postcss.config.js` loads
    no plugins. The real tokens are the `:root` custom properties, the utilities and the `.type-*`
    classes in `src/index.css`, which is the original compiled Tailwind v4 CSS. It is minified onto
    single lines, so its citations use `contains` rather than line ranges.
-8. **Only a light theme exists.** The source has no dark mode, so do not generate one.
+9. **Only a light theme exists.** The source has no dark mode, so do not generate one.
+
+## Generated mode (PageSpec `mode: "generated"`)
+
+`mode` is required and closed: `reference` | `generated` (`pageSpecVersion` 1.1.0). `schema/example.pagespec.json` is `reference`;
+`schema/examples/generated.template.home.pagespec.json` is `generated` (a made-up brand, "Foldwell"). `template.legal` is not
+generation-eligible and has no nodes, so it has no example of either mode.
+
+Every asset role in `assets/asset-roles.json` has an `availability`:
+
+| availability | roles | in a generated page |
+|---|---|---|
+| reference-only (7) | `brand.wordmark`, `brand.glyph`, `brand.app-icon`, `media.hero-demo-video`, `media.ambient-video`, `media.phone-demo-video`, `media.section-preview-frame` | absent (Avec's own brand and media); `generationSafeSubstitutes` name the replacement |
+| blocked-for-generation (3) | `thirdparty.store-badge` (TestFlight, App Store), `thirdparty.platform-icon` (Outlook, Android), `avatar.sender-photo` | absent, never imitated |
+| generation-safe (11) | `avatar.initials`, `brand.logo-placeholder`, `brand.logo-user-supplied`, `icon.generic-glyph`, `avatar.fictional-person`, `content.fictional-review`, `content.placeholder-rating`, `media.generated-product-visual`, `media.user-supplied`, `link.placeholder-url`, `content.original-copy` | allowed, only where the section lists them in `generatedAssetRoles` |
+
+In a generated page: the logo is a placeholder or user-supplied mark, CTAs carry a generic glyph and a placeholder URL (`#`, a relative path, `example.com|org|net`), the rating is the
+pinned placeholder (`X.X`, `[N] reviews`, zero stars), reviews are invented and marked `fictional: true`, senders are fictional with initials or a neutral avatar, product visuals are
+generated or user-supplied, and `meta.copyOrigin` attests the copy is original. The validator (`GENERATED_MODE_*` rules in `compatibility/graph.json`) scans every string of the PageSpec
+against `assets/asset-roles.json` `sourceBrand.patterns` (brand, store marks, URLs, reviews, ratings, people, media files and hashes, marketing claims) and against every 5-word run of the
+source's own section copy.
+
+What this does not do: it matches strings, so a lookalike logo, an obfuscated name or a reworded claim is not detected, and originality of copy cannot be proven. `Jordan`, `Diego`, `Android` and any
+mention of `App Store` are blocked even when innocent. A PageSpec carries roles, not files, so a renderer still decides what it draws for a role. The patterns were derived from the source by
+this tool and have **not been reviewed by a human**; `verify_all.py` only proves each regex traces to a real source string, that the availability of every role is pinned in code, and that
+the validator still rejects a leak of each kind.
 
 ## Corrections to pre-existing groundwork
 
@@ -78,12 +109,12 @@ tokens/20-component/        component-scoped tokens (raw values only where the s
 tokens/30-layout/           section-max-w, section-frame, scroll-root, anchors
 tokens/themes/light.json    resolves every semantic alias to a hex value
 tokens/llm/                 component-allowlist, token-catalog, token-policy (the curated view a generator uses)
-assets/asset-roles.json     closed assetRole set, generation/licensing policy, pinned policies, sender bindings
+assets/asset-roles.json     closed assetRole set (21), generation/licensing policy, availability per role (reference-only / generation-safe / blocked-for-generation), pinned policies, sender bindings, sourceBrand patterns
 primitives/ components/     content-agnostic building blocks
-sections/                   16 section contracts (ids reused from ../ia.json): purpose, contentSchema, fieldBudgets, motion, responsive, a11y, referenceContent
+sections/                   16 section contracts (ids reused from ../ia.json): purpose, contentSchema, fieldBudgets, motion, responsive, a11y, referenceContent, generatedAssetRoles, generatedContentSchema, generatedReferenceContent
 templates/                  templates.json (node lists and 13 scroll stops), routes.json (3 routes, each assigned once)
-compatibility/graph.json    15 enforced rules (error/warn), plus the rules deliberately not enforced
-schema/                     pagespec.schema.json (Draft-07), example.pagespec.json, semantic_validate.py, tests/adversarial_test.py
+compatibility/graph.json    25 enforced rules (error/warn; 10 are GENERATED_MODE_*), plus the rules deliberately not enforced
+schema/                     pagespec.schema.json (Draft-07), example.pagespec.json (reference), examples/generated.template.home.pagespec.json, semantic_validate.py, tests/adversarial_test.py
 extraction/                 measured-values.json (evidence ledger and corrections), verify_all.py
 ```
 
@@ -92,9 +123,9 @@ extraction/                 measured-values.json (evidence ledger and correction
 You need Python 3 and `jsonschema`.
 
 ```bash
-python3 schema/semantic_validate.py            # example → 0 errors
+python3 schema/semantic_validate.py            # both examples (reference and generated) → 0 errors
 python3 schema/tests/adversarial_test.py       # every mutation rejected by its expected rule, controls pass, drift caught
-python3 extraction/verify_all.py               # 19 repo-level checks
+python3 extraction/verify_all.py               # 20 repo-level checks
 ```
 
 The scripts find the repo root from their own location. Citations resolve against the parent
@@ -104,9 +135,8 @@ asset-file existence checks and the ia.json checks. Every internal check still r
 
 ### Machine-checked and documentation-only
 
-`allowlistVersion` and `counts` are machine-checked by `version_parity` and `manifest_counts`, and
-this README's counts table is checked as well. `repositoryVersion` is documentation-only.
-`pageSpecVersion` is documentation-only in the manifest, but it is also a schema `const`.
+`allowlistVersion`, `repositoryVersion` (= the newest CHANGELOG heading), `pageSpecVersion` (= the schema `const`) and `counts` are machine-checked by `version_parity` and
+`manifest_counts`, and this README's counts table is checked as well. Bumping a version is still a hand edit.
 
 ## Counts (checked by `verify_all.py` → `manifest_counts`)
 
@@ -124,9 +154,13 @@ this README's counts table is checked as well. `repositoryVersion` is documentat
 | generationEligibleTemplates | 1 |
 | routes | 3 |
 | scrollStops | 13 |
-| assetRoles | 11 |
-| graphRules | 15 |
-| evidenceEntries | 164 |
+| assetRoles | 21 |
+| referenceOnlyAssetRoles | 7 |
+| blockedAssetRoles | 3 |
+| generationSafeAssetRoles | 11 |
+| generatedExamples | 1 |
+| graphRules | 25 |
+| evidenceEntries | 169 |
 | corrections | 6 |
 <!-- counts:end -->
 

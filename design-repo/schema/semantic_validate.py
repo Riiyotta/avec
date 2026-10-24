@@ -6,13 +6,19 @@ below must also exist in compatibility/graph.json (extraction/verify_all.py enfo
 parity in both directions). The PageSpec's declared template is cross-referenced against
 that template's real node list in templates/templates.json -- not just nodes[] in isolation.
 
+PageSpec `mode` (required): `reference` reproduces the Avec source; `generated` is a new page for another brand and
+additionally runs the GENERATED_MODE_* rules: no reference-only / blocked asset role, only the roles a section lists in
+generatedAssetRoles, and no Avec brand, store mark, source URL, review, rating, person identity, media file or marketing copy
+(patterns: assets/asset-roles.json `sourceBrand.patterns`, every string of the PageSpec is scanned).
+
 Usage:
-    python3 schema/semantic_validate.py                 # validates schema/example.pagespec.json
+    python3 schema/semantic_validate.py                 # validates the reference example and the generated example
     python3 schema/semantic_validate.py path/to/spec.json [...]
 Exit code 1 if any error-severity finding.
 """
 import json
 import os
+import re
 import sys
 
 from jsonschema import Draft7Validator
@@ -24,6 +30,9 @@ DECK_ORDER = ["deck.word-reveal-copy", "deck.email-stack", "deck.triage-game"]
 EXPAND_ORDER = ["expand.compose-demo", "expand.be-here-now", "expand.search-demo", "expand.notifications-demo"]
 FOOTER_TAIL = ["footer.launch", "proof.reviews-carousel", "footer.bar"]
 VIDEO_ROLES = {"media.hero-demo-video", "media.ambient-video", "media.phone-demo-video"}
+VIDEO_SECTIONS = {"hero.video", "expand.compose-demo", "expand.be-here-now"}
+PLACEHOLDER_URL = re.compile(r"^(#|/[a-z0-9\-/]*|https://example\.(com|org|net)(/[A-Za-z0-9\-/_.]*)?|mailto:[A-Za-z0-9._-]+@example\.(com|org|net))$")
+URLISH = re.compile(r"(https?://|mailto:|(^|\s)//|\bwww\.)", re.I)
 
 
 class Context:
@@ -41,6 +50,45 @@ class Context:
                 s = json.load(open(os.path.join(sdir, f), encoding="utf-8"))
                 self.sections[s["id"]] = s
         self.severity = {r["id"]: r["severity"] for r in self.graph["rules"]}
+        sb = self.assets.get("sourceBrand", {}).get("patterns", {})
+        self.brand = {}
+        self.ngram = 0
+        for cat, c in sb.items():
+            rx = [p for p in c.get("regex", [])]
+            self.brand[cat] = re.compile("|".join(f"(?:{p})" for p in rx), re.I) if rx else None
+            if c.get("ngram"):
+                self.ngram = int(c["ngram"])
+        self._shingles = None
+
+    def shingles(self):
+        """5-word runs (normalised) of every string the source's own section contracts carry as copy."""
+        if self._shingles is None:
+            out = set()
+            if self.ngram:
+                for s in self.sections.values():
+                    for _, txt in strings(s.get("referenceContent", {})):
+                        out |= grams(txt, self.ngram)
+                    for _, txt in strings(s.get("verbatimReviews", {})):
+                        out |= grams(txt, self.ngram)
+            self._shingles = out
+        return self._shingles
+
+
+def strings(obj, path=""):
+    """Every (path, string value) of a JSON value; keys are not scanned."""
+    if isinstance(obj, str):
+        yield path, obj
+    elif isinstance(obj, dict):
+        for k, v in obj.items():
+            yield from strings(v, f"{path}.{k}" if path else k)
+    elif isinstance(obj, list):
+        for i, v in enumerate(obj):
+            yield from strings(v, f"{path}[{i}]")
+
+
+def grams(text, n):
+    w = re.findall(r"[a-z0-9']+", text.lower().replace("\u2019", "'"))
+    return {" ".join(w[i:i + n]) for i in range(len(w) - n + 1)}
 
 
 def _sections(spec):
@@ -262,6 +310,11 @@ def r_asset_policy(ctx, spec):
                 errs.append(f"{where}: unknown assetRole {a['assetRole']!r}")
                 continue
             ref = a.get("assetRef")
+            if role["policy"] == "user-supplied-only":
+                scheme = role.get("refScheme", "user-supplied:")
+                if ref is not None and not str(ref).startswith(scheme):
+                    errs.append(f"{where}: role {a['assetRole']} only accepts a user-supplied assetRef ({scheme}<name>), got {ref!r}")
+                continue
             if role["policy"] == "generate-new-allowed":
                 if ref is not None:
                     errs.append(f"{where}: role {a['assetRole']} is token-only and must not carry assetRef ({ref})")
@@ -283,8 +336,14 @@ def r_asset_policy(ctx, spec):
 
 def r_video_budget(ctx, spec):
     count = 0
+    generated = spec.get("mode") == "generated"
     for n in spec.get("nodes", []):
-        if isinstance(n, dict) and any(a["assetRole"] in VIDEO_ROLES for _, a in _assets(n.get("content", {}))):
+        if not isinstance(n, dict):
+            continue
+        if generated:  # generated visuals are not video-typed; count the sections that carry the three videos
+            if n.get("section") in VIDEO_SECTIONS:
+                count += 1
+        elif any(a["assetRole"] in VIDEO_ROLES for _, a in _assets(n.get("content", {}))):
             count += 1
     return [f"{count} video-bearing nodes > measured budget 3"] if count > 3 else []
 
@@ -295,6 +354,83 @@ def r_email_swipes(ctx, spec):
         return []
     k = len(n.get("content", {}).get("cards", []))
     return [f"deck.email-stack has {k} cards (<4): no visible stack after two swipes"] if k < 4 else []
+
+
+# ------------------------------------------------------------------ generated mode
+def _gen(spec):
+    return spec.get("mode") == "generated"
+
+
+def _node_roles(ctx, spec):
+    for i, n in enumerate(spec.get("nodes", [])):
+        if isinstance(n, dict):
+            for path, a in _assets(n.get("content", {})):
+                yield i, n, path, a
+
+
+def r_gen_reference_asset(ctx, spec):
+    if not _gen(spec):
+        return []
+    errs = []
+    for i, n, path, a in _node_roles(ctx, spec):
+        reg = ctx.assets["roles"].get(a["assetRole"])
+        if reg and reg.get("availability") != "generation-safe":
+            subs = ", ".join(reg.get("generationSafeSubstitutes", [])) or "none: omit it"
+            errs.append(f"nodes[{i}] {n.get('section')}.{path}: role {a['assetRole']} is {reg.get('availability')} and cannot appear in a generated page (use: {subs})")
+    return errs
+
+
+def r_gen_role(ctx, spec):
+    if not _gen(spec):
+        return []
+    errs = []
+    for i, n, path, a in _node_roles(ctx, spec):
+        reg = ctx.assets["roles"].get(a["assetRole"])
+        sec = ctx.sections.get(n.get("section"))
+        if reg and reg.get("availability") == "generation-safe" and sec is not None and a["assetRole"] not in sec.get("generatedAssetRoles", []):
+            errs.append(f"nodes[{i}] {n.get('section')}.{path}: role {a['assetRole']} is not a generated-mode role of this section (allowed: {', '.join(sec.get('generatedAssetRoles', [])) or 'none'})")
+    co = (spec.get("meta") or {}).get("copyOrigin") if isinstance(spec.get("meta"), dict) else None
+    if not isinstance(co, dict) or co.get("assetRole") != "content.original-copy":
+        errs.append("meta.copyOrigin (content.original-copy attestation) is required in generated mode")
+    return errs
+
+
+def _scan(cat, label):
+    def fn(ctx, spec):
+        if not _gen(spec):
+            return []
+        rx = ctx.brand.get(cat)
+        errs = []
+        if rx is None:
+            return [f"no sourceBrand.patterns.{cat} regex is registered; generated mode cannot be checked"]
+        for path, txt in strings(spec):
+            m = rx.search(txt)
+            if m:
+                errs.append(f"{path}: {label} ('{m.group(0)}')")
+        return errs
+    return fn
+
+
+def r_gen_url(ctx, spec):
+    errs = _scan("urls", "source-specific URL")(ctx, spec)
+    if not _gen(spec):
+        return errs
+    for path, txt in strings(spec):
+        if URLISH.search(txt) and not PLACEHOLDER_URL.match(txt):
+            errs.append(f"{path}: URL is not a placeholder (allowed: #, a relative path, https://example.com|org|net/..., mailto:...@example.com): {txt[:60]!r}")
+    return errs
+
+
+def r_gen_copy(ctx, spec):
+    errs = _scan("copy", "source marketing copy")(ctx, spec)
+    if not _gen(spec) or not ctx.ngram:
+        return errs
+    corpus = ctx.shingles()
+    for path, txt in strings(spec):
+        hit = grams(txt, ctx.ngram) & corpus
+        if hit:
+            errs.append(f"{path}: reuses a {ctx.ngram}-word run of the source's own copy ('{sorted(hit)[0]}')")
+    return errs
 
 
 RULES = {
@@ -313,6 +449,16 @@ RULES = {
     "ASSET_ROLE_POLICY": r_asset_policy,
     "VIDEO_BUDGET": r_video_budget,
     "EMAIL_STACK_SWIPES": r_email_swipes,
+    "GENERATED_MODE_REFERENCE_ASSET": r_gen_reference_asset,
+    "GENERATED_MODE_ROLE": r_gen_role,
+    "GENERATED_MODE_SOURCE_BRAND": _scan("brand", "names or marks the Avec brand"),
+    "GENERATED_MODE_STORE_MARK": _scan("storeMarks", "App Store / TestFlight / platform mark"),
+    "GENERATED_MODE_SOURCE_URL": r_gen_url,
+    "GENERATED_MODE_REVIEW": _scan("reviews", "real review, reviewer or review id"),
+    "GENERATED_MODE_RATING": _scan("ratings", "the source's rating"),
+    "GENERATED_MODE_PERSON": _scan("people", "real or demo person / sender identity"),
+    "GENERATED_MODE_MEDIA": _scan("media", "source media file, path or hash"),
+    "GENERATED_MODE_SOURCE_COPY": r_gen_copy,
 }
 
 
@@ -336,7 +482,8 @@ def validate(spec, ctx=None):
 
 
 def main(argv):
-    paths = argv[1:] or [os.path.join(REPO, "schema", "example.pagespec.json")]
+    paths = argv[1:] or [os.path.join(REPO, "schema", "example.pagespec.json"),
+                         os.path.join(REPO, "schema", "examples", "generated.template.home.pagespec.json")]
     ctx = Context()
     bad = 0
     for p in paths:

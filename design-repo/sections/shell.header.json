@@ -201,5 +201,139 @@
     "ev.src.cta-sizes",
     "ev.src.cta-url",
     "ev.spec.viewports"
-  ]
+  ],
+  "generatedAssetRoles": [
+    "brand.logo-placeholder",
+    "brand.logo-user-supplied",
+    "icon.generic-glyph",
+    "link.placeholder-url",
+    "content.original-copy"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "logo",
+      "primaryCta",
+      "secondaryCta"
+    ],
+    "properties": {
+      "logo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "brand.logo-placeholder",
+              "brand.logo-user-supplied"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^user-supplied:[A-Za-z0-9._/-]+$"
+          }
+        }
+      },
+      "primaryCta": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "href",
+          "icon"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "href": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assetRole",
+              "url"
+            ],
+            "properties": {
+              "assetRole": {
+                "const": "link.placeholder-url"
+              },
+              "url": {
+                "type": "string",
+                "pattern": "^(#|/[a-z0-9\\-/]*|https://example\\.(com|org|net)(/[A-Za-z0-9\\-/_.]*)?|mailto:[A-Za-z0-9._-]+@example\\.(com|org|net))$"
+              }
+            }
+          },
+          "icon": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assetRole"
+            ],
+            "properties": {
+              "assetRole": {
+                "const": "icon.generic-glyph"
+              }
+            }
+          }
+        }
+      },
+      "secondaryCta": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "action",
+          "icon"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "action": {
+            "const": "open-notify-modal"
+          },
+          "icon": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assetRole"
+            ],
+            "properties": {
+              "assetRole": {
+                "const": "icon.generic-glyph"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "logo": {
+      "assetRole": "brand.logo-placeholder"
+    },
+    "primaryCta": {
+      "label": "Get the app",
+      "href": {
+        "assetRole": "link.placeholder-url",
+        "url": "#"
+      },
+      "icon": {
+        "assetRole": "icon.generic-glyph"
+      }
+    },
+    "secondaryCta": {
+      "label": "Join waitlist",
+      "action": "open-notify-modal",
+      "icon": {
+        "assetRole": "icon.generic-glyph"
+      }
+    }
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

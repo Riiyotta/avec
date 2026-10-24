@@ -105,5 +105,49 @@
     "ev.src.progress-dots-frames",
     "ev.spec.dots"
   ],
-  "notes": "stopCount must equal the template's scrollStops length (13). All 13 tooltip frames are present on disk."
+  "notes": "stopCount must equal the template's scrollStops length (13). All 13 tooltip frames are present on disk.",
+  "generatedAssetRoles": [
+    "media.generated-product-visual",
+    "media.user-supplied"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "stopCount",
+      "previewFrames"
+    ],
+    "properties": {
+      "stopCount": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "previewFrames": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "media.generated-product-visual",
+              "media.user-supplied"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^user-supplied:[A-Za-z0-9._/-]+$"
+          }
+        }
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "stopCount": 13,
+    "previewFrames": {
+      "assetRole": "media.generated-product-visual"
+    }
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

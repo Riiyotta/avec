@@ -122,5 +122,88 @@
       "author": "Vahwdsss",
       "body": "Avec has saved me so much time managing email. It’s easily the best email app out there and I’ve tried them all. I’m sure Superhuman wishes they were Avec."
     }
-  }
+  },
+  "generatedAssetRoles": [
+    "content.fictional-review"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "reviews"
+    ],
+    "properties": {
+      "reviews": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "assetRole",
+            "fictional",
+            "title",
+            "author",
+            "body",
+            "stars"
+          ],
+          "properties": {
+            "assetRole": {
+              "const": "content.fictional-review"
+            },
+            "fictional": {
+              "const": true
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "author": {
+              "type": "string",
+              "minLength": 1
+            },
+            "body": {
+              "type": "string",
+              "minLength": 1
+            },
+            "stars": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            }
+          }
+        }
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "reviews": [
+      {
+        "assetRole": "content.fictional-review",
+        "fictional": true,
+        "title": "Calm at last",
+        "author": "Ines R.",
+        "body": "I used to dread the morning pile. Now it is a short stack and a clear head. Sample review for layout only.",
+        "stars": 5
+      },
+      {
+        "assetRole": "content.fictional-review",
+        "fictional": true,
+        "title": "Quick and quiet",
+        "author": "Tobias W.",
+        "body": "Replying by voice saves my thumbs on the commute, and the drafts sound like me. Sample review for layout only.",
+        "stars": 4
+      },
+      {
+        "assetRole": "content.fictional-review",
+        "fictional": true,
+        "title": "Finds things fast",
+        "author": "Keiko M.",
+        "body": "Searching by describing the message works every time I try it. Sample review for layout only.",
+        "stars": 5
+      }
+    ]
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

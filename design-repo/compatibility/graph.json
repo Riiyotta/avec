@@ -123,6 +123,93 @@
       "evidenceIds": [
         "ev.src.emailstack-container"
       ]
+    },
+    {
+      "id": "GENERATED_MODE_REFERENCE_ASSET",
+      "severity": "error",
+      "rule": "In a `generated` PageSpec no assetRole may have availability reference-only or blocked-for-generation (Avec logo/glyph/app icon, TestFlight/App Store and Outlook/Android marks, product videos and frames, sender photos); the registry's generationSafeSubstitutes name the replacement.",
+      "evidenceIds": [
+        "ev.spec.assets"
+      ]
+    },
+    {
+      "id": "GENERATED_MODE_ROLE",
+      "severity": "error",
+      "rule": "In a `generated` PageSpec every assetRole must be listed in that section's generatedAssetRoles, and meta.copyOrigin (content.original-copy) must be present.",
+      "evidenceIds": [
+        "ev.spec.assets"
+      ]
+    },
+    {
+      "id": "GENERATED_MODE_SOURCE_BRAND",
+      "severity": "error",
+      "rule": "In a `generated` PageSpec no string may name or imitate the Avec brand (sourceBrand.patterns.brand).",
+      "evidenceIds": [
+        "ev.src.content-footer",
+        "ev.gen.copyright"
+      ]
+    },
+    {
+      "id": "GENERATED_MODE_STORE_MARK",
+      "severity": "error",
+      "rule": "In a `generated` PageSpec no string may name an App Store, TestFlight or Outlook/Android mark (sourceBrand.patterns.storeMarks). Generic mentions are blocked too: the validator cannot tell a mark from a mention.",
+      "evidenceIds": [
+        "ev.src.cta-sizes",
+        "ev.gen.store-cta"
+      ]
+    },
+    {
+      "id": "GENERATED_MODE_SOURCE_URL",
+      "severity": "error",
+      "rule": "In a `generated` PageSpec no string may carry a source URL (TestFlight link, avec.ai, social profiles), and every URL-like string must be a placeholder (#, relative path, example.com|org|net, mailto at example.*).",
+      "evidenceIds": [
+        "ev.gen.testflight-url",
+        "ev.gen.social-urls"
+      ]
+    },
+    {
+      "id": "GENERATED_MODE_REVIEW",
+      "severity": "error",
+      "rule": "In a `generated` PageSpec no string may carry a real App Store review, reviewer name, review title or review id.",
+      "evidenceIds": [
+        "ev.src.carousel-reviews",
+        "ev.spec.reviews"
+      ]
+    },
+    {
+      "id": "GENERATED_MODE_RATING",
+      "severity": "error",
+      "rule": "In a `generated` PageSpec no string may carry the source's rating values (5.0, 400+ reviews); the rating is the schema-pinned placeholder.",
+      "evidenceIds": [
+        "ev.gen.rating",
+        "ev.src.hero-rating"
+      ]
+    },
+    {
+      "id": "GENERATED_MODE_PERSON",
+      "severity": "error",
+      "rule": "In a `generated` PageSpec no string may carry a source demo persona, sender or named third-party sender identity (sourceBrand.patterns.people).",
+      "evidenceIds": [
+        "ev.src.content-emails",
+        "ev.src.content-notif"
+      ]
+    },
+    {
+      "id": "GENERATED_MODE_MEDIA",
+      "severity": "error",
+      "rule": "In a `generated` PageSpec no string may reference a source media file, path or content hash (sourceBrand.patterns.media).",
+      "evidenceIds": [
+        "ev.spec.assets"
+      ]
+    },
+    {
+      "id": "GENERATED_MODE_SOURCE_COPY",
+      "severity": "error",
+      "rule": "In a `generated` PageSpec no string may carry a known Avec marketing claim (sourceBrand.patterns.copy) or a 5-word run copied from the source's own section copy.",
+      "evidenceIds": [
+        "ev.src.content-hero",
+        "ev.src.content-expand"
+      ]
     }
   ],
   "notEnforced": [

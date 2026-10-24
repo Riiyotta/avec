@@ -130,5 +130,136 @@
     "ev.src.footer-copy",
     "ev.src.footer-bar"
   ],
-  "notes": "Legal entity name, social handles and legal hrefs are pinned consts (real company data). /terms and /privacy-policy targets were never captured."
+  "notes": "Legal entity name, social handles and legal hrefs are pinned consts (real company data). /terms and /privacy-policy targets were never captured.",
+  "generatedAssetRoles": [
+    "link.placeholder-url"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "copyright",
+      "socialLinks",
+      "legalLinks"
+    ],
+    "properties": {
+      "copyright": {
+        "const": "Copyright © [year] [Company name]"
+      },
+      "socialLinks": {
+        "type": "array",
+        "maxItems": 5,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "label",
+            "href"
+          ],
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "href": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole",
+                "url"
+              ],
+              "properties": {
+                "assetRole": {
+                  "const": "link.placeholder-url"
+                },
+                "url": {
+                  "type": "string",
+                  "pattern": "^(#|/[a-z0-9\\-/]*|https://example\\.(com|org|net)(/[A-Za-z0-9\\-/_.]*)?|mailto:[A-Za-z0-9._-]+@example\\.(com|org|net))$"
+                }
+              }
+            }
+          }
+        }
+      },
+      "legalLinks": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 3,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "label",
+            "href"
+          ],
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "href": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole",
+                "url"
+              ],
+              "properties": {
+                "assetRole": {
+                  "const": "link.placeholder-url"
+                },
+                "url": {
+                  "type": "string",
+                  "pattern": "^(#|/[a-z0-9\\-/]*|https://example\\.(com|org|net)(/[A-Za-z0-9\\-/_.]*)?|mailto:[A-Za-z0-9._-]+@example\\.(com|org|net))$"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "copyright": "Copyright © [year] [Company name]",
+    "socialLinks": [
+      {
+        "label": "Social 1",
+        "href": {
+          "assetRole": "link.placeholder-url",
+          "url": "#"
+        }
+      },
+      {
+        "label": "Social 2",
+        "href": {
+          "assetRole": "link.placeholder-url",
+          "url": "#"
+        }
+      },
+      {
+        "label": "hello@example.com",
+        "href": {
+          "assetRole": "link.placeholder-url",
+          "url": "mailto:hello@example.com"
+        }
+      }
+    ],
+    "legalLinks": [
+      {
+        "label": "Terms of Service",
+        "href": {
+          "assetRole": "link.placeholder-url",
+          "url": "/terms"
+        }
+      },
+      {
+        "label": "Privacy Policy",
+        "href": {
+          "assetRole": "link.placeholder-url",
+          "url": "/privacy-policy"
+        }
+      }
+    ]
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

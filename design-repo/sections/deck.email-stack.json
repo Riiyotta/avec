@@ -202,5 +202,140 @@
     "ev.src.deck-bg",
     "ev.src.content-emails"
   ],
-  "notes": "Fictional demo emails may be newly written, but new senders must use avatar.initials; sender-photo avatars are bound to their original sender."
+  "notes": "Fictional demo emails may be newly written, but new senders must use avatar.initials; sender-photo avatars are bound to their original sender.",
+  "generatedAssetRoles": [
+    "avatar.initials",
+    "avatar.fictional-person",
+    "content.original-copy"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "cards",
+      "swipeLabels",
+      "replyLabel",
+      "replyHint"
+    ],
+    "properties": {
+      "cards": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 12,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "subject",
+            "sender",
+            "time",
+            "to",
+            "body",
+            "avatar"
+          ],
+          "properties": {
+            "subject": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sender": {
+              "type": "string",
+              "minLength": 1
+            },
+            "time": {
+              "type": "string",
+              "minLength": 1
+            },
+            "to": {
+              "type": "string",
+              "minLength": 1
+            },
+            "body": {
+              "type": "string",
+              "minLength": 1
+            },
+            "avatar": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole"
+              ],
+              "properties": {
+                "assetRole": {
+                  "enum": [
+                    "avatar.initials",
+                    "avatar.fictional-person"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "swipeLabels": {
+        "const": {
+          "right": "Done",
+          "left": "Later"
+        }
+      },
+      "replyLabel": {
+        "const": "Reply"
+      },
+      "replyHint": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "cards": [
+      {
+        "subject": "Room change for Thursday's workshop",
+        "sender": "Wren Okafor",
+        "time": "1 day ago",
+        "to": "You and 11 others",
+        "body": "Hello everyone,\n\nThe workshop has moved to the second-floor studio because the main hall is being repainted. We start at the same time. Please bring a notebook and use the side entrance.\n\nSee you there,\nWren",
+        "avatar": {
+          "assetRole": "avatar.fictional-person"
+        }
+      },
+      {
+        "subject": "Which paint swatch should we pick?",
+        "sender": "Basil Tran",
+        "time": "1 day ago",
+        "to": "You, Mira L",
+        "body": "Hi both,\n\nI narrowed the studio walls to three swatches and left photos in the shared folder. Could you each vote by Friday so the order goes in on time?\n\nBasil",
+        "avatar": {
+          "assetRole": "avatar.initials"
+        }
+      },
+      {
+        "subject": "Your library hold is ready",
+        "sender": "Harbor Library",
+        "time": "1 day ago",
+        "to": "You",
+        "body": "Your reserved book is waiting at the front desk. Holds are kept for five days, after which the copy returns to the shelf for the next reader.",
+        "avatar": {
+          "assetRole": "avatar.initials"
+        }
+      },
+      {
+        "subject": "Draft agenda for the offsite",
+        "sender": "Mira Lindqvist",
+        "time": "1 day ago",
+        "to": "You, Basil T",
+        "body": "Hi,\n\nHere is a first pass at the offsite agenda. Mornings stay open for deep work and afternoons hold the group sessions. Tell me what to cut.\n\nMira",
+        "avatar": {
+          "assetRole": "avatar.fictional-person"
+        }
+      }
+    ],
+    "swipeLabels": {
+      "right": "Done",
+      "left": "Later"
+    },
+    "replyLabel": "Reply",
+    "replyHint": "Press and speak to reply"
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

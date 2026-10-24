@@ -175,5 +175,102 @@
     "ev.shot.desktop.compose_intro",
     "ev.shot.desktop.compose_record"
   ],
-  "notes": "Correction vs CLONE_SPEC 5.4: caption index === B (reply shows at B0/compose_intro, dictation at B1, learn at B2, triage at B3), confirmed by Expand.jsx and desktop-1440-05 screenshot."
+  "notes": "Correction vs CLONE_SPEC 5.4: caption index === B (reply shows at B0/compose_intro, dictation at B1, learn at B2, triage at B3), confirmed by Expand.jsx and desktop-1440-05 screenshot.",
+  "generatedAssetRoles": [
+    "media.generated-product-visual",
+    "media.user-supplied",
+    "content.original-copy"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "captions",
+      "phoneVideo",
+      "stageSequence"
+    ],
+    "properties": {
+      "captions": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "reply",
+          "dictation",
+          "dictationCont",
+          "learn",
+          "triage"
+        ],
+        "properties": {
+          "reply": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dictation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dictationCont": {
+            "type": "string",
+            "minLength": 1
+          },
+          "learn": {
+            "type": "string",
+            "minLength": 1
+          },
+          "triage": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "phoneVideo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "media.generated-product-visual",
+              "media.user-supplied"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^user-supplied:[A-Za-z0-9._/-]+$"
+          }
+        }
+      },
+      "stageSequence": {
+        "const": [
+          "surface",
+          "accent-red",
+          "brand",
+          "accent-amber",
+          "surface"
+        ]
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "captions": {
+      "reply": "Speak the main points and Foldwell shapes them into a clear message.",
+      "dictation": "“Thursday works for me, let's move the workshop to the studio, and",
+      "dictationCont": "I can bring the printed agendas if that helps.”",
+      "learn": "Drafts pick up your own phrasing, so you only polish and send.",
+      "triage": "Routine notices can wait. Clear them in a single gesture."
+    },
+    "phoneVideo": {
+      "assetRole": "media.generated-product-visual"
+    },
+    "stageSequence": [
+      "surface",
+      "accent-red",
+      "brand",
+      "accent-amber",
+      "surface"
+    ]
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

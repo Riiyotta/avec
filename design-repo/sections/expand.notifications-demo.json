@@ -174,5 +174,100 @@
     "ev.shot.desktop.notifications",
     "ev.spec.notif-icon-claim"
   ],
-  "notes": "Correction vs CLONE_SPEC 5.4: the banner icon is the Avec app icon (square-logo-195.png), not the Pacific Airlines avatar - confirmed by Expand.jsx and desktop-1440-11 screenshot. Source also spells the email-stack sender 'Pacific Air Lines' vs 'Pacific Airlines' here."
+  "notes": "Correction vs CLONE_SPEC 5.4: the banner icon is the Avec app icon (square-logo-195.png), not the Pacific Airlines avatar - confirmed by Expand.jsx and desktop-1440-11 screenshot. Source also spells the email-stack sender 'Pacific Air Lines' vs 'Pacific Airlines' here.",
+  "generatedAssetRoles": [
+    "brand.logo-placeholder",
+    "avatar.initials",
+    "avatar.fictional-person",
+    "content.original-copy"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "headline",
+      "sender",
+      "time",
+      "bannerBody",
+      "emailSubject",
+      "emailBody",
+      "bannerIcon",
+      "senderAvatar"
+    ],
+    "properties": {
+      "headline": {
+        "type": "string",
+        "minLength": 1
+      },
+      "sender": {
+        "type": "string",
+        "minLength": 1
+      },
+      "time": {
+        "type": "string",
+        "minLength": 1
+      },
+      "bannerBody": {
+        "type": "string",
+        "minLength": 1
+      },
+      "emailSubject": {
+        "type": "string",
+        "minLength": 1
+      },
+      "emailBody": {
+        "type": "string",
+        "minLength": 1
+      },
+      "bannerIcon": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "brand.logo-placeholder",
+              "brand.logo-user-supplied"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^user-supplied:[A-Za-z0-9._/-]+$"
+          }
+        }
+      },
+      "senderAvatar": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "avatar.initials",
+              "avatar.fictional-person"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "headline": "Know what changed without opening anything. Short alerts explain the update and the next step.",
+    "sender": "Northgate Transit",
+    "time": "8:15 AM",
+    "bannerBody": "Platform changed to 4. Departs 6:10 PM. Pass attached.",
+    "emailSubject": "Platform and departure update for your trip",
+    "emailBody": "Hello,\n\nYour evening train now leaves from platform 4 at 6:10 PM.\nCoach: C\n\nYour digital pass is attached. Please keep it on your phone and arrive a few minutes early, since the platform is further from the main entrance.\n\nThank you for travelling with us,\nNorthgate Transit Desk",
+    "bannerIcon": {
+      "assetRole": "brand.logo-placeholder"
+    },
+    "senderAvatar": {
+      "assetRole": "avatar.initials"
+    }
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

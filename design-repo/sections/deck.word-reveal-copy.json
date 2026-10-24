@@ -98,5 +98,40 @@
     "ev.src.wordreveal-dim",
     "ev.src.deck"
   ],
-  "notes": "Exactly 3 chunks: the deck float has 3 steps (useScrollFloat(ref, 3)). Copy mentions 'Tinder' (third-party trademark) - keep as a comparison only."
+  "notes": "Exactly 3 chunks: the deck float has 3 steps (useScrollFloat(ref, 3)). Copy mentions 'Tinder' (third-party trademark) - keep as a comparison only.",
+  "generatedAssetRoles": [
+    "content.original-copy"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "chunks",
+      "aside"
+    ],
+    "properties": {
+      "chunks": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 3,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "aside": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "chunks": [
+      "Foldwell sorts your mail into a short, calm stack.",
+      "Each message gets one decision, then it is gone.",
+      "Nothing slips past you."
+    ],
+    "aside": "(Think flashcards, but for mail)"
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

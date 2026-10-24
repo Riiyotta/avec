@@ -6,7 +6,10 @@ Checks (each prints PASS / FAIL / WARN):
   manifest_counts, entry_points, no_absolute_paths, evidence_ids, citations (WARN-skips when the
   sibling source project is absent), asset_roles (incl. pinned-policy check), graph_validator_parity,
   schema_contract_parity, tokens, token_policy, templates_routes, ia_consistency (graceful),
-  no_zip_inside.
+  no_zip_inside, generated_mode (reference / generated PageSpec mode: per-role availability PINNED in this
+  file, substitutes, per-section generatedAssetRoles, generated schemas, sourceBrand patterns traced to the
+  source and probed against PINNED strings, one reference and one generated example per eligible template,
+  and an end-to-end leak self-test of the validator).
 
 Drift-proofing: schema/tests/adversarial_test.py copies this repo to a scratch dir, injects each
 class of drift (phantom allowlist entry, out-of-range / wrong-content citation, wrong manifest count,
@@ -27,6 +30,35 @@ from jsonschema import Draft7Validator
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ABS_PATTERNS = ["/" + "Users/", "/" + "home/", "C:" + "\\\\"]
+
+# Pinned in CODE, independent of assets/asset-roles.json: editing the registry alone cannot loosen any of these.
+PINNED_POLICIES = {"brand.wordmark": "reuse-exact-only", "brand.glyph": "reuse-exact-only", "brand.app-icon": "reuse-exact-only",
+                   "thirdparty.store-badge": "reuse-exact-only", "thirdparty.platform-icon": "reuse-exact-only",
+                   "avatar.sender-photo": "no-generation-proprietary", "media.hero-demo-video": "no-generation-proprietary",
+                   "media.phone-demo-video": "no-generation-proprietary"}
+AVAILABILITY = ["reference-only", "generation-safe", "blocked-for-generation"]
+PINNED_AVAILABILITY = {
+    "brand.wordmark": "reference-only", "brand.glyph": "reference-only", "brand.app-icon": "reference-only",
+    "media.hero-demo-video": "reference-only", "media.ambient-video": "reference-only", "media.phone-demo-video": "reference-only",
+    "media.section-preview-frame": "reference-only",
+    "thirdparty.store-badge": "blocked-for-generation", "thirdparty.platform-icon": "blocked-for-generation", "avatar.sender-photo": "blocked-for-generation",
+    "avatar.initials": "generation-safe", "brand.logo-placeholder": "generation-safe", "brand.logo-user-supplied": "generation-safe",
+    "icon.generic-glyph": "generation-safe", "avatar.fictional-person": "generation-safe", "content.fictional-review": "generation-safe",
+    "content.placeholder-rating": "generation-safe", "media.generated-product-visual": "generation-safe", "media.user-supplied": "generation-safe",
+    "link.placeholder-url": "generation-safe", "content.original-copy": "generation-safe"}
+PINNED_SOURCE_PROBES = {
+    "brand": ["Avec", "avec.ai", "Nearly Extraterrestrial Technology, Inc."],
+    "storeMarks": ["TestFlight", "Download on the App Store", "Outlook", "Android"],
+    "urls": ["https://testflight.apple.com/join/3JR2HxjZ", "https://x.com/avec", "https://www.linkedin.com/company/avec-ai", "hi@avec.ai"],
+    "reviews": ["soda_cowboy", "Rudraksh Awasthi", "Way better than Gmail!", "review.03"],
+    "ratings": ["5.0", "400+ reviews"],
+    "people": ["Coach Marcus", "Dana Chen", "Sarah Chen-Ramirez", "Pacific Gas & Electric", "Dropbox"],
+    "media": ["/assets/hero-triage.mp4", "wave_desktop.webm", "square-logo-195.png", "5d520b4b4002bff5"],
+    "copy": ["Handle your inbox in one minute a day", "Tinder for email", "Made for people who hate email"],
+}
+PINNED_RULE_FOR = {"brand": "GENERATED_MODE_SOURCE_BRAND", "storeMarks": "GENERATED_MODE_STORE_MARK", "urls": "GENERATED_MODE_SOURCE_URL",
+                   "reviews": "GENERATED_MODE_REVIEW", "ratings": "GENERATED_MODE_RATING", "people": "GENERATED_MODE_PERSON",
+                   "media": "GENERATED_MODE_MEDIA", "copy": "GENERATED_MODE_SOURCE_COPY"}
 
 
 def jload(repo, rel):
@@ -58,6 +90,17 @@ def leaf_tokens(obj):
     return n
 
 
+def example_files(repo, mode=None):
+    """Relative paths of every example PageSpec (mode None = all, else only those declaring that mode)."""
+    out = ["schema/example.pagespec.json"]
+    d = os.path.join(repo, "schema", "examples")
+    if os.path.isdir(d):
+        out += sorted(f"schema/examples/{f}" for f in os.listdir(d) if f.endswith(".json"))
+    if mode:
+        out = [r for r in out if jload(repo, r).get("mode") == mode]
+    return out
+
+
 def compute_counts(repo):
     tk = lambda rel: leaf_tokens(jload(repo, rel))
     fdir = os.path.join(repo, "tokens", "00-foundation")
@@ -79,6 +122,10 @@ def compute_counts(repo):
         "routes": len(jload(repo, "templates/routes.json")["routes"]),
         "scrollStops": sum(len(t["scrollStops"]) for t in tpls.values()),
         "assetRoles": len(jload(repo, "assets/asset-roles.json")["roles"]),
+        "referenceOnlyAssetRoles": sum(1 for r in jload(repo, "assets/asset-roles.json")["roles"].values() if r.get("availability") == "reference-only"),
+        "blockedAssetRoles": sum(1 for r in jload(repo, "assets/asset-roles.json")["roles"].values() if r.get("availability") == "blocked-for-generation"),
+        "generationSafeAssetRoles": sum(1 for r in jload(repo, "assets/asset-roles.json")["roles"].values() if r.get("availability") == "generation-safe"),
+        "generatedExamples": len(example_files(repo, "generated")),
         "graphRules": len(graph["rules"]),
         "evidenceEntries": len(mv["evidence"]),
         "corrections": len(mv["corrections"]),
@@ -119,13 +166,18 @@ def c_schema_meta(repo, src):
 
 def c_example_schema(repo, src):
     v = Draft7Validator(jload(repo, "schema/pagespec.schema.json"))
-    return [f"{list(e.path)}: {e.message[:150]}" for e in v.iter_errors(jload(repo, "schema/example.pagespec.json"))], []
+    return [f"{rel} {list(e.path)}: {e.message[:150]}" for rel in example_files(repo) for e in v.iter_errors(jload(repo, rel))], []
 
 
 def c_example_semantic(repo, src):
     sv = load_validator(repo)
-    errs, warns = sv.validate(jload(repo, "schema/example.pagespec.json"), sv.Context(repo))
-    return [f"[{r}] {m}" for r, m in errs], [f"[{r}] {m}" for r, m in warns]
+    ctx = sv.Context(repo)
+    errs, warns = [], []
+    for rel in example_files(repo):
+        e, w = sv.validate(jload(repo, rel), ctx)
+        errs += [f"{rel} [{r}] {m}" for r, m in e]
+        warns += [f"{rel} [{r}] {m}" for r, m in w]
+    return errs, warns
 
 
 def c_allowlist(repo, src):
@@ -152,6 +204,8 @@ def c_allowlist(repo, src):
     roles = sorted(jload(repo, "assets/asset-roles.json")["roles"].keys())
     if sorted(al["assetRoles"]) != roles:
         errs.append("allowlist assetRoles != assets/asset-roles.json roles")
+    if sorted(al.get("pageSpecModes", [])) != sorted(schema["properties"].get("mode", {}).get("enum", [])):
+        errs.append("allowlist pageSpecModes != schema mode enum")
     secs = sorted(k for k, e in al["entries"].items() if e["layer"] == "section")
     if secs != sorted(schema["definitions"]["node"]["properties"]["section"]["enum"]):
         errs.append("allowlist section entries != schema section enum")
@@ -160,7 +214,14 @@ def c_allowlist(repo, src):
 
 def c_version(repo, src):
     m, al = jload(repo, "registry.manifest.json"), jload(repo, "tokens/llm/component-allowlist.json")
-    return ([] if m["allowlistVersion"] == al["version"] else [f"manifest allowlistVersion {m['allowlistVersion']} != allowlist version {al['version']}"]), []
+    errs = [] if m["allowlistVersion"] == al["version"] else [f"manifest allowlistVersion {m['allowlistVersion']} != allowlist version {al['version']}"]
+    sc = jload(repo, "schema/pagespec.schema.json")["properties"]["pageSpecVersion"].get("const")
+    if m["pageSpecVersion"] != sc:
+        errs.append(f"manifest pageSpecVersion {m['pageSpecVersion']} != schema pageSpecVersion const {sc}")
+    head = re.search(r"^## (\d+\.\d+\.\d+)", open(os.path.join(repo, "CHANGELOG.md"), encoding="utf-8").read(), re.M)
+    if not head or head.group(1) != m["repositoryVersion"]:
+        errs.append(f"manifest repositoryVersion {m['repositoryVersion']} != newest CHANGELOG heading {head.group(1) if head else None}")
+    return errs, []
 
 
 def c_counts(repo, src):
@@ -256,8 +317,10 @@ def c_assets(repo, src):
     for rid, r in a["roles"].items():
         if r["policy"] not in a["policies"]:
             errs.append(f"{rid}: policy {r['policy']} not a defined policy")
-        if r["policy"] == "generate-new-allowed" and r["allowedRefs"]:
-            errs.append(f"{rid}: token-only role must have no allowedRefs")
+        if r["policy"] in ("generate-new-allowed", "user-supplied-only") and r["allowedRefs"]:
+            errs.append(f"{rid}: {r['policy']} role must have no allowedRefs")
+        if r["policy"] == "user-supplied-only" and not r.get("refScheme"):
+            errs.append(f"{rid}: user-supplied-only role needs a refScheme")
         for ref in r.get("senderBindings", {}):
             if ref not in r["allowedRefs"]:
                 errs.append(f"{rid}: senderBinding {ref} not in allowedRefs")
@@ -267,6 +330,12 @@ def c_assets(repo, src):
         got = a["roles"].get(rid, {}).get("policy")
         if got != pol:
             errs.append(f"PINNED {rid}: policy {got!r} != pinned {pol!r}")
+    for rid, pol in PINNED_POLICIES.items():  # pinned in code too: the registry's own pinnedPolicies block can be edited together with the role
+        got = a["roles"].get(rid, {}).get("policy")
+        if got != pol:
+            errs.append(f"PINNED (code) {rid}: policy {got!r} != pinned {pol!r}")
+        if a["pinnedPolicies"].get(rid) != pol:
+            errs.append(f"PINNED (code) {rid}: registry pinnedPolicies entry {a['pinnedPolicies'].get(rid)!r} != {pol!r}")
     if src and os.path.isdir(os.path.join(src, "public")):
         for rid, r in a["roles"].items():
             for ref in r["allowedRefs"]:
@@ -280,6 +349,9 @@ def c_assets(repo, src):
         for role in s.get("assetRoles", []):
             if role not in a["roles"]:
                 errs.append(f"{s['id']}: assetRole {role} not registered")
+        for role in s.get("generatedAssetRoles", []):
+            if role not in a["roles"]:
+                errs.append(f"{s['id']}: generatedAssetRole {role} not registered")
     return errs, warns
 
 
@@ -314,6 +386,16 @@ def c_schema_contract(repo, src):
                 errs.append(f"{sid}: schema motion.{k} {mc[k]['const']!r} != contract {s['motion'][k]!r}")
         if br["properties"]["variant"]["enum"] != s["variants"]:
             errs.append(f"{sid}: schema variants != contract variants")
+        if schema["definitions"].get(f"content.generated.{sid}") != s.get("generatedContentSchema"):
+            errs.append(f"{sid}: schema generated content definition != section generatedContentSchema")
+        gbr = {b["if"]["properties"]["section"]["const"]: b["then"] for b in schema["definitions"]["node.generated"]["allOf"]}.get(sid)
+        if not gbr:
+            errs.append(f"{sid}: no node.generated allOf branch")
+        else:
+            if gbr["properties"]["content"] != {"$ref": f"#/definitions/content.generated.{sid}"}:
+                errs.append(f"{sid}: node.generated content does not reference content.generated.{sid}")
+            if gbr["properties"]["motion"] != br["properties"]["motion"] or gbr["properties"]["variant"] != br["properties"]["variant"]:
+                errs.append(f"{sid}: node.generated motion/variant differ from node")
     if schema["definitions"]["motion"].get("additionalProperties") is not False:
         errs.append("motion schema is not closed (additionalProperties must be false)")
     return errs, []
@@ -428,6 +510,205 @@ def c_ia(repo, src):
     return errs, warns
 
 
+def _node_of(spec, sid):
+    return next(n for n in spec["nodes"] if n["section"] == sid)
+
+
+def _leaks():
+    """(label, expected rule, mutator) -- one leak per blocked category; the validator must reject each in generated mode."""
+    def setv(sid, path, val):
+        def f(s):
+            o = _node_of(s, sid)["content"]
+            for k in path[:-1]:
+                o = o[k]
+            o[path[-1]] = val
+        return f
+    return [
+        ("Avec name in headline", "GENERATED_MODE_SOURCE_BRAND", setv("hero.copy", ["headline"], "Avec helps you sort mail")),
+        ("TestFlight in a CTA label", "GENERATED_MODE_STORE_MARK", setv("shell.header", ["primaryCta", "label"], "Get on TestFlight")),
+        ("source social URL", "GENERATED_MODE_SOURCE_URL", setv("footer.bar", ["socialLinks", 0, "href", "url"], "https://x.com/avec")),
+        ("real store URL", "GENERATED_MODE_SOURCE_URL", setv("hero.copy", ["cta", "href", "url"], "https://testflight.apple.com/join/3JR2HxjZ")),
+        ("real reviewer", "GENERATED_MODE_REVIEW", setv("proof.reviews-carousel", ["reviews", 0, "author"], "soda_cowboy")),
+        ("source rating", "GENERATED_MODE_RATING", setv("hero.copy", ["subheadline"], "Rated 5.0 by readers")),
+        ("source persona", "GENERATED_MODE_PERSON", setv("deck.email-stack", ["cards", 0, "sender"], "Dana Chen")),
+        ("source media path", "GENERATED_MODE_MEDIA", setv("expand.notifications-demo", ["emailBody"], "See /assets/hero-triage.mp4 for details")),
+        ("non-placeholder URL", "GENERATED_MODE_SOURCE_URL", setv("footer.launch", ["primaryCta", "href", "url"], "https://acme-mail.io/download")),
+        ("5-word run copied from the source's copy", "GENERATED_MODE_SOURCE_COPY", setv("expand.compose-demo", ["captions", "learn"], "Review it, tweak it, and send it.")),
+        ("source marketing claim", "GENERATED_MODE_SOURCE_COPY", setv("hero.copy", ["headline"], "Handle your inbox in one minute a day")),
+        ("reference-only role", "GENERATED_MODE_REFERENCE_ASSET", setv("shell.header", ["logo", "assetRole"], "brand.wordmark")),
+        ("role outside the section's generatedAssetRoles", "GENERATED_MODE_ROLE", setv("shell.progress-dots", ["previewFrames", "assetRole"], "icon.generic-glyph")),
+    ]
+
+
+def c_generated_mode(repo, src):
+    import copy
+    errs, warns = [], []
+    a = jload(repo, "assets/asset-roles.json")
+    roles = a["roles"]
+    schema = jload(repo, "schema/pagespec.schema.json")
+    # --- schema: required closed `mode`, one branch per mode
+    if schema["properties"].get("mode", {}).get("enum") != ["reference", "generated"]:
+        errs.append("schema mode enum must be exactly ['reference', 'generated']")
+    if "mode" not in schema.get("required", []):
+        errs.append("schema must require 'mode'")
+    branches = {}
+    for b in schema.get("allOf", []):
+        c = b.get("if", {}).get("properties", {}).get("mode", {}).get("const")
+        branches[c] = b.get("then", {}).get("properties", {}).get("nodes", {}).get("items", {}).get("$ref")
+    if branches != {"reference": "#/definitions/node", "generated": "#/definitions/node.generated"}:
+        errs.append(f"schema mode branches must map reference -> node and generated -> node.generated, found {branches}")
+    if sorted(al_modes := jload(repo, "tokens/llm/component-allowlist.json").get("pageSpecModes", [])) != ["generated", "reference"]:
+        errs.append(f"allowlist pageSpecModes must be ['generated', 'reference'], found {al_modes}")
+    # --- availability: closed enum, pinned in code, substitutes
+    if sorted(a.get("availabilityValues", {})) != sorted(AVAILABILITY):
+        errs.append(f"asset-roles availabilityValues keys must be {AVAILABILITY}")
+    if sorted(a.get("modes", {})) != ["generated", "reference"]:
+        errs.append("asset-roles modes must describe exactly reference and generated")
+    for rid, r in roles.items():
+        if r.get("availability") not in AVAILABILITY:
+            errs.append(f"role {rid}: availability {r.get('availability')!r} is not one of {AVAILABILITY}")
+        if not r.get("generatedModeGuidance"):
+            errs.append(f"role {rid}: missing generatedModeGuidance")
+    for rid, want in PINNED_AVAILABILITY.items():
+        if rid not in roles:
+            errs.append(f"pinned availability: role {rid} missing from the registry")
+        elif roles[rid].get("availability") != want:
+            errs.append(f"pinned availability: role {rid} must be {want!r}, found {roles[rid].get('availability')!r}")
+    for rid in roles:
+        if rid not in PINNED_AVAILABILITY:
+            errs.append(f"role {rid} has no pinned availability in verify_all.py (add it to PINNED_AVAILABILITY)")
+    for rid, r in roles.items():
+        av, subs = r.get("availability"), r.get("generationSafeSubstitutes", [])
+        if av in ("reference-only", "blocked-for-generation"):
+            if not subs:
+                errs.append(f"role {rid} is {av} but names no generation-safe substitute")
+            for s_ in subs:
+                if s_ not in roles or roles[s_].get("availability") != "generation-safe":
+                    errs.append(f"role {rid}: substitute {s_} is not a generation-safe role")
+        elif subs:
+            errs.append(f"role {rid} is generation-safe but lists substitutes")
+    # --- sections: generated role sets, usedBy recomputed
+    secs = {}
+    for f in sorted(os.listdir(os.path.join(repo, "sections"))):
+        s = jload(repo, f"sections/{f}")
+        secs[s["id"]] = s
+    users = {}
+    for sid, s in secs.items():
+        gen = s.get("generatedAssetRoles")
+        if not gen:
+            errs.append(f"sections/{sid}.json: generatedAssetRoles missing or empty (a generated page could not fill it)")
+            continue
+        for r in gen:
+            users.setdefault(r, set()).add(sid)
+            if r not in roles or roles[r].get("availability") != "generation-safe":
+                errs.append(f"sections/{sid}.json generatedAssetRoles lists {r}, which is not a generation-safe role")
+        for k in ("generatedContentSchema", "generatedReferenceContent"):
+            if k not in s:
+                errs.append(f"sections/{sid}.json: missing {k}")
+        if "generatedContentSchema" in s and "generatedReferenceContent" in s:
+            for e in Draft7Validator(s["generatedContentSchema"]).iter_errors(s["generatedReferenceContent"]):
+                errs.append(f"sections/{sid}.json generatedReferenceContent {list(e.path)}: {e.message[:120]}")
+    for rid, r in roles.items():
+        if r.get("availability") == "generation-safe" and r.get("observed", 1) == 0 and rid not in users:
+            errs.append(f"generation-safe role {rid} is not listed by any section's generatedAssetRoles (a dead role)")
+        if r.get("availability") == "generation-safe" and "usedBy" in r and r.get("observed", 1) == 0 and set(r["usedBy"]) != users.get(rid, set()):
+            errs.append(f"role {rid}: usedBy {sorted(r['usedBy'])} != sections listing it {sorted(users.get(rid, []))}")
+    # --- generated schemas / content carry no source material
+    sv = load_validator(repo)
+    ctx = sv.Context(repo)
+    for sid, s in secs.items():
+        blob = json.dumps([s.get("generatedContentSchema"), s.get("generatedReferenceContent")], ensure_ascii=False)
+        for cat in ("brand", "storeMarks", "urls", "reviews", "ratings", "people", "media"):
+            m_ = ctx.brand.get(cat) and ctx.brand[cat].search(blob)
+            if m_:
+                errs.append(f"sections/{sid}.json generated schema/content carries source material ({cat}: {m_.group(0)!r})")
+    # --- sourceBrand: complete, compiled, traced to examples, probed against pinned strings
+    sb = a.get("sourceBrand", {})
+    pats = sb.get("patterns", {})
+    if sorted(pats) != sorted(PINNED_SOURCE_PROBES):
+        errs.append(f"sourceBrand.patterns categories {sorted(pats)} != {sorted(PINNED_SOURCE_PROBES)}")
+    for cat, c in pats.items():
+        if c.get("rule") != PINNED_RULE_FOR.get(cat):
+            errs.append(f"sourceBrand.patterns.{cat}.rule {c.get('rule')!r} != {PINNED_RULE_FOR.get(cat)!r}")
+        try:
+            comp = [re.compile(x, re.I) for x in c.get("regex", [])]
+        except re.error as e:
+            errs.append(f"sourceBrand.patterns.{cat}: regex does not compile: {e}")
+            continue
+        if not comp:
+            errs.append(f"sourceBrand.patterns.{cat}: no regex")
+            continue
+        ex = c.get("examples", [])
+        hashes = [h["sha256"][:16] for h in c.get("sha256", [])]
+        for x in ex:
+            if not any(r_.search(x["text"]) for r_ in comp):
+                errs.append(f"sourceBrand.patterns.{cat}: example {x['text']!r} is matched by no regex")
+        for r_, raw in zip(comp, c["regex"]):
+            if not any(r_.search(x["text"]) for x in ex) and not any(h in raw for h in hashes):
+                errs.append(f"sourceBrand.patterns.{cat}: regex {raw!r} has no example from the source (an invented pattern)")
+        for h in hashes:
+            if not any(h in raw for raw in c["regex"]):
+                errs.append(f"sourceBrand.patterns.{cat}: sha256 {h} is not in a regex")
+        rx = ctx.brand.get(cat)  # the validator's own compiled regex, not this file's
+        for probe in PINNED_SOURCE_PROBES.get(cat, []):
+            if rx is None or not rx.search(probe):
+                errs.append(f"pinned probe: sourceBrand.patterns.{cat} no longer matches {probe!r}")
+        if src and os.path.isdir(src) and (os.path.isdir(os.path.join(src, "src")) or os.path.exists(os.path.join(src, "CLONE_SPEC.md"))):
+            for x in ex:
+                fp = os.path.join(src, x["path"])
+                if not os.path.exists(fp):
+                    errs.append(f"sourceBrand.patterns.{cat}: example file {x['path']} not found in the source")
+                elif x["text"].lower() not in open(fp, encoding="utf-8", errors="ignore").read().lower():
+                    errs.append(f"sourceBrand.patterns.{cat}: example {x['text']!r} not found in {x['path']}")
+            for h in c.get("sha256", []):
+                fp = os.path.join(src, h["path"])
+                if os.path.exists(fp):
+                    import hashlib
+                    if hashlib.sha256(open(fp, "rb").read()).hexdigest() != h["sha256"]:
+                        errs.append(f"sourceBrand.patterns.{cat}: {h['path']} hash differs from the pinned sha256 (the source file changed)")
+    if not (src and os.path.isdir(os.path.join(src or "", "src"))):
+        warns.append("source project absent: sourceBrand examples and media hashes were not re-checked against it")
+    for nm in sb.get("names", []):
+        if not (ctx.brand.get("brand") and ctx.brand["brand"].search(nm)) and not (ctx.brand.get("urls") and ctx.brand["urls"].search(nm)):
+            errs.append(f"sourceBrand name {nm!r} is matched by no brand/url pattern")
+    # --- examples: one reference and one generated per generation-eligible template
+    tpls = jload(repo, "templates/templates.json")["templates"]
+    for tid, tp in tpls.items():
+        if not tp["generationEligible"]:
+            continue
+        for mode in ("reference", "generated"):
+            if not any(jload(repo, r).get("template") == tid for r in example_files(repo, mode)):
+                errs.append(f"template {tid} has no example PageSpec with mode {mode!r}")
+    for rel in example_files(repo):
+        sp = jload(repo, rel)
+        if sp.get("mode") not in ("reference", "generated"):
+            errs.append(f"{rel}: mode missing or invalid")
+    if jload(repo, "schema/example.pagespec.json").get("mode") != "reference":
+        errs.append("schema/example.pagespec.json must have mode 'reference'")
+    # --- end-to-end: the validator still rejects each leak in generated mode and accepts the clean example
+    gens = example_files(repo, "generated")
+    if gens:
+        base = jload(repo, gens[0])
+        e0, _ = sv.validate(copy.deepcopy(base), ctx)
+        if e0:
+            errs.append(f"leak self-test: the clean generated example already fails ({e0[0][0]})")
+        for label, rule, fn in _leaks():
+            sp = copy.deepcopy(base)
+            try:
+                fn(sp)
+            except Exception as ex_:
+                errs.append(f"leak self-test '{label}': mutator failed on the generated example ({ex_!r})")
+                continue
+            got = {r for r, _ in sv.validate(sp, ctx)[0]}
+            if rule not in got:
+                errs.append(f"leak self-test '{label}': validator did not raise {rule} (got {sorted(got) or 'nothing'}): generated mode is not enforced")
+        ref = copy.deepcopy(jload(repo, "schema/example.pagespec.json"))
+        ref["mode"] = "generated"
+        if not any(r in ("SCHEMA", "GENERATED_MODE_REFERENCE_ASSET") for r, _ in sv.validate(ref, ctx)[0]):
+            errs.append("leak self-test: the reference example flipped to mode generated was accepted")
+    return errs, warns
+
+
 def c_no_zip(repo, src):
     return [f"zip inside package: {os.path.relpath(p, repo)}" for p in all_files(repo) if p.endswith(".zip")], []
 
@@ -439,6 +720,7 @@ CHECKS = [
     ("evidence_ids", c_evidence_ids), ("citations", c_citations), ("asset_roles", c_assets),
     ("graph_validator_parity", c_graph_parity), ("schema_contract_parity", c_schema_contract), ("tokens", c_tokens),
     ("token_policy", c_token_policy), ("templates_routes", c_templates), ("ia_consistency", c_ia), ("no_zip_inside", c_no_zip),
+    ("generated_mode", c_generated_mode),
 ]
 
 

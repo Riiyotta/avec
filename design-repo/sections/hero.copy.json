@@ -197,5 +197,120 @@
     "ev.shot.desktop.hero",
     "ev.shot.mobile.hero"
   ],
-  "notes": "Rating values are real third-party App Store data (pinned consts) - never alter or invent ratings/review counts."
+  "notes": "Rating values are real third-party App Store data (pinned consts) - never alter or invent ratings/review counts.",
+  "generatedAssetRoles": [
+    "icon.generic-glyph",
+    "link.placeholder-url",
+    "content.placeholder-rating",
+    "content.original-copy"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "headline",
+      "subheadline",
+      "cta",
+      "rating"
+    ],
+    "properties": {
+      "headline": {
+        "type": "string",
+        "minLength": 1
+      },
+      "subheadline": {
+        "type": "string",
+        "minLength": 1
+      },
+      "cta": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "href",
+          "icon"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "href": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assetRole",
+              "url"
+            ],
+            "properties": {
+              "assetRole": {
+                "const": "link.placeholder-url"
+              },
+              "url": {
+                "type": "string",
+                "pattern": "^(#|/[a-z0-9\\-/]*|https://example\\.(com|org|net)(/[A-Za-z0-9\\-/_.]*)?|mailto:[A-Za-z0-9._-]+@example\\.(com|org|net))$"
+              }
+            }
+          },
+          "icon": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assetRole"
+            ],
+            "properties": {
+              "assetRole": {
+                "const": "icon.generic-glyph"
+              }
+            }
+          }
+        }
+      },
+      "rating": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole",
+          "reviewCountLabel",
+          "score",
+          "stars"
+        ],
+        "properties": {
+          "assetRole": {
+            "const": "content.placeholder-rating"
+          },
+          "reviewCountLabel": {
+            "const": "[N] reviews"
+          },
+          "score": {
+            "const": "X.X"
+          },
+          "stars": {
+            "const": 0
+          }
+        }
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "headline": "Clear your mail before your coffee cools",
+    "subheadline": "Built for people who dread opening mail. Connects to the accounts you already have.",
+    "cta": {
+      "label": "Get the app",
+      "href": {
+        "assetRole": "link.placeholder-url",
+        "url": "#"
+      },
+      "icon": {
+        "assetRole": "icon.generic-glyph"
+      }
+    },
+    "rating": {
+      "assetRole": "content.placeholder-rating",
+      "reviewCountLabel": "[N] reviews",
+      "score": "X.X",
+      "stars": 0
+    }
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

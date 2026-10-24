@@ -1,0 +1,553 @@
+{
+  "pageSpecVersion": "1.1.0",
+  "mode": "generated",
+  "template": "template.home",
+  "route": "/",
+  "theme": "light",
+  "meta": {
+    "title": "Foldwell - Calm mail, sorted",
+    "description": "A made-up example page: sorted mail, voice replies and plain-word search.",
+    "copyOrigin": {
+      "assetRole": "content.original-copy",
+      "attestation": "original-or-user-supplied"
+    }
+  },
+  "nodes": [
+    {
+      "id": "n00",
+      "section": "shell.header",
+      "variant": "default",
+      "content": {
+        "logo": {
+          "assetRole": "brand.logo-placeholder"
+        },
+        "primaryCta": {
+          "label": "Get the app",
+          "href": {
+            "assetRole": "link.placeholder-url",
+            "url": "#"
+          },
+          "icon": {
+            "assetRole": "icon.generic-glyph"
+          }
+        },
+        "secondaryCta": {
+          "label": "Join waitlist",
+          "action": "open-notify-modal",
+          "icon": {
+            "assetRole": "icon.generic-glyph"
+          }
+        }
+      },
+      "motion": {
+        "pattern": "static",
+        "trigger": "none",
+        "reducedMotionFallback": "static",
+        "durationTokens": [
+          "press"
+        ]
+      }
+    },
+    {
+      "id": "n01",
+      "section": "shell.progress-dots",
+      "variant": "default",
+      "content": {
+        "stopCount": 13,
+        "previewFrames": {
+          "assetRole": "media.generated-product-visual"
+        }
+      },
+      "motion": {
+        "pattern": "dot-opacity-scrub",
+        "trigger": "scroll-scrub",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "press",
+          "fast"
+        ]
+      }
+    },
+    {
+      "id": "n02",
+      "section": "shell.scroll-hint",
+      "variant": "default",
+      "content": {
+        "leadText": "Keep scrolling",
+        "trailText": "there is more below",
+        "hiddenOnStops": [
+          "hero",
+          "deck_intro",
+          "deck_swipe_done",
+          "deck_swipe_later",
+          "triage_game",
+          "compose_intro",
+          "compose_record",
+          "compose_drafted",
+          "low_importance",
+          "deck_empty",
+          "search",
+          "notifications",
+          "footer"
+        ],
+        "idleDelayMs": 5000
+      },
+      "motion": {
+        "pattern": "idle-fade-float",
+        "trigger": "time",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "stage",
+          "fast"
+        ]
+      }
+    },
+    {
+      "id": "n03",
+      "section": "shell.notify-modal",
+      "variant": "default",
+      "content": {
+        "title": "Stay posted",
+        "subtitle": "Leave your address and we will write when the beta opens.",
+        "inputPlaceholder": "you@example.com",
+        "submitLabel": "Notify me",
+        "retryLabel": "Try again",
+        "successMessage": "You are on the list",
+        "icon": {
+          "assetRole": "icon.generic-glyph"
+        }
+      },
+      "motion": {
+        "pattern": "blur-scale-in",
+        "trigger": "interaction",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "modal"
+        ]
+      }
+    },
+    {
+      "id": "n04",
+      "section": "hero.copy",
+      "variant": "default",
+      "content": {
+        "headline": "Clear your mail before your coffee cools",
+        "subheadline": "Built for people who dread opening mail. Connects to the accounts you already have.",
+        "cta": {
+          "label": "Get the app",
+          "href": {
+            "assetRole": "link.placeholder-url",
+            "url": "#"
+          },
+          "icon": {
+            "assetRole": "icon.generic-glyph"
+          }
+        },
+        "rating": {
+          "assetRole": "content.placeholder-rating",
+          "reviewCountLabel": "[N] reviews",
+          "score": "X.X",
+          "stars": 0
+        }
+      },
+      "motion": {
+        "pattern": "static",
+        "trigger": "none",
+        "reducedMotionFallback": "static",
+        "durationTokens": [
+          "press"
+        ]
+      }
+    },
+    {
+      "id": "n05",
+      "section": "hero.video",
+      "variant": "default",
+      "content": {
+        "primaryVideo": {
+          "assetRole": "media.generated-product-visual"
+        },
+        "loopVideo": {
+          "assetRole": "media.generated-product-visual"
+        },
+        "overlayCtaLabel": "Watch it work"
+      },
+      "motion": {
+        "pattern": "video-crossfade",
+        "trigger": "load",
+        "reducedMotionFallback": "instant-transitions-video-unchanged",
+        "durationTokens": [
+          "crossfade"
+        ]
+      }
+    },
+    {
+      "id": "n06",
+      "section": "deck.word-reveal-copy",
+      "variant": "default",
+      "content": {
+        "chunks": [
+          "Foldwell sorts your mail into a short, calm stack.",
+          "Each message gets one decision, then it is gone.",
+          "Nothing slips past you."
+        ],
+        "aside": "(Think flashcards, but for mail)"
+      },
+      "motion": {
+        "pattern": "char-reveal-scrub",
+        "trigger": "scroll-scrub",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "word-step"
+        ]
+      }
+    },
+    {
+      "id": "n07",
+      "section": "deck.email-stack",
+      "variant": "default",
+      "content": {
+        "cards": [
+          {
+            "subject": "Room change for Thursday's workshop",
+            "sender": "Wren Okafor",
+            "time": "1 day ago",
+            "to": "You and 11 others",
+            "body": "Hello everyone,\n\nThe workshop has moved to the second-floor studio because the main hall is being repainted. We start at the same time. Please bring a notebook and use the side entrance.\n\nSee you there,\nWren",
+            "avatar": {
+              "assetRole": "avatar.fictional-person"
+            }
+          },
+          {
+            "subject": "Which paint swatch should we pick?",
+            "sender": "Basil Tran",
+            "time": "1 day ago",
+            "to": "You, Mira L",
+            "body": "Hi both,\n\nI narrowed the studio walls to three swatches and left photos in the shared folder. Could you each vote by Friday so the order goes in on time?\n\nBasil",
+            "avatar": {
+              "assetRole": "avatar.initials"
+            }
+          },
+          {
+            "subject": "Your library hold is ready",
+            "sender": "Harbor Library",
+            "time": "1 day ago",
+            "to": "You",
+            "body": "Your reserved book is waiting at the front desk. Holds are kept for five days, after which the copy returns to the shelf for the next reader.",
+            "avatar": {
+              "assetRole": "avatar.initials"
+            }
+          },
+          {
+            "subject": "Draft agenda for the offsite",
+            "sender": "Mira Lindqvist",
+            "time": "1 day ago",
+            "to": "You, Basil T",
+            "body": "Hi,\n\nHere is a first pass at the offsite agenda. Mornings stay open for deep work and afternoons hold the group sessions. Tell me what to cut.\n\nMira",
+            "avatar": {
+              "assetRole": "avatar.fictional-person"
+            }
+          }
+        ],
+        "swipeLabels": {
+          "right": "Done",
+          "left": "Later"
+        },
+        "replyLabel": "Reply",
+        "replyHint": "Press and speak to reply"
+      },
+      "motion": {
+        "pattern": "card-swipe-scrub",
+        "trigger": "scroll-scrub",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "card"
+        ]
+      }
+    },
+    {
+      "id": "n08",
+      "section": "deck.triage-game",
+      "variant": "default",
+      "content": {
+        "chip": "Quick round",
+        "title": "Sort the stack",
+        "durationSeconds": 20,
+        "instructionsPointer": "Drag each card left or right before time runs out",
+        "instructionsTouch": "Swipe each card to sort it",
+        "startPromptPointer": "Press space to begin",
+        "startPromptTouch": "Tap to begin",
+        "scoring": {
+          "correct": 1,
+          "incorrect": -1
+        }
+      },
+      "motion": {
+        "pattern": "game-state-keyframes",
+        "trigger": "interaction",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "card-enter",
+          "card"
+        ]
+      }
+    },
+    {
+      "id": "n09",
+      "section": "expand.compose-demo",
+      "variant": "default",
+      "content": {
+        "captions": {
+          "reply": "Speak the main points and Foldwell shapes them into a clear message.",
+          "dictation": "“Thursday works for me, let's move the workshop to the studio, and",
+          "dictationCont": "I can bring the printed agendas if that helps.”",
+          "learn": "Drafts pick up your own phrasing, so you only polish and send.",
+          "triage": "Routine notices can wait. Clear them in a single gesture."
+        },
+        "phoneVideo": {
+          "assetRole": "media.generated-product-visual"
+        },
+        "stageSequence": [
+          "surface",
+          "accent-red",
+          "brand",
+          "accent-amber",
+          "surface"
+        ]
+      },
+      "motion": {
+        "pattern": "clip-stage-state",
+        "trigger": "scroll-state",
+        "reducedMotionFallback": "instant-transitions-video-unchanged",
+        "durationTokens": [
+          "stage",
+          "phone-md",
+          "fast"
+        ]
+      }
+    },
+    {
+      "id": "n10",
+      "section": "expand.be-here-now",
+      "variant": "default",
+      "content": {
+        "label": "Eyes up",
+        "expandVideo": {
+          "assetRole": "media.generated-product-visual"
+        }
+      },
+      "motion": {
+        "pattern": "button-expand-state",
+        "trigger": "scroll-state",
+        "reducedMotionFallback": "instant-transitions-video-unchanged",
+        "durationTokens": [
+          "stage",
+          "fast"
+        ]
+      }
+    },
+    {
+      "id": "n11",
+      "section": "expand.search-demo",
+      "variant": "default",
+      "content": {
+        "headline": "Ask in plain words and the right message appears.",
+        "query": "Find the library hold notice",
+        "answer": "Harbor Library wrote on March 3 that your hold is ready, and Northgate Transit sent a pass receipt.",
+        "sources": [
+          {
+            "initial": "HL",
+            "name": "Harbor Library",
+            "subject": "Your hold is ready",
+            "preview": "Your reserved book is waiting at the front desk until Friday.",
+            "avatar": {
+              "assetRole": "avatar.initials",
+              "colorToken": "accent-green"
+            }
+          },
+          {
+            "initial": "NT",
+            "name": "Northgate Transit",
+            "subject": "Pass receipt attached",
+            "preview": "Thanks for renewing. Your monthly pass receipt is attached for your records.",
+            "avatar": {
+              "assetRole": "avatar.initials",
+              "colorToken": "accent-sky"
+            }
+          }
+        ]
+      },
+      "motion": {
+        "pattern": "typing-query-state",
+        "trigger": "scroll-state",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "type-char",
+          "headline",
+          "card"
+        ]
+      }
+    },
+    {
+      "id": "n12",
+      "section": "expand.notifications-demo",
+      "variant": "default",
+      "content": {
+        "headline": "Know what changed without opening anything. Short alerts explain the update and the next step.",
+        "sender": "Northgate Transit",
+        "time": "8:15 AM",
+        "bannerBody": "Platform changed to 4. Departs 6:10 PM. Pass attached.",
+        "emailSubject": "Platform and departure update for your trip",
+        "emailBody": "Hello,\n\nYour evening train now leaves from platform 4 at 6:10 PM.\nCoach: C\n\nYour digital pass is attached. Please keep it on your phone and arrive a few minutes early, since the platform is further from the main entrance.\n\nThank you for travelling with us,\nNorthgate Transit Desk",
+        "bannerIcon": {
+          "assetRole": "brand.logo-placeholder"
+        },
+        "senderAvatar": {
+          "assetRole": "avatar.initials"
+        }
+      },
+      "motion": {
+        "pattern": "card-stagger-state",
+        "trigger": "scroll-state",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "stage",
+          "card"
+        ]
+      }
+    },
+    {
+      "id": "n13",
+      "section": "footer.launch",
+      "variant": "default",
+      "content": {
+        "headlineLines": [
+          "Foldwell is ready",
+          "when you are."
+        ],
+        "glyph": {
+          "assetRole": "brand.logo-placeholder"
+        },
+        "primaryCta": {
+          "label": "Get the app",
+          "href": {
+            "assetRole": "link.placeholder-url",
+            "url": "#"
+          },
+          "icon": {
+            "assetRole": "icon.generic-glyph"
+          }
+        },
+        "secondaryCta": {
+          "label": "Join waitlist",
+          "action": "open-notify-modal",
+          "icon": {
+            "assetRole": "icon.generic-glyph"
+          }
+        }
+      },
+      "motion": {
+        "pattern": "static",
+        "trigger": "none",
+        "reducedMotionFallback": "static",
+        "durationTokens": [
+          "press"
+        ]
+      }
+    },
+    {
+      "id": "n14",
+      "section": "proof.reviews-carousel",
+      "variant": "default",
+      "content": {
+        "reviews": [
+          {
+            "assetRole": "content.fictional-review",
+            "fictional": true,
+            "title": "Calm at last",
+            "author": "Ines R.",
+            "body": "I used to dread the morning pile. Now it is a short stack and a clear head. Sample review for layout only.",
+            "stars": 5
+          },
+          {
+            "assetRole": "content.fictional-review",
+            "fictional": true,
+            "title": "Quick and quiet",
+            "author": "Tobias W.",
+            "body": "Replying by voice saves my thumbs on the commute, and the drafts sound like me. Sample review for layout only.",
+            "stars": 4
+          },
+          {
+            "assetRole": "content.fictional-review",
+            "fictional": true,
+            "title": "Finds things fast",
+            "author": "Keiko M.",
+            "body": "Searching by describing the message works every time I try it. Sample review for layout only.",
+            "stars": 5
+          }
+        ]
+      },
+      "motion": {
+        "pattern": "auto-advance-carousel",
+        "trigger": "time",
+        "reducedMotionFallback": "instant-state-change",
+        "durationTokens": [
+          "carousel-pause"
+        ]
+      }
+    },
+    {
+      "id": "n15",
+      "section": "footer.bar",
+      "variant": "default",
+      "content": {
+        "copyright": "Copyright © [year] [Company name]",
+        "socialLinks": [
+          {
+            "label": "Social 1",
+            "href": {
+              "assetRole": "link.placeholder-url",
+              "url": "#"
+            }
+          },
+          {
+            "label": "Social 2",
+            "href": {
+              "assetRole": "link.placeholder-url",
+              "url": "#"
+            }
+          },
+          {
+            "label": "hello@example.com",
+            "href": {
+              "assetRole": "link.placeholder-url",
+              "url": "mailto:hello@example.com"
+            }
+          }
+        ],
+        "legalLinks": [
+          {
+            "label": "Terms of Service",
+            "href": {
+              "assetRole": "link.placeholder-url",
+              "url": "/terms"
+            }
+          },
+          {
+            "label": "Privacy Policy",
+            "href": {
+              "assetRole": "link.placeholder-url",
+              "url": "/privacy-policy"
+            }
+          }
+        ]
+      },
+      "motion": {
+        "pattern": "static",
+        "trigger": "none",
+        "reducedMotionFallback": "static",
+        "durationTokens": []
+      }
+    }
+  ]
+}

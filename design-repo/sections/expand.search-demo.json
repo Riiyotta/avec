@@ -184,5 +184,114 @@
     "ev.src.content-search",
     "ev.shot.desktop.search"
   ],
-  "notes": "Max 2 sources: the sources card is measured at 480x266 with 2 rows. 'Acorns' is a real company named in demo copy."
+  "notes": "Max 2 sources: the sources card is measured at 480x266 with 2 rows. 'Acorns' is a real company named in demo copy.",
+  "generatedAssetRoles": [
+    "avatar.initials",
+    "content.original-copy"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "headline",
+      "query",
+      "answer",
+      "sources"
+    ],
+    "properties": {
+      "headline": {
+        "type": "string",
+        "minLength": 1
+      },
+      "query": {
+        "type": "string",
+        "minLength": 1
+      },
+      "answer": {
+        "type": "string",
+        "minLength": 1
+      },
+      "sources": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 2,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "initial",
+            "name",
+            "subject",
+            "preview",
+            "avatar"
+          ],
+          "properties": {
+            "initial": {
+              "type": "string",
+              "pattern": "^[A-Z]{1,2}$"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "subject": {
+              "type": "string",
+              "minLength": 1
+            },
+            "preview": {
+              "type": "string",
+              "minLength": 1
+            },
+            "avatar": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "assetRole",
+                "colorToken"
+              ],
+              "properties": {
+                "assetRole": {
+                  "const": "avatar.initials"
+                },
+                "colorToken": {
+                  "enum": [
+                    "accent-green",
+                    "accent-sky"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "headline": "Ask in plain words and the right message appears.",
+    "query": "Find the library hold notice",
+    "answer": "Harbor Library wrote on March 3 that your hold is ready, and Northgate Transit sent a pass receipt.",
+    "sources": [
+      {
+        "initial": "HL",
+        "name": "Harbor Library",
+        "subject": "Your hold is ready",
+        "preview": "Your reserved book is waiting at the front desk until Friday.",
+        "avatar": {
+          "assetRole": "avatar.initials",
+          "colorToken": "accent-green"
+        }
+      },
+      {
+        "initial": "NT",
+        "name": "Northgate Transit",
+        "subject": "Pass receipt attached",
+        "preview": "Thanks for renewing. Your monthly pass receipt is attached for your records.",
+        "avatar": {
+          "assetRole": "avatar.initials",
+          "colorToken": "accent-sky"
+        }
+      }
+    ]
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

@@ -139,5 +139,71 @@
     "ev.src.game-finish",
     "ev.spec.not-reachable"
   ],
-  "notes": "Leaderboard/percentile API (/stackchallenge) is NOT reproduced; the clone uses a synthetic local distribution. Do not invent leaderboard data or endpoints."
+  "notes": "Leaderboard/percentile API (/stackchallenge) is NOT reproduced; the clone uses a synthetic local distribution. Do not invent leaderboard data or endpoints.",
+  "generatedAssetRoles": [
+    "content.original-copy"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "chip",
+      "title",
+      "durationSeconds",
+      "instructionsPointer",
+      "instructionsTouch",
+      "startPromptPointer",
+      "startPromptTouch",
+      "scoring"
+    ],
+    "properties": {
+      "chip": {
+        "type": "string",
+        "minLength": 1
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "durationSeconds": {
+        "const": 20
+      },
+      "instructionsPointer": {
+        "type": "string",
+        "minLength": 1
+      },
+      "instructionsTouch": {
+        "type": "string",
+        "minLength": 1
+      },
+      "startPromptPointer": {
+        "type": "string",
+        "minLength": 1
+      },
+      "startPromptTouch": {
+        "type": "string",
+        "minLength": 1
+      },
+      "scoring": {
+        "const": {
+          "correct": 1,
+          "incorrect": -1
+        }
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "chip": "Quick round",
+    "title": "Sort the stack",
+    "durationSeconds": 20,
+    "instructionsPointer": "Drag each card left or right before time runs out",
+    "instructionsTouch": "Swipe each card to sort it",
+    "startPromptPointer": "Press space to begin",
+    "startPromptTouch": "Tap to begin",
+    "scoring": {
+      "correct": 1,
+      "incorrect": -1
+    }
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

@@ -150,16 +150,30 @@
     "variant"
   ],
   "assetRoles": [
+    "avatar.fictional-person",
     "avatar.initials",
     "avatar.sender-photo",
     "brand.app-icon",
     "brand.glyph",
+    "brand.logo-placeholder",
+    "brand.logo-user-supplied",
     "brand.wordmark",
+    "content.fictional-review",
+    "content.original-copy",
+    "content.placeholder-rating",
+    "icon.generic-glyph",
+    "link.placeholder-url",
     "media.ambient-video",
+    "media.generated-product-visual",
     "media.hero-demo-video",
     "media.phone-demo-video",
     "media.section-preview-frame",
+    "media.user-supplied",
     "thirdparty.platform-icon",
     "thirdparty.store-badge"
+  ],
+  "pageSpecModes": [
+    "generated",
+    "reference"
   ]
 }

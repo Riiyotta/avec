@@ -149,5 +149,71 @@
     "ev.src.notify-stub",
     "ev.spec.modal"
   ],
-  "notes": "LIVE ENDPOINT NOT REPRODUCED: the real POST target is unknown; the clone stubs it (src/lib/analytics.js). A generated page must not wire this form to any invented endpoint."
+  "notes": "LIVE ENDPOINT NOT REPRODUCED: the real POST target is unknown; the clone stubs it (src/lib/analytics.js). A generated page must not wire this form to any invented endpoint.",
+  "generatedAssetRoles": [
+    "icon.generic-glyph",
+    "content.original-copy"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "title",
+      "subtitle",
+      "inputPlaceholder",
+      "submitLabel",
+      "retryLabel",
+      "successMessage",
+      "icon"
+    ],
+    "properties": {
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "subtitle": {
+        "type": "string",
+        "minLength": 1
+      },
+      "inputPlaceholder": {
+        "const": "you@example.com"
+      },
+      "submitLabel": {
+        "type": "string",
+        "minLength": 1
+      },
+      "retryLabel": {
+        "type": "string",
+        "minLength": 1
+      },
+      "successMessage": {
+        "type": "string",
+        "minLength": 1
+      },
+      "icon": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "const": "icon.generic-glyph"
+          }
+        }
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "title": "Stay posted",
+    "subtitle": "Leave your address and we will write when the beta opens.",
+    "inputPlaceholder": "you@example.com",
+    "submitLabel": "Notify me",
+    "retryLabel": "Try again",
+    "successMessage": "You are on the list",
+    "icon": {
+      "assetRole": "icon.generic-glyph"
+    }
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

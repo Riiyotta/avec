@@ -119,5 +119,73 @@
     "ev.src.herovideo-timing",
     "ev.src.herovideo-src",
     "ev.spec.viewports"
-  ]
+  ],
+  "generatedAssetRoles": [
+    "media.generated-product-visual",
+    "media.user-supplied",
+    "content.original-copy"
+  ],
+  "generatedContentSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "primaryVideo",
+      "loopVideo",
+      "overlayCtaLabel"
+    ],
+    "properties": {
+      "primaryVideo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "media.generated-product-visual",
+              "media.user-supplied"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^user-supplied:[A-Za-z0-9._/-]+$"
+          }
+        }
+      },
+      "loopVideo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetRole"
+        ],
+        "properties": {
+          "assetRole": {
+            "enum": [
+              "media.generated-product-visual",
+              "media.user-supplied"
+            ]
+          },
+          "assetRef": {
+            "type": "string",
+            "pattern": "^user-supplied:[A-Za-z0-9._/-]+$"
+          }
+        }
+      },
+      "overlayCtaLabel": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "generatedReferenceContent": {
+    "primaryVideo": {
+      "assetRole": "media.generated-product-visual"
+    },
+    "loopVideo": {
+      "assetRole": "media.generated-product-visual"
+    },
+    "overlayCtaLabel": "Watch it work"
+  },
+  "generatedModeNotes": "Fictional example content for a made-up brand (Foldwell). Every field is original; none is derived from the Avec source."
 }

@@ -1,9 +1,10 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "policies": {
     "reuse-exact-only": "Reference only a file listed in allowedRefs, unmodified. Never AI-generate, redraw, recolour or approximate. Trademarks/logos.",
     "no-generation-proprietary": "Proprietary Avec media or real-person likeness. Reference only a listed file (inside an Avec-licensed context) or omit assetRef to leave a neutral placeholder. Never AI-generate a lookalike, never fabricate new footage/photos.",
-    "generate-new-allowed": "Purely token-driven, no file. Generator may compose new instances (e.g. initials on an accent token). Must NOT carry an assetRef."
+    "generate-new-allowed": "Purely token-driven, no file. Generator may compose new instances (e.g. initials on an accent token). Must NOT carry an assetRef.",
+    "user-supplied-only": "Generation-safe slot the user fills with their own file. assetRef, when present, must be `user-supplied:<name>`; never a source asset. Carries the role's refScheme."
   },
   "pinnedPolicies": {
     "brand.wordmark": "reuse-exact-only",
@@ -28,6 +29,12 @@
       "evidenceIds": [
         "ev.src.header",
         "ev.spec.assets"
+      ],
+      "availability": "reference-only",
+      "generatedModeGuidance": "Avec's own wordmark. A generated page is a different brand and must never carry it or a lookalike.",
+      "generationSafeSubstitutes": [
+        "brand.logo-placeholder",
+        "brand.logo-user-supplied"
       ]
     },
     "brand.glyph": {
@@ -42,6 +49,12 @@
       "evidenceIds": [
         "ev.src.icons-logo",
         "ev.src.footer-headline"
+      ],
+      "availability": "reference-only",
+      "generatedModeGuidance": "Avec's own glyph. Never reuse, trace or restyle it for another brand.",
+      "generationSafeSubstitutes": [
+        "brand.logo-placeholder",
+        "brand.logo-user-supplied"
       ]
     },
     "brand.app-icon": {
@@ -56,6 +69,12 @@
       "evidenceIds": [
         "ev.src.expand-notif-banner",
         "ev.shot.desktop.notifications"
+      ],
+      "availability": "reference-only",
+      "generatedModeGuidance": "Avec's own app icon. A generated page shows its own placeholder or user-supplied mark instead.",
+      "generationSafeSubstitutes": [
+        "brand.logo-placeholder",
+        "brand.logo-user-supplied"
       ]
     },
     "thirdparty.store-badge": {
@@ -73,6 +92,11 @@
       "evidenceIds": [
         "ev.src.cta-sizes",
         "ev.src.hero-rating"
+      ],
+      "availability": "blocked-for-generation",
+      "generatedModeGuidance": "Apple TestFlight icon and App Store wordmark are Apple trademarks tied to Avec's real listing. Blocked: a generated page must not show them, link to the listing, or imitate them.",
+      "generationSafeSubstitutes": [
+        "icon.generic-glyph"
       ]
     },
     "thirdparty.platform-icon": {
@@ -89,6 +113,11 @@
       "licensing": "Microsoft Outlook and Android marks are third-party trademarks; never generate lookalikes.",
       "evidenceIds": [
         "ev.spec.assets"
+      ],
+      "availability": "blocked-for-generation",
+      "generatedModeGuidance": "Microsoft Outlook and Android marks are third-party trademarks. Blocked: never reproduced or imitated in generated output.",
+      "generationSafeSubstitutes": [
+        "icon.generic-glyph"
       ]
     },
     "media.hero-demo-video": {
@@ -103,6 +132,12 @@
       "licensing": "Proprietary Avec product footage.",
       "evidenceIds": [
         "ev.src.herovideo-src"
+      ],
+      "availability": "reference-only",
+      "generatedModeGuidance": "Avec's proprietary product footage. Never reuse or re-shoot it; use a generated product visual or the user's own footage.",
+      "generationSafeSubstitutes": [
+        "media.generated-product-visual",
+        "media.user-supplied"
       ]
     },
     "media.ambient-video": {
@@ -125,6 +160,12 @@
       "evidenceIds": [
         "ev.src.herovideo",
         "ev.src.expand-wave-src"
+      ],
+      "availability": "reference-only",
+      "generatedModeGuidance": "Avec's proprietary wave footage. Not reusable in a generated page.",
+      "generationSafeSubstitutes": [
+        "media.generated-product-visual",
+        "media.user-supplied"
       ]
     },
     "media.phone-demo-video": {
@@ -140,6 +181,12 @@
       "licensing": "Proprietary Avec app UI recording (HEVC/VP9 with alpha). Never fabricate app-UI footage.",
       "evidenceIds": [
         "ev.src.expand-phone-src"
+      ],
+      "availability": "reference-only",
+      "generatedModeGuidance": "Avec's proprietary app-UI recording (a proprietary product screenshot in motion). Not reusable in a generated page.",
+      "generationSafeSubstitutes": [
+        "media.generated-product-visual",
+        "media.user-supplied"
       ]
     },
     "media.section-preview-frame": {
@@ -159,6 +206,12 @@
       "licensing": "Screenshots of the proprietary site. NOTE: ProgressDots.jsx references frame-08..13 which are absent from public/assets/frames (broken tooltip images in the clone); only the 7 present files are allowed refs.",
       "evidenceIds": [
         "ev.src.progress-dots-frames"
+      ],
+      "availability": "reference-only",
+      "generatedModeGuidance": "Screenshots of the proprietary Avec site. Not reusable in a generated page.",
+      "generationSafeSubstitutes": [
+        "media.generated-product-visual",
+        "media.user-supplied"
       ]
     },
     "avatar.sender-photo": {
@@ -224,20 +277,792 @@
       "evidenceIds": [
         "ev.src.content-emails",
         "ev.src.expand-notif-avatar"
+      ],
+      "availability": "blocked-for-generation",
+      "generatedModeGuidance": "Avec's demo sender photos (people likenesses and third-party sender marks). Blocked: a generated page shows initials or a neutral fictional-person placeholder, never these files or their identities.",
+      "generationSafeSubstitutes": [
+        "avatar.initials",
+        "avatar.fictional-person"
       ]
     },
     "avatar.initials": {
       "policy": "generate-new-allowed",
       "allowedRefs": [],
       "usedBy": [
-        "expand.search-demo",
         "deck.email-stack",
-        "expand.notifications-demo"
+        "expand.notifications-demo",
+        "expand.search-demo"
       ],
       "licensing": "Text initials on a token colour (accent-green / accent-sky) - no image.",
       "evidenceIds": [
         "ev.src.expand-sources"
-      ]
+      ],
+      "availability": "generation-safe",
+      "generatedModeGuidance": "Text initials on an accent token; no image, no person. Safe, but the name beside it must be fictional (a source persona's name is rejected)."
+    },
+    "brand.logo-placeholder": {
+      "policy": "generate-new-allowed",
+      "allowedRefs": [],
+      "kind": "asset",
+      "description": "A neutral placeholder brand mark for the generated brand (a plain geometric monogram or text wordmark).",
+      "licensing": "Token-only: carries no assetRef. Never a redraw, recolour or imitation of the Avec mark.",
+      "generatedModeGuidance": "Use when the user has not supplied a logo. Must not resemble the Avec mark.",
+      "availability": "generation-safe",
+      "usedBy": [
+        "expand.notifications-demo",
+        "footer.launch",
+        "shell.header"
+      ],
+      "observed": 0
+    },
+    "brand.logo-user-supplied": {
+      "policy": "user-supplied-only",
+      "allowedRefs": [],
+      "refScheme": "user-supplied:",
+      "kind": "asset",
+      "description": "The user's own brand mark. assetRef, if present, is `user-supplied:<name>`; a source file is never valid.",
+      "licensing": "The user is responsible for rights to the file they supply.",
+      "generatedModeGuidance": "Preferred over the placeholder when the user provides a logo.",
+      "availability": "generation-safe",
+      "usedBy": [
+        "footer.launch",
+        "shell.header"
+      ],
+      "observed": 0
+    },
+    "icon.generic-glyph": {
+      "policy": "generate-new-allowed",
+      "allowedRefs": [],
+      "kind": "asset",
+      "description": "A generic, generated CTA glyph (arrow or download tray) replacing the Apple and Microsoft/Android marks.",
+      "licensing": "Token-only: carries no assetRef. Must not imitate an Apple, Microsoft or Google mark.",
+      "generatedModeGuidance": "Use wherever the source shows a store badge or platform icon.",
+      "availability": "generation-safe",
+      "usedBy": [
+        "footer.launch",
+        "hero.copy",
+        "shell.header",
+        "shell.notify-modal"
+      ],
+      "observed": 0
+    },
+    "avatar.fictional-person": {
+      "policy": "generate-new-allowed",
+      "allowedRefs": [],
+      "kind": "asset",
+      "description": "A neutral generated placeholder avatar (silhouette or gradient) for a fictional sender.",
+      "licensing": "Token-only: carries no assetRef. Never a photograph, likeness or lookalike of a real person.",
+      "generatedModeGuidance": "Pair with a fictional sender name that is not one of the source's personas or reviewers.",
+      "availability": "generation-safe",
+      "usedBy": [
+        "deck.email-stack",
+        "expand.notifications-demo"
+      ],
+      "observed": 0
+    },
+    "content.fictional-review": {
+      "policy": "generate-new-allowed",
+      "allowedRefs": [],
+      "kind": "content",
+      "description": "An invented sample review with a fictional author and `fictional: true`.",
+      "licensing": "Invented text only. Never a real review, reviewer or a rewording of one.",
+      "generatedModeGuidance": "Replaces the six verbatim App Store reviews. Label it as a sample in the product UI.",
+      "availability": "generation-safe",
+      "usedBy": [
+        "proof.reviews-carousel"
+      ],
+      "observed": 0
+    },
+    "content.placeholder-rating": {
+      "policy": "generate-new-allowed",
+      "allowedRefs": [],
+      "kind": "content",
+      "description": "A placeholder rating (score `X.X`, label `[N] reviews`, zero filled stars) to be replaced by the user's own verified numbers.",
+      "licensing": "Never the source's score or review count, and never a made-up number presented as real.",
+      "generatedModeGuidance": "Schema-pinned to the placeholder values so a generator cannot invent a rating.",
+      "availability": "generation-safe",
+      "usedBy": [
+        "hero.copy"
+      ],
+      "observed": 0
+    },
+    "media.generated-product-visual": {
+      "policy": "generate-new-allowed",
+      "allowedRefs": [],
+      "kind": "asset",
+      "description": "A generated product visual (abstract UI mock, illustration or video) made for the new brand.",
+      "licensing": "Token-only: carries no assetRef. Must not reproduce, trace or restyle an Avec screenshot, video frame or app UI.",
+      "generatedModeGuidance": "Use wherever the source shows its product footage or screenshots.",
+      "availability": "generation-safe",
+      "usedBy": [
+        "expand.be-here-now",
+        "expand.compose-demo",
+        "hero.video",
+        "shell.progress-dots"
+      ],
+      "observed": 0
+    },
+    "media.user-supplied": {
+      "policy": "user-supplied-only",
+      "allowedRefs": [],
+      "refScheme": "user-supplied:",
+      "kind": "asset",
+      "description": "Footage or imagery the user supplies. assetRef, if present, is `user-supplied:<name>`.",
+      "licensing": "The user is responsible for rights to the file they supply.",
+      "generatedModeGuidance": "Preferred over a generated visual when the user has real product media of their own.",
+      "availability": "generation-safe",
+      "usedBy": [
+        "expand.be-here-now",
+        "expand.compose-demo",
+        "hero.video",
+        "shell.progress-dots"
+      ],
+      "observed": 0
+    },
+    "link.placeholder-url": {
+      "policy": "generate-new-allowed",
+      "allowedRefs": [],
+      "kind": "content",
+      "description": "A placeholder link target: `#`, a site-relative path, `https://example.(com|org|net)/...` or `mailto:<name>@example.(com|org|net)`.",
+      "licensing": "Never a real URL of the source company, its store listing or its social profiles.",
+      "generatedModeGuidance": "Every href in a generated page is this role; the user wires real targets later.",
+      "availability": "generation-safe",
+      "usedBy": [
+        "footer.bar",
+        "footer.launch",
+        "hero.copy",
+        "shell.header"
+      ],
+      "observed": 0
+    },
+    "content.original-copy": {
+      "policy": "generate-new-allowed",
+      "allowedRefs": [],
+      "kind": "content",
+      "description": "Attestation (PageSpec `meta.copyOrigin`) that all marketing copy is original or user-supplied, not the source's.",
+      "licensing": "Copy must not reuse the source's headlines, claims or sentences. The validator blocks the known claims and any 5-word run copied from the source; it cannot prove originality.",
+      "generatedModeGuidance": "Write fresh copy for the new brand within the section's word budgets.",
+      "availability": "generation-safe",
+      "usedBy": [
+        "deck.email-stack",
+        "deck.triage-game",
+        "deck.word-reveal-copy",
+        "expand.be-here-now",
+        "expand.compose-demo",
+        "expand.notifications-demo",
+        "expand.search-demo",
+        "footer.launch",
+        "hero.copy",
+        "hero.video",
+        "shell.header",
+        "shell.notify-modal",
+        "shell.scroll-hint"
+      ],
+      "observed": 0
+    }
+  },
+  "availabilityValues": {
+    "reference-only": "Part of the Avec source. May appear only in a `reference` PageSpec (reproducing the source in an Avec-authorised context). A `generated` page must not contain it; generationSafeSubstitutes name what to use instead.",
+    "generation-safe": "May appear in a `generated` PageSpec: token-only, placeholder, fictional or user-supplied. Carries no Avec asset, claim or identity.",
+    "blocked-for-generation": "A third-party trademark or a real or demo person's likeness. Never reproduced in generated output, and in reference mode only inside an authorised context; substitutes name the safe alternative."
+  },
+  "modes": {
+    "reference": "The PageSpec reproduces the Avec source (clone, QA, internal tooling). Source roles are allowed per field; generation-safe-only roles are rejected by the schema.",
+    "generated": "A new page for any OTHER brand. No reference-only or blocked role, no Avec brand, store marks, URLs, reviews, ratings, people, media or marketing copy; only the roles each section lists in generatedAssetRoles."
+  },
+  "sourceBrand": {
+    "names": [
+      "Avec",
+      "avec.ai",
+      "Nearly Extraterrestrial Technology, Inc."
+    ],
+    "note": "Matched case-insensitively against EVERY string in a `generated` PageSpec (headings, body, labels, alt text, hrefs, route, meta). Every regex is traced to a real string in the source (`examples`); verify_all.py checks that each example exists in the source when it is present and that each regex matches an example. No human has reviewed these patterns.",
+    "patterns": {
+      "brand": {
+        "rule": "GENERATED_MODE_SOURCE_BRAND",
+        "regex": [
+          "\\bavec(mail)?\\b",
+          "avec[-_ ]?(logo|glyph)",
+          "nearly\\s+extraterrestrial"
+        ],
+        "examples": [
+          {
+            "text": "Avec is available for",
+            "path": "src/content.js"
+          },
+          {
+            "text": "avecmail",
+            "path": "src/content.js"
+          },
+          {
+            "text": "avec-logo",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "Nearly Extraterrestrial Technology",
+            "path": "src/components/Footer.jsx"
+          }
+        ],
+        "evidenceIds": [
+          "ev.src.content-footer",
+          "ev.gen.copyright"
+        ]
+      },
+      "storeMarks": {
+        "rule": "GENERATED_MODE_STORE_MARK",
+        "regex": [
+          "test\\s*flight",
+          "app\\s*store",
+          "\\boutlook\\b",
+          "\\bandroid\\b"
+        ],
+        "examples": [
+          {
+            "text": "testflight.png",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "App Store wordmark",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "Outlook, Android, and more",
+            "path": "src/content.js"
+          }
+        ],
+        "evidenceIds": [
+          "ev.src.cta-sizes",
+          "ev.src.hero-rating",
+          "ev.gen.store-cta"
+        ]
+      },
+      "urls": {
+        "rule": "GENERATED_MODE_SOURCE_URL",
+        "regex": [
+          "testflight\\.apple\\.com",
+          "3JR2HxjZ",
+          "\\bavec\\.ai",
+          "x\\.com/avec",
+          "youtube\\.com/@avecmail",
+          "instagram\\.com/avecmail",
+          "linkedin\\.com/company/avec-ai"
+        ],
+        "examples": [
+          {
+            "text": "https://testflight.apple.com/join/3JR2HxjZ",
+            "path": "src/components/Cta.jsx"
+          },
+          {
+            "text": "hi@avec.ai",
+            "path": "src/content.js"
+          },
+          {
+            "text": "https://x.com/avec",
+            "path": "src/content.js"
+          },
+          {
+            "text": "https://www.youtube.com/@avecmail",
+            "path": "src/content.js"
+          },
+          {
+            "text": "https://www.instagram.com/avecmail/",
+            "path": "src/content.js"
+          },
+          {
+            "text": "https://www.linkedin.com/company/avec-ai",
+            "path": "src/content.js"
+          }
+        ],
+        "evidenceIds": [
+          "ev.gen.testflight-url",
+          "ev.gen.social-urls"
+        ]
+      },
+      "reviews": {
+        "rule": "GENERATED_MODE_REVIEW",
+        "regex": [
+          "\\breview\\.0[1-6]\\b",
+          "soda_cowboy",
+          "jamesl55",
+          "evntylr",
+          "buggs+\\b",
+          "rudraksh\\s+awasthi",
+          "vahwdsss",
+          "way better than gmail",
+          "fast,? thoughtful,? and delightful",
+          "the only way to handle email",
+          "smoothest emailing experience",
+          "hate managing email\\??\\s*me too",
+          "superhuman wishes"
+        ],
+        "examples": [
+          {
+            "text": "soda_cowboy",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "JamesL55",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "evntylr",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "BUGGSSSSSS",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "Rudraksh Awasthi",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "Vahwdsss",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "Way better than Gmail!",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "Fast, thoughtful, and delightful",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "The only way to handle email",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "Smoothest emailing experience",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "Hate managing email? Me too!",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "Superhuman wishes",
+            "path": "src/components/ReviewsCarousel.jsx"
+          },
+          {
+            "text": "review.01",
+            "path": "design-repo/sections/proof.reviews-carousel.json"
+          }
+        ],
+        "evidenceIds": [
+          "ev.src.carousel-reviews",
+          "ev.spec.reviews"
+        ]
+      },
+      "ratings": {
+        "rule": "GENERATED_MODE_RATING",
+        "regex": [
+          "\\b5\\.0\\b",
+          "\\b400\\s*\\+"
+        ],
+        "examples": [
+          {
+            "text": "400+ ",
+            "path": "src/components/Hero.jsx"
+          },
+          {
+            "text": "\"400+ reviews\"",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "\"5.0\"",
+            "path": "CLONE_SPEC.md"
+          }
+        ],
+        "evidenceIds": [
+          "ev.gen.rating",
+          "ev.src.hero-rating"
+        ]
+      },
+      "people": {
+        "rule": "GENERATED_MODE_PERSON",
+        "regex": [
+          "coach\\s+marcus",
+          "nina\\s+park",
+          "dana\\s+chen",
+          "tom[aá]s[\\s-]+reyes",
+          "sar[a]h?\\s+chen[- ]ramirez",
+          "\\bjordan\\b",
+          "riverside\\s+elementary",
+          "pilates\\s*pass",
+          "\\bthe\\s+gist\\b",
+          "pacific\\s+(air\\s*lines|airlines|gas)",
+          "\\bdropbox\\b",
+          "\\bpg&e\\b",
+          "smith\\s+engineers",
+          "\\bacorns\\b",
+          "\\bdiego\\b",
+          "\\bmaura\\b",
+          "janelle\\s+morris",
+          "\\bfinch\\b"
+        ],
+        "examples": [
+          {
+            "text": "sender: \"Coach Marcus\"",
+            "path": "src/content.js"
+          },
+          {
+            "text": "sender: \"Nina Park\"",
+            "path": "src/content.js"
+          },
+          {
+            "text": "/assets/avatars/tomas-reyes.png",
+            "path": "src/content.js"
+          },
+          {
+            "text": "sender: \"Dana Chen\"",
+            "path": "src/content.js"
+          },
+          {
+            "text": "sender: \"Sarah Chen-Ramirez\"",
+            "path": "src/content.js"
+          },
+          {
+            "text": "sender: \"Jordan\"",
+            "path": "src/content.js"
+          },
+          {
+            "text": "sender: \"Riverside Elementary School\"",
+            "path": "src/content.js"
+          },
+          {
+            "text": "sender: \"PilatesPass\"",
+            "path": "src/content.js"
+          },
+          {
+            "text": "sender: \"The Gist\"",
+            "path": "src/content.js"
+          },
+          {
+            "text": "sender: \"Pacific Air Lines\"",
+            "path": "src/content.js"
+          },
+          {
+            "text": "sender: \"Pacific Gas & Electric\"",
+            "path": "src/content.js"
+          },
+          {
+            "text": "sender: \"Dropbox\"",
+            "path": "src/content.js"
+          },
+          {
+            "text": "PG&E",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Smith Engineers LLC",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Acorns",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Hi Diego,",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Hi Maura,",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Janelle Morris",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Finch Team IRL",
+            "path": "src/content.js"
+          }
+        ],
+        "evidenceIds": [
+          "ev.src.content-emails",
+          "ev.src.content-notif",
+          "ev.src.content-search"
+        ]
+      },
+      "media": {
+        "rule": "GENERATED_MODE_MEDIA",
+        "regex": [
+          "hero-triage",
+          "hero-waves",
+          "wave_(desktop|mobile)",
+          "phone-demo",
+          "avec-logo",
+          "square-logo-195",
+          "app-store-wordmark",
+          "testflight\\.png",
+          "outlook-icon",
+          "android-icon",
+          "frame-\\d\\d\\.",
+          "/assets/",
+          "avatars/",
+          "opengraph-image",
+          "apple-icon",
+          "\\b5d520b4b4002bff5",
+          "\\b2e5a5d83e295d091",
+          "\\bfaf20119de70d679",
+          "\\b4f4684ec064d10af",
+          "\\bc0f15c9ea898777a",
+          "\\bf652cb6de2ce4ccc",
+          "\\be9c132cba011641d",
+          "\\ba98ba648fd2ea0ea",
+          "\\be2c2b806ef628db8",
+          "\\ba4d0e02821e7e4a8",
+          "\\b85bce0755856b344",
+          "\\b79648ee1be36fcc4",
+          "\\b218f94eed945627d",
+          "\\be49d0da31079a705",
+          "\\b255cd5972fa77906",
+          "\\b9fb80b08d51b63e6",
+          "\\b052bfb6aa6dd1da8"
+        ],
+        "sha256": [
+          {
+            "path": "public/assets/hero-triage.mp4",
+            "sha256": "5d520b4b4002bff56a4c5c10656eda775e37d07089cb0fc35c89bb44c63f7118"
+          },
+          {
+            "path": "public/assets/hero-waves.mp4",
+            "sha256": "2e5a5d83e295d0910a82c6cfc29d6d43a1016c9f6ad39cdf9400ee1bef4c14a1"
+          },
+          {
+            "path": "public/assets/wave_desktop.webm",
+            "sha256": "faf20119de70d67944e9df0b1475425e26980349ffa18d1f36a4ae8ab7ad4236"
+          },
+          {
+            "path": "public/assets/wave_desktop_hevc.mp4",
+            "sha256": "4f4684ec064d10afc3e2ec4e81d3bb0f1787b8eaa71b4843ca1fee7800033417"
+          },
+          {
+            "path": "public/assets/wave_mobile.webm",
+            "sha256": "c0f15c9ea898777a96d1e810550312a8cc5109bd8420e2fea2af987029f8cd72"
+          },
+          {
+            "path": "public/assets/wave_mobile_hevc.mp4",
+            "sha256": "f652cb6de2ce4cccbe527c9a3cb0802c6aaaefa5a6cd3619c2f3f712343934c9"
+          },
+          {
+            "path": "public/assets/phone-demo.webm",
+            "sha256": "e9c132cba011641d62601b7ddc0ed1ae4380f70b0e8698f9ad265b8055447933"
+          },
+          {
+            "path": "public/assets/phone-demo.mov",
+            "sha256": "a98ba648fd2ea0ea7a94a80298a0a1a1ceb959180bd868f4b5eb44807025550b"
+          },
+          {
+            "path": "public/assets/avec-logo.svg",
+            "sha256": "e2c2b806ef628db8e01fa451b1d747b0303ab2877059d2bf0f231c4ddcc5fc57"
+          },
+          {
+            "path": "public/assets/testflight.png",
+            "sha256": "a4d0e02821e7e4a8ff6ebbd5c5d18cf66bfa78d7888b3c2401efe04c59233b34"
+          },
+          {
+            "path": "public/assets/square-logo-195.png",
+            "sha256": "85bce0755856b3446882cda2d26d9e28a3a089d93ce92e5bce7cffa7f537affc"
+          },
+          {
+            "path": "public/assets/app-store-wordmark.svg",
+            "sha256": "79648ee1be36fcc4c0ffa3c2a08d481ab31e204b15a3cf4ba153da31981cb6ef"
+          },
+          {
+            "path": "public/assets/outlook-icon.svg",
+            "sha256": "218f94eed945627dfa1e9f3bfb2f1bbebfb6f44b1bd1df2cbe849ab7a7571f52"
+          },
+          {
+            "path": "public/assets/android-icon.svg",
+            "sha256": "e49d0da31079a705c6840eae3a16b56ba0dc2af2e88b42116acdf65e08798798"
+          },
+          {
+            "path": "public/assets/hero-triage-poster.webp",
+            "sha256": "255cd5972fa779067da64ec9815e79d69247acafe5fac9f123b84d3610b2182f"
+          },
+          {
+            "path": "public/assets/hero-waves-poster.webp",
+            "sha256": "9fb80b08d51b63e6fe2cc34e8517b8ee7b4c03fd74c94f44fdab9b762ba1b7f0"
+          },
+          {
+            "path": "public/assets/phone-demo-poster.webp",
+            "sha256": "052bfb6aa6dd1da84f0fddeb9180c2844f550110d6a8b7e6a706baa991865eee"
+          }
+        ],
+        "examples": [
+          {
+            "text": "hero-triage.mp4",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "hero-waves",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "wave_desktop",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "phone-demo",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "avec-logo.svg",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "square-logo-195.png",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "app-store-wordmark",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "testflight.png",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "outlook-icon",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "android-icon",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "frame-01.png",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "/assets/avatars/coach-marcus.png",
+            "path": "src/content.js"
+          },
+          {
+            "text": "opengraph-image",
+            "path": "CLONE_SPEC.md"
+          },
+          {
+            "text": "apple-icon",
+            "path": "CLONE_SPEC.md"
+          }
+        ],
+        "evidenceIds": [
+          "ev.spec.assets"
+        ]
+      },
+      "copy": {
+        "rule": "GENERATED_MODE_SOURCE_COPY",
+        "regex": [
+          "one\\s+minute\\s+a\\s+day",
+          "handle\\s+your\\s+inbox",
+          "people\\s+who\\s+hate\\s+email",
+          "works\\s+with\\s+(your\\s+existing\\s+)?gmail",
+          "tinder\\s+for\\s+email",
+          "power\\s+through\\s+the\\s+tasks",
+          "find\\s+anything\\s+in\\s+seconds",
+          "sifting\\s+through\\s+threads",
+          "without\\s+opening\\s+your\\s+inbox",
+          "smart\\s+notifications",
+          "prioriti[sz]es\\s+your\\s+inbox",
+          "swipe\\s+to\\s+mark\\s+them\\s+done",
+          "hold\\s+to\\s+voice\\s+compose",
+          "get\\s+early\\s+access",
+          "get\\s+notified\\s+about",
+          "unified\\s+inbox",
+          "free\\s+to\\s+use",
+          "distinctively\\s+like\\s+you",
+          "use\\s+voice\\s+to\\s+send\\s+emails",
+          "stack\\s+challenge"
+        ],
+        "ngram": 5,
+        "examples": [
+          {
+            "text": "Handle your inbox in one minute a day",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Made for people who hate email",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Works with your existing Gmail account",
+            "path": "src/content.js"
+          },
+          {
+            "text": "(Yes, it's like Tinder for email)",
+            "path": "src/content.js"
+          },
+          {
+            "text": "power through the tasks you saved",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Find anything in seconds",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Instead of sifting through threads",
+            "path": "src/content.js"
+          },
+          {
+            "text": "without opening your inbox",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Avec sends smart notifications",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Avec prioritizes your inbox",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Swipe to mark them done",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Hold to voice compose",
+            "path": "src/components/EmailStack.jsx"
+          },
+          {
+            "text": "Get early access",
+            "path": "src/components/Cta.jsx"
+          },
+          {
+            "text": "Get notified about Outlook",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Unified inbox for all your accounts",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Free to use",
+            "path": "src/content.js"
+          },
+          {
+            "text": "sound distinctively like you",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Use voice to send emails in seconds",
+            "path": "src/content.js"
+          },
+          {
+            "text": "Stack Challenge",
+            "path": "CLONE_SPEC.md"
+          }
+        ],
+        "evidenceIds": [
+          "ev.src.content-hero",
+          "ev.src.content-expand",
+          "ev.src.content-footer",
+          "ev.src.content-search"
+        ]
+      }
     }
   }
 }

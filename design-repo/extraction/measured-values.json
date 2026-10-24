@@ -1061,6 +1061,36 @@
       "kind": "file",
       "path": "_reference/shots/mobile-390-12-footer.png",
       "description": "Mobile 390 screenshot, stop 12 footer"
+    },
+    "ev.gen.copyright": {
+      "kind": "contains",
+      "path": "src/components/Footer.jsx",
+      "expect": "Nearly Extraterrestrial Technology",
+      "description": "Source company name (brand pattern for generated mode)"
+    },
+    "ev.gen.store-cta": {
+      "kind": "contains",
+      "path": "src/components/Cta.jsx",
+      "expect": "Get early access",
+      "description": "TestFlight CTA label (store-mark and copy pattern)"
+    },
+    "ev.gen.testflight-url": {
+      "kind": "contains",
+      "path": "src/components/Cta.jsx",
+      "expect": "https://testflight.apple.com/join/3JR2HxjZ",
+      "description": "Real TestFlight link (source-URL pattern)"
+    },
+    "ev.gen.social-urls": {
+      "kind": "contains",
+      "path": "src/content.js",
+      "expect": "https://www.youtube.com/@avecmail",
+      "description": "Real social/contact URLs (source-URL pattern)"
+    },
+    "ev.gen.rating": {
+      "kind": "contains",
+      "path": "src/components/Hero.jsx",
+      "expect": "400+ ",
+      "description": "Source rating row (rating pattern)"
     }
   },
   "corrections": [

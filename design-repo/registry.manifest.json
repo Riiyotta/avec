@@ -1,9 +1,9 @@
 {
   "repositoryId": "avec-design-repo",
-  "repositoryVersion": "1.0.0",
-  "pageSpecVersion": "1.0.0",
+  "repositoryVersion": "1.1.0",
+  "pageSpecVersion": "1.1.0",
   "allowlistVersion": "1.0.0",
-  "versionFieldNote": "allowlistVersion is MACHINE-CHECKED (extraction/verify_all.py version_parity fails if it drifts from tokens/llm/component-allowlist.json). counts are MACHINE-CHECKED (manifest_counts recomputes every number from disk). repositoryVersion and pageSpecVersion are DOCUMENTATION-ONLY hand-maintained markers (pageSpecVersion is additionally a schema const, so PageSpecs must declare 1.0.0).",
+  "versionFieldNote": "allowlistVersion is MACHINE-CHECKED (extraction/verify_all.py version_parity fails if it drifts from tokens/llm/component-allowlist.json). counts are MACHINE-CHECKED (manifest_counts recomputes every number from disk). repositoryVersion (= newest CHANGELOG heading) and pageSpecVersion (= the schema const, which PageSpecs must declare) are cross-checked by version_parity; bumping them stays a hand edit.",
   "status": "design-review-pending",
   "productionApproved": false,
   "defaultTheme": "light",
@@ -46,7 +46,8 @@
     "componentAllowlist": "tokens/llm/component-allowlist.json",
     "tokenCatalog": "tokens/llm/token-catalog.json",
     "tokenPolicy": "tokens/llm/token-policy.json",
-    "themeLight": "tokens/themes/light.json"
+    "themeLight": "tokens/themes/light.json",
+    "exampleGenerated": "schema/examples/generated.template.home.pagespec.json"
   },
   "counts": {
     "foundationTokens": 111,
@@ -60,9 +61,17 @@
     "generationEligibleTemplates": 1,
     "routes": 3,
     "scrollStops": 13,
-    "assetRoles": 11,
-    "graphRules": 15,
-    "evidenceEntries": 164,
+    "assetRoles": 21,
+    "referenceOnlyAssetRoles": 7,
+    "blockedAssetRoles": 3,
+    "generationSafeAssetRoles": 11,
+    "generatedExamples": 1,
+    "graphRules": 25,
+    "evidenceEntries": 169,
     "corrections": 6
+  },
+  "modes": {
+    "reference": "reproduces the Avec source; source roles allowed",
+    "generated": "a new page for another brand; only generation-safe roles, placeholder URLs, fictional reviews/people, placeholder rating, original copy"
   }
 }
